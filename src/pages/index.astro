@@ -1,13 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from '@supabase/supabase-js';
 import Leaderboard from '../components/Leaderboard.astro';
 
 const supabase = createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_KEY);
 
 async function getLeaderboard() {
   return supabase
-    .from("leaderboard")
+    .from('leaderboard')
     .select(
       `id,
       points,
@@ -22,26 +22,25 @@ async function getLeaderboard() {
       player:profiles(id, full_name, avatar_url)
       `
     )
-    .throwOnError()
+    .throwOnError();
 }
 
 async function getMetaData() {
-  return supabase.from("season").select().eq('name', '2023').limit(1).single().throwOnError();
+  return supabase.from('season').select().eq('name', '2023').limit(1).single().throwOnError();
 }
 
 const { data } = await getLeaderboard();
 const { data: meta } = await getMetaData();
-
 ---
 
 <Layout title="Tisdagsgolfen">
-	<main>
-		<div class="list">
-			<div class="list__header">
-				<h5>Ledartavla efter {meta.event_count} veckor</h5>
-				<h1>Tisdagsgolfen 2023</h1>
-			</div>
-			{data && <Leaderboard data={data} />}
-		</div>
-	</main>
+  <main>
+    <div class="list">
+      <div class="list__header">
+        <h5>Ledartavla efter {meta.event_count} veckor</h5>
+        <h1>Tisdagsgolfen 2023</h1>
+      </div>
+      {data && <Leaderboard data={data} />}
+    </div>
+  </main>
 </Layout>

@@ -1,6 +1,6 @@
 ---
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -8,163 +8,166 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="sv">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title || "Tisdagsgolfen"}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title || 'Tisdagsgolfen'}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 <style lang="scss" is:global>
-html {
-	--black: 	#21252a;
-	--grey-1: #343A40;
-	--grey-2: #495057;
-	--grey-3: #868E96;
-	--grey-4: #ADB5BD;
-	--grey-5: #CED4DA;
-	--grey-6: #DEE2E6;
-	--grey-7: #E9ECEF;
-	--grey-8: #F1F3F5;
-	--grey-9: #F8F9FA;
+  html {
+    --black: #21252a;
+    --grey-1: #343a40;
+    --grey-2: #495057;
+    --grey-3: #868e96;
+    --grey-4: #adb5bd;
+    --grey-5: #ced4da;
+    --grey-6: #dee2e6;
+    --grey-7: #e9ecef;
+    --grey-8: #f1f3f5;
+    --grey-9: #f8f9fa;
 
-	--trans-black: rgba(33, 37, 42, .9);
+    --trans-black: rgba(33, 37, 42, 0.9);
 
-	--tgblue: #1a4996;
+    --tgblue: #1a4996;
 
-	--gold: #ffda65;
-	--gold-dark: #a3862c;
-	--bronze: #c99355;
-	--bronze-dark: #80582c;
-}
+    --gold: #ffda65;
+    --gold-dark: #a3862c;
+    --bronze: #c99355;
+    --bronze-dark: #80582c;
+  }
 
+  html {
+    box-sizing: border-box;
+  }
 
-html {
-	box-sizing: border-box;
-}
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
 
-*, *:before, *:after {
-	box-sizing: inherit;
-}
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--black);
+  }
+  body {
+    font-family: system-ui;
+    color: var(--black);
+  }
 
-html, body {
-	width: 100%;
-	height: 100%;
-	background-color: var(--black);
-}
-body {
-	font-family: system-ui;
-	color: var(--black);
-}
+  .list {
+    width: 100%;
+    max-width: 800px;
+    margin: 3rem auto 3rem;
+    @media screen and (max-width: 800px) {
+      margin: 0 auto;
+    }
 
-.list {
-	width: 100%;
-	max-width: 800px;
-	margin: 3rem auto 3rem;
-	@media screen and (max-width: 800px) {
-		margin: 0 auto;
-	}
+    &__table {
+      width: 100%;
+      border-spacing: 0;
+      color: var(--grey-3);
+    }
+    &__header {
+      padding: 3rem 2rem;
+      background: white;
+      border-top-left-radius: 0.4rem;
+      border-top-right-radius: 0.4rem;
+      h1,
+      h5 {
+        margin: 0;
+        padding: 0;
+      }
+      h5 {
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        color: var(--tgblue);
+      }
+    }
+    &__value {
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+    }
 
-	&__table {
-		width: 100%;
-		border-spacing: 0;
-		color: var(--grey-3);
-	}
-	&__header {
-		padding: 3rem 2rem;
-		background: white;
-		border-top-left-radius: .4rem;
-		border-top-right-radius: .4rem;
-		h1, h5 {
-			margin: 0;
-			padding: 0;
-		}
-		h5 {
-			margin-bottom: .5rem;
-			text-transform: uppercase;
-			color: var(--tgblue);
-		}
-	}
-	&__value {
-		display: flex;
-		align-items: center;
-		column-gap: 8px;
-	}
+    span {
+      padding: 0 8px;
 
-	span {
-		padding: 0 8px;
+      &:not(:first-of-type) {
+        border-left: 1px solid var(--grey-4);
+      }
 
-		&:not(:first-of-type) {
-			border-left: 1px solid var(--grey-4);
-		}
+      &:first-of-type {
+        padding-left: 0;
+      }
 
-		&:first-of-type {
-			padding-left: 0;
-		}
+      @media screen and (max-width: 400px) {
+        width: 100%;
+        display: block;
+        padding: 4px 0;
+        &:not(:first-of-type) {
+          border: 0;
+        }
+      }
+    }
+    &__meta {
+      font-size: 14px;
+      opacity: 0.6;
+      padding-top: 0.5rem;
+    }
 
-		@media screen and (max-width: 400px) {
-			width: 100%;
-			display: block;
-			padding: 4px 0;
-			&:not(:first-of-type) {
-				border: 0;
-			}
-		}
-	}
-	&__meta {
-		font-size: 14px;
-		opacity: .6;
-		padding-top: .5rem
-	}
+    &__total {
+      font-size: 20px;
+      font-weight: 600;
+    }
 
-	&__total {
-		font-size: 20px;
-		font-weight: 600;
-	}
+    &__row {
+      background: var(--grey-8);
+      color: var(--grey-1);
+      &:first-of-type {
+        .list__cell:first-of-type {
+          background: var(--gold);
+          color: var(--gold-dark);
+        }
+      }
+      &:nth-of-type(2) {
+        .list__cell:first-of-type {
+          background: var(--grey-4);
+          color: var(--grey-2);
+        }
+      }
+      &:nth-of-type(3) {
+        .list__cell:first-of-type {
+          background: var(--bronze);
+          color: var(--bronze-dark);
+        }
+      }
 
-	&__row {
-		background: var(--grey-8);
-		color: var(--grey-1);
-		&:first-of-type {
-				.list__cell:first-of-type {
-					background: var(--gold);
-					color: var(--gold-dark);
-			}
-		}
-		&:nth-of-type(2) {
-			.list__cell:first-of-type {
-				background: var(--grey-4);
-				color: var(--grey-2);
-			}
-		}
-		&:nth-of-type(3) {
-			.list__cell:first-of-type {
-				background: var(--bronze);
-				color: var(--bronze-dark);
-			}
-		}
-
-		&:last-of-type {
-			border-bottom-right-radius: .4rem;
-			.list__cell:first-of-type {
-				border-bottom-left-radius: .4rem;
-			}
-			.list__cell:last-of-type {
-				border-bottom-right-radius: .4rem;
-			}
-		}
-	}
-	&__cell {
-		padding:1rem;
-		&:first-of-type {
-			text-align: center;
-			padding: 0 8px;
-			background: var(--grey-5);
-		}
-	}
-}
+      &:last-of-type {
+        border-bottom-right-radius: 0.4rem;
+        .list__cell:first-of-type {
+          border-bottom-left-radius: 0.4rem;
+        }
+        .list__cell:last-of-type {
+          border-bottom-right-radius: 0.4rem;
+        }
+      }
+    }
+    &__cell {
+      padding: 1rem;
+      &:first-of-type {
+        text-align: center;
+        padding: 0 8px;
+        background: var(--grey-5);
+      }
+    }
+  }
 </style>

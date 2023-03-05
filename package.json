@@ -7,14 +7,18 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "prettier -w ."
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.10.0",
+    "@vercel/node": "^2.9.10",
     "astro": "^2.0.17",
     "astro-compress": "^1.1.35"
   },
   "devDependencies": {
+    "prettier": "^2.8.4",
+    "prettier-plugin-astro": "^0.8.0",
     "sass": "^1.58.3"
   }
 }
