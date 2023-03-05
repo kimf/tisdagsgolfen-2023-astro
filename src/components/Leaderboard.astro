@@ -1,0 +1,38 @@
+---
+export interface Props {
+	data: LeaderboardItem[];
+}
+
+const { data } = Astro.props;
+---
+<div class="list__body">
+  <table class="list__table">
+    {data.map((item) => (
+      <tr class="list__row">
+        <td class="list__cell">{item.rank}</td>
+        <td class="list__cell">
+          <div class="list__value">
+            <img width="30" height="30" src={item.player?.avatar_url || `https://api.dicebear.com/5.x/avataaars-neutral/svg?seed=${item.player.id}_${item.player.full_name}`} alt="Avatar" />
+            <strong>{item.player?.full_name || "N/A"}</strong>
+          </div>
+          <div class="list__meta">
+            <span>{item.events} rund{item.events === 1 ? 'a' : 'or'}</span>
+            {item.beers > 0 && <span>🍻 {item.beers} öl</span>}
+            <span> {item.fines} kr</span>
+          </div>
+        </td>
+        <td class="list__cell">
+          <div class="list__value">
+            <strong class="list__total">{item.points}</strong>
+          </div>
+          <div class="list__meta">
+            <span>Snitt: {item.average}p</span>
+            <span>{item.events} rundor</span>
+            <span>Topp 4: {item.points_array.join(',')}</span>
+            {item.special_array.length > 0 && <span>Special: {item.special_array.join(',')}</span>}
+          </div>
+        </td>
+      </tr>
+    ))}
+  </table>
+</div>
