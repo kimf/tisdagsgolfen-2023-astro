@@ -19,7 +19,7 @@ const { data } = Astro.props;
                 height="30"
                 src={
                   item.player?.avatar_url ||
-                  `https://api.dicebear.com/5.x/avataaars-neutral/svg?seed=${item.player.id}_${item.player.full_name}`
+                  `https://api.dicebear.com/5.x/avataaars-neutral/svg?seed=${item.player?.id}_${item.player.full_name}`
                 }
                 alt="Avatar"
               />

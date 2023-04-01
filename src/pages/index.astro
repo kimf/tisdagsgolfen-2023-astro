@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import { createClient } from '@supabase/supabase-js';
 import Leaderboard from '../components/Leaderboard.astro';
+import ActiveSession from '../components/ActiveSession.tsx';
+
+export const prerender = true;
 
 const supabase = createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_KEY);
 
@@ -37,10 +40,12 @@ const { data: meta } = await getMetaData();
   <main>
     <div class="list">
       <div class="list__header">
-        <h5>Ledartavla efter {meta.event_count} veckor</h5>
+        <h5>Ledartavla {meta ? `efter ${meta.event_count} veckor` : ''}</h5>
         <h1>Tisdagsgolfen 2023</h1>
       </div>
       {data && <Leaderboard data={data} />}
     </div>
+    <div id="links" class="skeleton-box" style="width:100%;height:40px;"></div>
+    <ActiveSession client:only="react" />
   </main>
 </Layout>
