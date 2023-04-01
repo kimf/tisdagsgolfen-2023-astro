@@ -7,6 +7,13 @@ const { data } = Astro.props;
 ---
 
 <div class="list__body">
+  <div class="tabs">
+    <input type="radio" id="points" name="tabs" checked />
+    <label class="tab" for="points">Poäng</label>
+    <input type="radio" id="fines" name="tabs" />
+    <label class="tab" for="fines">Böter</label>
+    <span class="glider"></span>
+  </div>
   <table class="list__table">
     {
       data.map((item) => (

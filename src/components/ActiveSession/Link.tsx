@@ -5,23 +5,24 @@ import getActiveSessions from '../../utils/getActiveSessions';
 
 const ActiveSessionLink = () => {
   const { session } = useAuth();
-  const result = useQuery(['sessions'], getActiveSessions);
+  const result = useQuery(['sessions'], getActiveSessions, { staleTime: 0, cacheTime: 0 });
   const { isLoading, fetchStatus, data } = result;
   const scoringSessions = (!isLoading && data && data.data) || [];
   const ownedScoringSession = scoringSessions.find((sesh) => sesh.owner_id === session?.user.id);
 
-  useEffect(() => {
-    document.querySelector('#links')?.remove();
-  }, []);
-
   return (
-    <div style={{ padding: '12px', display: 'flex', gap: 10 }}>
+    <div style={{ padding: '12px', display: 'flex', gap: 10, float: 'right', maxWidth: '200px' }}>
       {!isLoading && ownedScoringSession && (
-        <a href={`/scoring/${ownedScoringSession.id}`}>FORTSÄTT RUNDA</a>
+        <a href={`/scoring/${ownedScoringSession.id}`} className="btn">
+          FORTSÄTT RUNDA
+        </a>
       )}
       {!isLoading && !ownedScoringSession && (
         <>
-          <a href="/sessions/new">NY RUNDA</a>
+          <a href="/sessions/new">
+            <button className="skeleton-box">NY RUNDA</button>
+          </a>
+
           {scoringSessions.length > 0 && <a href="/scoring/leaderboard">FÖLJ AKTIV</a>}
         </>
       )}

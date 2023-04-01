@@ -37,7 +37,10 @@ const { data: meta } = await getMetaData();
 ---
 
 <Layout title="Tisdagsgolfen">
-  <main>
+  <header class="header">
+    <ActiveSession client:only="react" />
+  </header>
+  <main class="main">
     <div class="list">
       <div class="list__header">
         <h5>Ledartavla {meta ? `efter ${meta.event_count} veckor` : ''}</h5>
@@ -45,7 +48,5 @@ const { data: meta } = await getMetaData();
       </div>
       {data && <Leaderboard data={data} />}
     </div>
-    <div id="links" class="skeleton-box" style="width:100%;height:40px;"></div>
-    <ActiveSession client:only="react" />
   </main>
 </Layout>
