@@ -8,31 +8,31 @@ export const prerender = true;
 
 const supabase = createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_KEY);
 
-async function getLeaderboard() {
-  return supabase
-    .from('leaderboard')
-    .select(
-      `id,
-      points,
-      average,
-      beers,
-      fines,
-      events,
-      points_array,
-      special_array,
-      rank,
-      fines_rank,
-      player:profiles(id, full_name, avatar_url)
-      `
-    )
-    .throwOnError();
-}
+// async function getLeaderboard() {
+//   return supabase
+//     .from('leaderboard')
+//     .select(
+//       `id,
+//       points,
+//       average,
+//       beers,
+//       fines,
+//       events,
+//       points_array,
+//       special_array,
+//       rank,
+//       fines_rank,
+//       player:profiles(id, full_name, avatar_url)
+//       `
+//     )
+//     .throwOnError();
+// }
 
 async function getMetaData() {
   return supabase.from('season').select().eq('name', '2023').limit(1).single().throwOnError();
 }
 
-const { data } = await getLeaderboard();
+// const { data } = await getLeaderboard();
 const { data: meta } = await getMetaData();
 ---
 
@@ -46,7 +46,7 @@ const { data: meta } = await getMetaData();
         <h5>Ledartavla {meta ? `efter ${meta.event_count} veckor` : ''}</h5>
         <h1>Tisdagsgolfen 2023</h1>
       </div>
-      {data && <Leaderboard data={data} />}
+      <!-- {data && <Leaderboard data={data} />} -->
     </div>
   </main>
 </Layout>
