@@ -12,7 +12,7 @@
   "dependencies": {
     "@astrojs/react": "^2.1.1",
     "@astrojs/ts-plugin": "^0.4.4",
-    "@astrojs/vercel": "^3.2.1",
+    "@astrojs/vercel": "^3.2.5",
     "@supabase/supabase-js": "^2.10.0",
     "@tanstack/query-sync-storage-persister": "^4.27.1",
     "@tanstack/react-query": "^4.28.0",
@@ -20,7 +20,7 @@
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
     "@vercel/node": "^2.9.10",
-    "astro": "^2.1.9",
+    "astro": "^2.3.2",
     "astro-compress": "^1.1.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
