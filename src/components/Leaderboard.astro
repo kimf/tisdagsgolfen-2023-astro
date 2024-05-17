@@ -42,7 +42,9 @@ const { data } = Astro.props;
           </td>
           <td class="list__cell">
             <div class="list__value">
-              <strong class="list__total">{item.points}</strong>
+              <span>
+                <strong class="list__total">{item.points}</strong>p
+              </span>
             </div>
             <div class="list__meta">
               <span>Snitt: {item.average}p</span>

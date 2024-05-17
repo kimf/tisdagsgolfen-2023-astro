@@ -1,52 +1,41 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { createClient } from '@supabase/supabase-js';
 import Leaderboard from '../components/Leaderboard.astro';
-import ActiveSession from '../components/ActiveSession.tsx';
+import { getPlayers } from '../utils/getPlayers';
+import { getEvents } from '../utils/getEvents';
+import { getSeason } from '../utils/getSeason';
+import buildLeaderboardItems from '../utils/buildLeaderboardItems';
+import type { Player, SortingType, TourEvent } from '../utils/types';
+import ActiveSessionCard from '../components/ActiveSessionCard.astro';
 
 export const prerender = true;
 
-const supabase = createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_KEY);
+const sortings: SortingType[] = ['rank', 'kr'];
 
-// async function getLeaderboard() {
-//   return supabase
-//     .from('leaderboard')
-//     .select(
-//       `id,
-//       points,
-//       average,
-//       beers,
-//       fines,
-//       events,
-//       points_array,
-//       special_array,
-//       rank,
-//       fines_rank,
-//       player:profiles(id, full_name, avatar_url)
-//       `
-//     )
-//     .throwOnError();
-// }
+const season = await getSeason('2024');
+const playersData = await getPlayers();
+const eventsData = await getEvents(season?.data?.id || 0);
 
-async function getMetaData() {
-  return supabase.from('season').select().eq('name', '2023').limit(1).single().throwOnError();
-}
-
-// const { data } = await getLeaderboard();
-const { data: meta } = await getMetaData();
+const events = eventsData?.data as TourEvent[];
+const scoringSessions = events.flatMap((event) => event.event_sessions.flatMap((es) => es.session));
+const leaderboardItems = buildLeaderboardItems(scoringSessions, playersData.data as Player[]);
+const sorting = sortings[0];
+const sortedPlayers = leaderboardItems[sorting].filter(
+  (item) => item.events.length !== 0
+) as LeaderboardItem[];
 ---
 
 <Layout title="Tisdagsgolfen">
   <header class="header">
-    <ActiveSession client:only="react" />
+    <ActiveSessionCard scoringSessions={scoringSessions} userId="" />
   </header>
   <main class="main">
     <div class="list">
       <div class="list__header">
-        <h5>Ledartavla {meta ? `efter ${meta.event_count} veckor` : ''}</h5>
-        <h1>Tisdagsgolfen 2023</h1>
+        <h5>Ledartavla efter {events.length} veckor</h5>
+        <h1>Tisdagsgolfen 2024</h1>
       </div>
-      <!-- {data && <Leaderboard data={data} />} -->
+      {sortedPlayers && <Leaderboard data={sortedPlayers} />}
     </div>
   </main>
 </Layout>

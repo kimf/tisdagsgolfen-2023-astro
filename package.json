@@ -10,24 +10,25 @@
     "lint": "prettier -w ."
   },
   "dependencies": {
-    "@astrojs/react": "^2.1.1",
-    "@astrojs/ts-plugin": "^0.4.4",
-    "@astrojs/vercel": "^3.2.5",
-    "@supabase/supabase-js": "^2.10.0",
-    "@tanstack/query-sync-storage-persister": "^4.27.1",
-    "@tanstack/react-query": "^4.28.0",
-    "@tanstack/react-query-persist-client": "^4.28.0",
-    "@types/react": "^18.0.31",
-    "@types/react-dom": "^18.0.11",
-    "@vercel/node": "^2.9.10",
-    "astro": "^2.3.2",
-    "astro-compress": "^1.1.35",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@astrojs/react": "^3.3.4",
+    "@astrojs/ts-plugin": "^1.8.0",
+    "@astrojs/vercel": "^7.6.0",
+    "@playform/compress": "^0.0.4",
+    "@supabase/supabase-js": "^2.43.2",
+    "@tanstack/query-sync-storage-persister": "^5.36.1",
+    "@tanstack/react-query": "^5.36.2",
+    "@tanstack/react-query-persist-client": "^5.36.2",
+    "@vercel/node": "^3.1.5",
+    "astro": "^4.8.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
     "prettier": "^2.8.4",
     "prettier-plugin-astro": "^0.8.0",
-    "sass": "^1.58.3"
+    "sass": "^1.58.3",
+    "supabase": "^1.167.4"
   }
 }
