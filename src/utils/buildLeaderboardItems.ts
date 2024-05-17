@@ -1,6 +1,5 @@
 import { cacheable } from './cacheable';
 import standardCompRank from './standardCompetitionRanking';
-import type { LeaderboardItem, Player, ScoringSession } from './types';
 
 function buildLeaderboardItems(sessions: ScoringSession[], players: Player[]) {
   const leaderboardItems: LeaderboardItem[] = [];
