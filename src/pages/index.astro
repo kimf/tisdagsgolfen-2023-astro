@@ -1,40 +1,27 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Leaderboard from '../components/Leaderboard.astro';
-import { getPlayers } from '../utils/getPlayers';
-import { getEvents } from '../utils/getEvents';
-import { getSeason } from '../utils/getSeason';
-import buildLeaderboardItems from '../utils/buildLeaderboardItems';
-import ActiveSessionCard from '../components/ActiveSessionCard.astro';
-
 export const prerender = true;
 
-const sortings: SortingType[] = ['rank', 'kr'];
+import Layout from '../layouts/Layout.astro';
+import Leaderboard from '../components/Leaderboard.astro';
+
+import { getEvents } from '../utils/getEvents';
+import { getSeason } from '../utils/getSeason';
+import ActiveSessionCard from '../components/ActiveSessionCard.tsx';
 
 const season = await getSeason('2024');
-const playersData = await getPlayers();
 const eventsData = await getEvents(season?.data?.id || 0);
-
 const events = eventsData?.data as TourEvent[];
-const scoringSessions = events.flatMap((event) => event.event_sessions.flatMap((es) => es.session));
-const leaderboardItems = buildLeaderboardItems(scoringSessions, playersData.data as Player[]);
-const sorting = sortings[0];
-const sortedPlayers = leaderboardItems[sorting].filter(
-  (item) => item.events.length !== 0
-) as LeaderboardItem[];
 ---
 
 <Layout title="Tisdagsgolfen">
-  <header class="header">
-    <ActiveSessionCard scoringSessions={scoringSessions} userId="" />
-  </header>
   <main class="main">
+    <ActiveSessionCard client:only="react" />
     <div class="list">
       <div class="list__header">
         <h5>Ledartavla efter {events.length} veckor</h5>
         <h1>Tisdagsgolfen 2024</h1>
       </div>
-      {sortedPlayers && <Leaderboard data={sortedPlayers} />}
+      <Leaderboard events={events} />
     </div>
   </main>
 </Layout>

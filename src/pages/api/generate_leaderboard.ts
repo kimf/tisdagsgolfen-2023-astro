@@ -36,7 +36,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     )
     .neq('state', 'CLOSED')
     .throwOnError();
-  console.log(sessions);
+
   if (sessions.data === null || sessions.data.length === 0) {
     response.status(200).json({ body: 'No sessions found' });
   } else {

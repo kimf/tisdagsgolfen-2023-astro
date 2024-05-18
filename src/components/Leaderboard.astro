@@ -1,9 +1,25 @@
 ---
+export const prerender = true;
+
 export interface Props {
-  data: LeaderboardItem[];
+  events: TourEvent[];
 }
 
-const { data } = Astro.props;
+const { events } = Astro.props;
+
+import { getPlayers } from '../utils/getPlayers';
+import buildLeaderboardItems from '../utils/buildLeaderboardItems';
+
+const sortings: SortingType[] = ['rank', 'kr'];
+
+const playersData = await getPlayers();
+
+const scoringSessions = events.flatMap((event) => event.event_sessions.flatMap((es) => es.session));
+const leaderboardItems = buildLeaderboardItems(scoringSessions, playersData.data as Player[]);
+const sorting = sortings[0];
+const sortedPlayers = leaderboardItems[sorting].filter(
+  (item) => item.events.length !== 0
+) as LeaderboardItem[];
 ---
 
 <div class="list__body">
@@ -16,7 +32,7 @@ const { data } = Astro.props;
   </div>
   <table class="list__table">
     {
-      data.map((item) => (
+      sortedPlayers.map((item) => (
         <tr class="list__row">
           <td class="list__cell">{item.rank}</td>
           <td class="list__cell">

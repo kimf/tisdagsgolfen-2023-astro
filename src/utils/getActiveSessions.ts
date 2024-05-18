@@ -1,5 +1,7 @@
-import { queryOptions, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import supabase from '../utils/supabase';
+import queryClient from './queryClient';
+import delayPromise from './delayedPromise';
 
 export async function getActiveSessions() {
   return supabase
@@ -16,13 +18,12 @@ export async function getActiveSessions() {
     .throwOnError();
 }
 
-export function activeSessionsQuery() {
-  return queryOptions({
-    queryKey: ['sessions', { minimal: true }],
-    queryFn: () => getActiveSessions(),
-  });
-}
-
 export function useGetActiveSessions() {
-  return useQuery(activeSessionsQuery());
+  return useQuery(
+    {
+      queryKey: ['sessions', { minimal: true }],
+      queryFn: () => delayPromise(getActiveSessions(), 500),
+    },
+    queryClient
+  );
 }
