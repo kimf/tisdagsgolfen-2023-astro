@@ -6,9 +6,7 @@ const supabaseKey = import.meta.env.SUPABASE_KEY;
 const supabase = createClient<Database>(supabaseUrl, supabaseKey, {
   auth: {
     // storage: window ? window.localStorage : null,
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false,
+    flowType: 'pkce',
   },
 });
 

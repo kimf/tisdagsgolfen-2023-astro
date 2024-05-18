@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get('sb-access-token');
+const refreshToken = cookies.get('sb-refresh-token');
+
+if (accessToken && refreshToken) {
+  return redirect('/');
+}
+
+const email = Astro.url.searchParams.get('email') || '';
+---
+
+<Layout title="Verify OTP">
+  <h1>Ange kod</h1>
+  <form action="/api/auth/verify-otp" method="post">
+    <input type="email" name="email" id="email" hidden value={email} />
+
+    <label for="token">Kod</label>
+    <input type="text" name="token" id="token" />
+
+    <button type="submit">Logga in</button>
+  </form>
+</Layout>

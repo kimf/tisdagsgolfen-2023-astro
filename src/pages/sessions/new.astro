@@ -1,14 +1,39 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import supabase from '../../utils/supabase';
 
-export const prerender = true;
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get('sb-access-token');
+const refreshToken = cookies.get('sb-refresh-token');
+
+if (!accessToken || !refreshToken) {
+  return redirect('/auth/signin');
+}
+
+const { data, error } = await supabase.auth.setSession({
+  refresh_token: refreshToken.value,
+  access_token: accessToken.value,
+});
+
+if (error) {
+  cookies.delete('sb-access-token', {
+    path: '/',
+  });
+  cookies.delete('sb-refresh-token', {
+    path: '/',
+  });
+
+  return redirect('/auth/signin');
+}
+
+const email = data.user?.email;
 ---
 
 <Layout title="Ny Runda">
-  <main class="main">
-    <div class="list">
-      <h2>Ny runda</h2>
-    </div>
-    <div id="links" class="skeleton-box" style="width:100%;height:40px;"></div>
-  </main>
+  <h1>Welcome {email}</h1>
+  <p>We are happy to see you here</p>
+  <form action="/api/auth/signout">
+    <button type="submit">Sign out</button>
+  </form>
 </Layout>
