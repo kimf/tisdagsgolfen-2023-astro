@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import supabase from './supabase';
 
-async function getLeaderboard(
+export async function getLeaderboard(
   courseId: number,
   special: boolean,
   teamEvent: boolean,

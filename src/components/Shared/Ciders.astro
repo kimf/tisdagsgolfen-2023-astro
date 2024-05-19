@@ -1,0 +1,13 @@
+---
+export interface Props {
+  ciders: number;
+}
+
+const { ciders }  = Astro.props;
+---
+
+{ciders > 0 && (
+  <span style={{ fontSize: '10px', opacity: 0.9 }}>
+    {ciders > 1 ? `${ciders} x 🥤` : '🥤'}
+  </span>
+)}

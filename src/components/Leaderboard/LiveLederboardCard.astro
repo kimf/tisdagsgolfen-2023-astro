@@ -1,0 +1,56 @@
+---
+import Beers from '../Shared/Beers.astro';
+import Ciders from '../Shared/Ciders.astro';
+import Name from '../Shared/Name.astro';
+import ToPar from '../Shared/ToPar.astro';
+
+export interface Props {
+  scorecard: Scorecard | ScorecardWithRank;
+  specialEvent: boolean;
+}
+
+const { scorecard, specialEvent } = Astro.props;
+
+const hasRank = (scorecard as ScorecardWithRank).rank !== undefined;
+---
+
+<div
+  style={{
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: '4px',
+    backgroundColor: '#eee',
+    borderTop: '1px solid #ccc',
+    paddingLeft: '2px',
+    paddingRight: '2px',
+  }}>
+  {hasRank && <span>{(scorecard as ScorecardWithRank).rank}</span>}
+  <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+    {
+      scorecard.players.map((p) => (
+        <div style={{ flexDirection: 'row' }}>
+          <Name name={p.player.full_name || ''} firstNameOnly />
+          <Beers beers={p.beers || 0} />
+          <Ciders ciders={p.ciders || 0} />
+        </div>
+      ))
+    }
+  </div>
+  <div
+    style={{
+      display: 'flex',
+      flexDirection: 'row',
+      marginLeft: 'auto',
+      justifyContent: 'space-between',
+      gap: '12px',
+    }}>
+    <span>{scorecard.strokes}</span>
+    <span>{scorecard.points}</span>
+    <span>{scorecard.through}</span>
+
+    <ToPar to_par={scorecard.to_par || 0} />
+
+    {!specialEvent && <span>{scorecard.players.reduce((a, b) => a + b.fines!, 0)}</span>}
+  </div>
+</div>

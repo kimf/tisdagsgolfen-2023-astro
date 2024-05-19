@@ -97,11 +97,3 @@ type FinalLeaderboardItem = {
 };
 
 type PlayerWithStrokes = Player & { strokes: number };
-
-type EventItem = Database['public']['Tables']['events']['Row'] & {
-  course: Course;
-  event_sessions: {
-    id: number;
-    session: ScoringSession;
-  }[];
-};

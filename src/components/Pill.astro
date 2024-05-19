@@ -1,0 +1,32 @@
+---
+export interface Props {
+  text: string;
+  backgroundColor?: string;
+  color?: string;
+}
+const { text, backgroundColor, color } = Astro.props;
+---
+
+<div
+  style={{
+    backgroundColor: backgroundColor || '$border',
+    paddingHorizontal: '4px',
+    paddingLeft: '5px',
+    paddingVertical: 0,
+    height: '16px',
+    justifyContent: 'center',
+    borderRadius: 0,
+    borderBottomWidth: '1px',
+    borderRightWidth: '1px',
+    borderColor: '#000',
+  }}>
+  <span
+    style={{
+      fontWeight: 'bold',
+      fontFamily: 'PixeloidSans',
+      fontSize: '8px',
+      color,
+    }}>
+    {text}
+  </span>
+</div>

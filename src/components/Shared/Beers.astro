@@ -1,0 +1,14 @@
+---
+export interface Props {
+  beers: number;
+}
+
+const { beers }  = Astro.props;
+---
+{beers > 0 && (
+  <div>
+    <span style={{ fontSize: '10px', opacity: 0.9 }}>
+      {beers > 1 ? `${beers} x 🍺` : '🍺'}
+    </span>
+  </div>
+)

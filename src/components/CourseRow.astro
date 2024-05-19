@@ -1,0 +1,18 @@
+---
+import Row from './Row.astro';
+
+export interface Props {
+  course: Course;
+}
+
+const { course } = Astro.props;
+---
+
+<Row>
+  <strong>{course.name.toUpperCase()}</strong>
+  <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', marginLeft: 'auto' }}>
+    <span>PAR {course.par}</span>
+    <span>{course.holes_count} HÅL</span>
+  </div>
+</Row>
+<span>{course.club}</span>

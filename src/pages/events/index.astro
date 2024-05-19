@@ -1,0 +1,27 @@
+---
+export const prerender = true;
+
+import EventCard from '../../components/Events/EventCard.astro';
+import Layout from '../../layouts/Layout.astro';
+import { getEvents } from '../../utils/getEvents';
+import { getSeason } from '../../utils/getSeason';
+
+const seasonYear = (Astro.url.searchParams.get('season') || '2024') as SeasonYear;
+
+const season = await getSeason(seasonYear);
+const eventsData = await getEvents(season?.data?.id || 0);
+const events = eventsData?.data as TourEvent[];
+
+---
+
+<Layout title="HISTORIK - Tisdagsgolfen">
+  <header>
+    <button type="button" onclick="javascript:history.back()">&larr;</button>
+  </header>
+  <main>
+    <h2>RUNDOR</h2>
+    {events.map((event) => (
+      <EventCard event={event} />
+    ))}
+  </main>
+</Layout>

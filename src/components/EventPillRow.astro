@@ -1,0 +1,27 @@
+---
+import Pill from './Pill.astro';
+
+export interface Props {
+  live?: boolean;
+  special: boolean;
+  teamEvent: boolean;
+  strokes: boolean;
+  noMargin?: boolean;
+  small?: boolean;
+}
+
+const { live, special, teamEvent, strokes, noMargin = false, small = false } = Astro.props;
+---
+
+<div style={{ flexDirection: 'row', gap: small ? '6px' : '8px', marginTop: noMargin ? 0 : '12px' }}>
+  {live && <Pill text="LIVE" backgroundColor="red" color="white" />}
+  {
+    special && (
+      <div style={{ flexDirection: 'row', gap: small ? '6px' : '8px', opacity: 0.8 }}>
+        <Pill text="SPECIAL" backgroundColor="blue" />
+        {teamEvent && <Pill text="LAG" backgroundColor="purple" />}
+      </div>
+    )
+  }
+  <Pill text={strokes ? 'SLAG' : 'POÄNG'} backgroundColor="ForestGreen" />
+</div>
