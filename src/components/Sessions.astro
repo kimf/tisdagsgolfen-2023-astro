@@ -21,7 +21,7 @@ const scoringSession = ownedScoringSession || (sessions && sessions.data ? sessi
     padding: '12px',
   }}>
   {
-    scoringSession ? (
+    scoringSession && (
       <>
         <h5 style={{ margin: 0, marginbottom: 4 }}>AKTIV RUNDA</h5>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -33,19 +33,9 @@ const scoringSession = ownedScoringSession || (sessions && sessions.data ? sessi
                 LEDARTAVLA
               </div>
             </a>
-            <a
-              href={
-                !ownedScoringSession
-                  ? '/sessions/new?id=' + scoringSession.id
-                  : `/scoring/${ownedScoringSession.id}`
-              }>
-              {hasFinishedSession ? 'REDIGERA' : ownedScoringSession ? 'FORTSÄTT' : 'SPELA'}
-            </a>
           </div>
         </div>
       </>
-    ) : (
-      <a href="/sessions/new">STARTA NY RUNDA</a>
     )
   }
 </div>

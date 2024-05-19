@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import CourseRow from '../../components/CourseRow.astro';
 import EventPillRow from '../../components/EventPillRow.astro';
 import Row from '../../components/Row.astro';
@@ -8,7 +10,18 @@ import Name from '../../components/Shared/Name.astro';
 import ToPar from '../../components/Shared/ToPar.astro';
 import Layout from '../../layouts/Layout.astro';
 import { getEvent } from '../../utils/getEvent';
+import { getEvents } from '../../utils/getEvents';
+import { getSeason } from '../../utils/getSeason';
 import standardCompRank from '../../utils/standardCompetitionRanking';
+
+
+
+export async function getStaticPaths() {
+  const season = await getSeason('2024');
+  const events = await getEvents(season.data!.id as number);
+  return events.data?.map((event) => ({params: { id: `${event.id}` } }));
+}
+
 
 const { id } = Astro.params;
 const eventId = parseInt(`${id}`, 10);

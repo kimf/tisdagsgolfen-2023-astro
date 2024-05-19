@@ -20,8 +20,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  background-color: #333;
+  padding: 12px;
+  background-color: #428bff;
   color: white;
 
   a {

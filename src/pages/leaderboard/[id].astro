@@ -6,7 +6,6 @@ import LiveLederboardCard from '../../components/Leaderboard/LiveLederboardCard.
 import Row from '../../components/Row.astro';
 import Layout from '../../layouts/Layout.astro';
 import { getLeaderboard } from '../../utils/getLeaderboard';
-import { getPlayers } from '../../utils/getPlayers';
 import { getSession } from '../../utils/getSession';
 import standardCompRank from '../../utils/standardCompetitionRanking';
 
@@ -16,8 +15,6 @@ const data = await getSession(sessionId);
 const session = data?.data as ScoringSession;
 const course = session.course as Course;
 
-const players = await getPlayers();
-
 const leaderboard = await getLeaderboard(
   course.id,
   session.special,
@@ -25,9 +22,6 @@ const leaderboard = await getLeaderboard(
   session.strokes,
   session.part_of_final
 );
-
-const holesCount = course?.holes?.length || 0;
-const currentHole = course?.holes?.find((hole) => hole.number === data?.data?.current_hole);
 
 const firstSession = leaderboard && leaderboard.data![0];
 const scorecards = leaderboard.data!.flatMap((session) => session.scorecards);
@@ -39,9 +33,8 @@ const rankedScorecards = firstSession.strokes
       'to_par'
     );
 
-const isComplete = scorecards.every((scorecard) => scorecard.through === course.holes_count);
-
-// markAsDone
+// TODO - api route that marksAsDone
+// const isComplete = scorecards.every((scorecard) => scorecard.through === course.holes_count);
 ---
 
 <Layout title="LEDARTAVLA - Tisdagsgolfen">
@@ -57,7 +50,7 @@ const isComplete = scorecards.every((scorecard) => scorecard.through === course.
     </Row>
 
     {
-      scorecards.map((scorecard) => (
+      rankedScorecards.map((scorecard) => (
         <LiveLederboardCard
           scorecard={scorecard as ScorecardWithRank}
           specialEvent={firstSession.special}
@@ -73,4 +66,22 @@ const isComplete = scorecards.every((scorecard) => scorecard.through === course.
       small
     />
   </main>
+  <!-- <footer>
+    {isKim && (
+          // confirm - vill du verkligen spara och stänga?
+          {!isComplete ? (
+            <span>Väntar på rundor</span>
+          ) : (
+            <form action="/api/markdone">
+              <input type="hidden" value={course.id} name="courseId" />
+              <input type="hidden" value={session.special} name="special" />
+              <input type="hidden" value={session.team_event} name="team_event" />
+              <input type="hidden" value={session.strokes} name="strokes" />
+              <input type="hidden" value={session.id} name="id" />
+              <button type="submit" style={{backgroundColor: 'red'}}>KIM - STÄNG RUNDA</button>
+            </form>
+
+          )}
+      )}
+  </footer> -->
 </Layout>
