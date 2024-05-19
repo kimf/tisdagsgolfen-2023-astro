@@ -31,5 +31,5 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   cookies.set('sb-user-id', id, {
     path: '/',
   });
-  return redirect('/sessions/new');
+  return redirect('/');
 };

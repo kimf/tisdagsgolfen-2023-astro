@@ -1,27 +1,52 @@
 ---
-export const prerender = true;
-
 import Layout from '../layouts/Layout.astro';
 import Leaderboard from '../components/Leaderboard.astro';
 
 import { getEvents } from '../utils/getEvents';
 import { getSeason } from '../utils/getSeason';
-import ActiveSessionCard from '../components/ActiveSessionCard.tsx';
+import Sessions from '../components/Sessions.astro';
 
-const season = await getSeason('2024');
+const seasonYear = (Astro.url.searchParams.get('season') || '2024') as SeasonYear;
+
+const season = await getSeason(seasonYear);
 const eventsData = await getEvents(season?.data?.id || 0);
 const events = eventsData?.data as TourEvent[];
+
+let userId: string | null = null;
+if (Astro.cookies.has('sb-user-id')) {
+  userId = Astro.cookies.get('sb-user-id')?.value || null;
+}
+
+const seasonState = season.data?.state;
 ---
 
 <Layout title="Tisdagsgolfen">
-  <main class="main">
-    <ActiveSessionCard client:only="react" />
-    <div class="list">
-      <div class="list__header">
-        <h5>Ledartavla efter {events.length} veckor</h5>
-        <h1>Tisdagsgolfen 2024</h1>
-      </div>
-      <Leaderboard events={events} />
-    </div>
+  <header>
+    <h1>Tisdagsgolfen {seasonYear}</h1>
+    {
+      userId ? (
+        <form action="/api/auth/signout">
+          <button type="submit">Logga ut</button>
+        </form>
+      ) : (
+        <a href="/auth/signin">Logga in</a>
+      )
+    }
+  </header>
+
+  {
+    seasonState === 'FINAL' ||
+      (seasonState === 'CLOSED' && (
+        <a href="/finalleaderboard">
+          <button>LEDARTAVLA FINAL</button>
+        </a>
+      ))
+  }
+
+  <Sessions />
+
+  <main>
+    <h2>Ledartavla efter {events.length} veckor</h2>
+    <Leaderboard events={events} />
   </main>
 </Layout>

@@ -8,7 +8,7 @@ interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
 
-type SortingType = 'rank' | 'kr' | 'beers' | 'ciders';
+type SortingType = 'rank' | 'kr';
 type SessionState = 'STARTED' | 'PENDING' | 'CLOSED' | 'FINALPENDING';
 type SeasonState = 'REGULAR' | 'FINAL' | 'CLOSED';
 type SeasonYear = '2023' | '2024';

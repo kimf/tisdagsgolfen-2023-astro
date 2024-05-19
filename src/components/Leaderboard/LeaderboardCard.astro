@@ -1,0 +1,58 @@
+---
+import Avatar from './Avatar.astro';
+
+export interface Props {
+  sorting: SortingType;
+  item: LeaderboardItem;
+}
+
+const { item, sorting } = Astro.props;
+
+let pointValue = '';
+let pointText = '';
+let summaryString = '';
+let subSummaryString = '';
+if (sorting === 'kr') {
+  pointValue = `${item.totalFines <= 0 ? '' : '+'}${item.totalFines}`;
+  pointText = 'kr';
+  summaryString = `${item.fines} kr`;
+  subSummaryString = ``;
+  subSummaryString += ` | ${item.beers} öl`;
+  subSummaryString += ` | ${item.ciders} cider`;
+} else {
+  pointValue = parseFloat(`${item.points}`).toFixed(1);
+  pointText = 'p';
+  const emptyPoints =
+    item.points_array.length < 4 ? [...Array(4 - item.points_array.length)].map((_) => 0) : [];
+  const emptySpecialPoints =
+    item.special_array.length < 4 ? [...Array(2 - item.special_array.length)].map((_) => 0) : [];
+  summaryString = `${[...item.points_array, ...emptyPoints].join(', ')} | ${[
+    ...item.special_array,
+    ...emptySpecialPoints,
+  ].join(', ')}`;
+  // subSummaryString = `| ${item.events}`;
+}
+---
+
+<tr>
+  <td>{item.rank}</td>
+  <td>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      <div>
+        <!-- <Avatar
+          uri={item.player?.avatar_url}
+          seed={`${item.player?.id}_${item.player.full_name}`}
+          size="smallmedium"
+        /> -->
+        <strong style={{fontSize: '1.2rem'}}>{item.player?.full_name || 'N/A'}</strong>
+      </div>
+      <div style={{fontSize: '0.8rem'}}>
+        {summaryString} {subSummaryString}
+      </div>
+    </div>
+  </td>
+  <td>
+    <strong style={{fontSize: '24px'}}>{pointValue}</strong>
+    <span>{pointText}</span>
+  </td>
+</tr>

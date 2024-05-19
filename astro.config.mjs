@@ -24,4 +24,7 @@ export default defineConfig({
   adapter: vercel({
     analytics: true,
   }),
+  image: {
+    domains: [],
+  },
 });

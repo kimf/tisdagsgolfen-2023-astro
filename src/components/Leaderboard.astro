@@ -1,78 +1,37 @@
 ---
-export const prerender = true;
-
 export interface Props {
   events: TourEvent[];
 }
-
-const { events } = Astro.props;
-
 import { getPlayers } from '../utils/getPlayers';
 import buildLeaderboardItems from '../utils/buildLeaderboardItems';
+import FinesSummary from './Leaderboard/FinesSummary.astro';
+import LeaderboardCard from './Leaderboard/LeaderboardCard.astro';
+const { events } = Astro.props;
 
-const sortings: SortingType[] = ['rank', 'kr'];
+const sorting = (Astro.url.searchParams.get('sorting') || 'rank') as SortingType;
 
 const playersData = await getPlayers();
 
 const scoringSessions = events.flatMap((event) => event.event_sessions.flatMap((es) => es.session));
 const leaderboardItems = buildLeaderboardItems(scoringSessions, playersData.data as Player[]);
-const sorting = sortings[0];
-const sortedPlayers = leaderboardItems[sorting].filter(
-  (item) => item.events.length !== 0
+
+const sortedPlayers = leaderboardItems[sorting as SortingType].filter(
+  (item) => item.events !== 0
 ) as LeaderboardItem[];
 ---
 
-<div class="list__body">
-  <div class="tabs">
-    <input type="radio" id="points" name="tabs" checked />
-    <label class="tab" for="points">Poäng</label>
-    <input type="radio" id="fines" name="tabs" />
-    <label class="tab" for="fines">Böter</label>
-    <span class="glider"></span>
-  </div>
-  <table class="list__table">
-    {
-      sortedPlayers.map((item) => (
-        <tr class="list__row">
-          <td class="list__cell">{item.rank}</td>
-          <td class="list__cell">
-            <div class="list__value">
-              <img
-                width="30"
-                height="30"
-                src={
-                  item.player?.avatar_url ||
-                  `https://api.dicebear.com/5.x/avataaars-neutral/svg?seed=${item.player?.id}_${item.player.full_name}`
-                }
-                alt="Avatar"
-              />
-              <strong>{item.player?.full_name || 'N/A'}</strong>
-            </div>
-            <div class="list__meta">
-              <span>
-                {item.events} rund{item.events === 1 ? 'a' : 'or'}
-              </span>
-              {item.beers > 0 && <span>🍻 {item.beers} öl</span>}
-              <span> {item.fines} kr</span>
-            </div>
-          </td>
-          <td class="list__cell">
-            <div class="list__value">
-              <span>
-                <strong class="list__total">{item.points}</strong>p
-              </span>
-            </div>
-            <div class="list__meta">
-              <span>Snitt: {item.average}p</span>
-              <span>{item.events} rundor</span>
-              <span>Topp 4: {item.points_array.join(',')}</span>
-              {item.special_array.length > 0 && (
-                <span>Special: {item.special_array.join(',')}</span>
-              )}
-            </div>
-          </td>
-        </tr>
-      ))
-    }
-  </table>
+<div>
+  <a href="?sorting=rank" class={sorting === 'rank' ? 'active interactive' : 'interactive'}>
+    <button>Poäng</button>
+  </a>
+  <a href="?sorting=kr" class={sorting === 'kr' ? 'active interactive' : 'interactive'}>
+    <button>Böter</button>
+  </a>
 </div>
+<table>
+  {sortedPlayers.map((item) => (
+    <LeaderboardCard item={item} sorting={sorting} />
+  ))}
+</table>
+
+{sorting === 'kr' && <FinesSummary players={sortedPlayers} />}

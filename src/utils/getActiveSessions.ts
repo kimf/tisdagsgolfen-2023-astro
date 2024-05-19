@@ -22,7 +22,7 @@ export function useGetActiveSessions() {
   return useQuery(
     {
       queryKey: ['sessions', { minimal: true }],
-      queryFn: () => delayPromise(getActiveSessions(), 500),
+      queryFn: () => delayPromise(getActiveSessions(), 250),
     },
     queryClient
   );
