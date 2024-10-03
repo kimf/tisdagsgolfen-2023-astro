@@ -1,8 +1,8 @@
 import { defineConfig } from 'astro/config';
-import vercel from '@astrojs/vercel/serverless';
 import { loadEnv } from 'vite';
 import supabase from 'astro-supabase';
 import react from '@astrojs/react';
+import node from '@astrojs/node';
 
 // https://astro.build/config
 import playformCompress from '@playform/compress';
@@ -21,10 +21,10 @@ export default defineConfig({
     }),
   ],
   output: 'server',
-  adapter: vercel({
-    analytics: true,
-  }),
   image: {
     domains: [],
   },
+  adapter: node({
+    mode: 'standalone',
+  }),
 });

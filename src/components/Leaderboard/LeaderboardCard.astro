@@ -20,8 +20,8 @@ if (sorting === 'kr') {
   subSummaryString += ` | ${item.beers} öl`;
   subSummaryString += ` | ${item.ciders} cider`;
 } else {
-  pointValue = parseFloat(`${item.points}`).toFixed(1);
-  pointText = 'p';
+  pointValue = parseFloat(`${item.points}`).toFixed(0);
+  pointText = '';
   const emptyPoints =
     item.points_array.length < 4 ? [...Array(4 - item.points_array.length)].map((_) => 0) : [];
   const emptySpecialPoints =
@@ -44,15 +44,16 @@ if (sorting === 'kr') {
           seed={`${item.player?.id}_${item.player.full_name}`}
           size="smallmedium"
         /> -->
-        <strong style={{fontSize: '1.2rem'}}>{item.player?.full_name || 'N/A'}</strong>
+        <strong style={{ fontSize: '1.2rem' }}>{item.player?.full_name || 'N/A'}</strong>
       </div>
-      <div style={{fontSize: '0.8rem'}}>
-        {summaryString} {subSummaryString}
+      <div style={{ fontSize: '0.8rem' }}>
+        {summaryString}
+        {subSummaryString}
       </div>
     </div>
   </td>
   <td>
-    <strong style={{fontSize: '24px'}}>{pointValue}</strong>
+    <strong style={{ fontSize: '24px' }}>{pointValue}</strong>
     <span>{pointText}</span>
   </td>
 </tr>

@@ -14,13 +14,12 @@
 //     - send push to mobile app
 //     - would be nice to be able to post to messenger as well
 
-import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(process.env.SUPABASE_URL || '', process.env.SUPABASE_KEY || '');
 const deployUrl = process.env.VERCEL_DEPLOY_URL || '';
 
-export default async function handler(request: VercelRequest, response: VercelResponse) {
+export default async function handler(request: any, response: any) {
   const sessions = await supabase
     .from('sessions')
     .select(
