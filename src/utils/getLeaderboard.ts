@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import supabase from './supabase';
 
 export async function getLeaderboard(
@@ -28,21 +27,4 @@ export async function getLeaderboard(
     .order('id', { referencedTable: 'scorecards', ascending: false })
     .order('full_name', { referencedTable: 'scorecards.players.player', ascending: false })
     .neq('state', 'CLOSED');
-}
-
-export default function useGetLeaderboard(
-  courseId: number,
-  special: boolean,
-  teamEvent: boolean,
-  strokes: boolean,
-  partOfFinal: boolean,
-  enabled = true
-) {
-  return useQuery({
-    queryKey: ['leaderboard', courseId, special, teamEvent, strokes, partOfFinal],
-    queryFn: () => getLeaderboard(courseId, special, teamEvent, strokes, partOfFinal),
-    enabled,
-    staleTime: 0,
-    gcTime: 0,
-  });
 }

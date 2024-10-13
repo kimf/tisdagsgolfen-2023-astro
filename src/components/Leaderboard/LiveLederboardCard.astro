@@ -14,22 +14,12 @@ const { scorecard, specialEvent } = Astro.props;
 const hasRank = (scorecard as ScorecardWithRank).rank !== undefined;
 ---
 
-<div
-  style={{
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: '4px',
-    backgroundColor: '#eee',
-    borderTop: '1px solid #ccc',
-    paddingLeft: '2px',
-    paddingRight: '2px',
-  }}>
+<div>
   {hasRank && <span>{(scorecard as ScorecardWithRank).rank}</span>}
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+  <div>
     {
       scorecard.players.map((p) => (
-        <div style={{ flexDirection: 'row' }}>
+        <div>
           <Name name={p.player.full_name || ''} firstNameOnly />
           <Beers beers={p.beers || 0} />
           <Ciders ciders={p.ciders || 0} />
@@ -37,14 +27,7 @@ const hasRank = (scorecard as ScorecardWithRank).rank !== undefined;
       ))
     }
   </div>
-  <div
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      marginLeft: 'auto',
-      justifyContent: 'space-between',
-      gap: '12px',
-    }}>
+  <div>
     <span>{scorecard.strokes}</span>
     <span>{scorecard.points}</span>
     <span>{scorecard.through}</span>

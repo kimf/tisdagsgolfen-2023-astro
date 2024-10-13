@@ -10,30 +10,25 @@
     "lint": "prettier -w ."
   },
   "dependencies": {
-    "@astrojs/node": "^8.3.4",
-    "@astrojs/react": "^3.6.2",
-    "@astrojs/ts-plugin": "^1.10.2",
-    "@playform/compress": "^0.0.4",
-    "@supabase/supabase-js": "^2.43.2",
-    "@tanstack/query-sync-storage-persister": "^5.36.1",
-    "@tanstack/react-query": "^5.36.2",
-    "@tanstack/react-query-devtools": "^5.37.1",
-    "@tanstack/react-query-persist-client": "^5.36.2",
-    "astro": "^4.15.11",
+    "@astrojs/node": "^9.0.0-beta.2",
+    "@playform/compress": "^0.1.4",
+    "@supabase/supabase-js": "^2.45.4",
+    "astro": "^5.0.0-beta.4",
+    "astro-capo": "^0.0.1",
+    "astro-font": "^0.1.81",
+    "astro-page-insight": "^0.8.7",
     "astro-supabase": "^0.0.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "astro-webmanifest": "^1.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.2",
-    "@types/react-dom": "^18.3.0",
-    "prettier": "^2.8.4",
-    "prettier-plugin-astro": "^0.8.0",
-    "sass": "^1.58.3",
-    "supabase": "^1.167.4",
-    "typescript": "^5.6.2"
+    "@astrojs/ts-plugin": "^1.10.2",
+    "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "sass": "^1.79.5",
+    "supabase": "^1.204.3",
+    "typescript": "^5.6.3"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.9.5"
+    "@rollup/rollup-linux-x64-gnu": "4.24.0"
   }
 }

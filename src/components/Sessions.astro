@@ -14,28 +14,19 @@ const hasFinishedSession = ownedScoringSession && ownedScoringSession.state === 
 const scoringSession = ownedScoringSession || (sessions && sessions.data ? sessions.data[0] : null);
 ---
 
-<div
-  style={{
-    width: '100%',
-    backgroundColor: scoringSession ? '#feb' : '#e2e5e7',
-    padding: '12px',
-  }}>
+<div>
+  <h5>AKTIV RUNDA</h5>
   {
     scoringSession && (
-      <>
-        <h5 style={{ margin: 0, marginbottom: 4 }}>AKTIV RUNDA</h5>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          {scoringSession.course?.name.toUpperCase()}
+      <div>
+        {scoringSession.course?.name.toUpperCase()}
 
-          <div style={{ marginLeft: 'auto', flexDirection: 'row', display: 'flex', gap: '12px' }}>
-            <a href={`/leaderboard/${scoringSession.id}`}>
-              <div style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                LEDARTAVLA
-              </div>
-            </a>
-          </div>
+        <div>
+          <a href={`/leaderboard/${scoringSession.id}`}>
+            <div>LEDARTAVLA</div>
+          </a>
         </div>
-      </>
+      </div>
     )
   }
 </div>

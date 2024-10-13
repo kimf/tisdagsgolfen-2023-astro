@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import EventCard from '../../components/Events/EventCard.astro';
 import Layout from '../../layouts/Layout.astro';
 import { getEvents } from '../../utils/getEvents';
@@ -11,7 +9,6 @@ const seasonYear = (Astro.url.searchParams.get('season') || '2024') as SeasonYea
 const season = await getSeason(seasonYear);
 const eventsData = await getEvents(season?.data?.id || 0);
 const events = eventsData?.data as TourEvent[];
-
 ---
 
 <Layout title="HISTORIK - Tisdagsgolfen">
@@ -20,8 +17,6 @@ const events = eventsData?.data as TourEvent[];
   </header>
   <main>
     <h2>RUNDOR</h2>
-    {events.map((event) => (
-      <EventCard event={event} />
-    ))}
+    {events.map((event) => <EventCard event={event} />)}
   </main>
 </Layout>

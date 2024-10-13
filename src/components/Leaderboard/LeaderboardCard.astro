@@ -37,23 +37,23 @@ if (sorting === 'kr') {
 <tr>
   <td>{item.rank}</td>
   <td>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+    <div>
       <div>
         <!-- <Avatar
           uri={item.player?.avatar_url}
           seed={`${item.player?.id}_${item.player.full_name}`}
           size="smallmedium"
         /> -->
-        <strong style={{ fontSize: '1.2rem' }}>{item.player?.full_name || 'N/A'}</strong>
+        <strong>{item.player?.full_name || 'N/A'}</strong>
       </div>
-      <div style={{ fontSize: '0.8rem' }}>
+      <div>
         {summaryString}
         {subSummaryString}
       </div>
     </div>
   </td>
   <td>
-    <strong style={{ fontSize: '24px' }}>{pointValue}</strong>
+    <strong>{pointValue}</strong>
     <span>{pointText}</span>
   </td>
 </tr>

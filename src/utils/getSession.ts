@@ -1,4 +1,3 @@
-import { queryOptions, useQuery } from '@tanstack/react-query';
 import supabase from './supabase';
 
 export async function getSession(id: number) {
@@ -19,16 +18,4 @@ export async function getSession(id: number) {
     .order('id', { referencedTable: 'scorecards', ascending: false })
     .order('full_name', { referencedTable: 'scorecards.players.player', ascending: false })
     .single();
-}
-
-export function sessionQuery(sessionId: number, options?: object) {
-  return queryOptions({
-    queryKey: ['sessions', sessionId],
-    queryFn: () => getSession(sessionId),
-    ...options,
-  });
-}
-
-export default function useGetSession(sessionId: number, options?: object) {
-  return useQuery(sessionQuery(sessionId, options));
 }

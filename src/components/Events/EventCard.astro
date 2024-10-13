@@ -7,21 +7,21 @@ export interface Props {
   event: TourEvent;
 }
 
-const { event } = Astro.props;
+const { event } = Astro.props;
 
 const date = new Date(event.created_at as string).toLocaleDateString('sv-SE', {
-    month: 'short',
-    day: 'numeric',
-  });
-
-  console.log(date);
-
+  month: 'short',
+  day: 'numeric',
+});
 ---
 
 <a href={`/events/${event.id}`}>
-  <Row
-    <h4>{date}</h4>
-    <EventPillRow special={event.special} teamEvent={event.team_event} strokes={event.strokes} small />
-  </Row>
-  <CourseRow course={event.course} />
+  <Row <h4>{date}</Row>
+  <EventPillRow
+    special={event.special}
+    teamEvent={event.team_event}
+    strokes={event.strokes}
+    small
+  />
 </a>
+<CourseRow course={event.course} />

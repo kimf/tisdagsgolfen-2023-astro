@@ -6,16 +6,16 @@ import { getEvents } from '../utils/getEvents';
 import { getSeason } from '../utils/getSeason';
 import Sessions from '../components/Sessions.astro';
 
-const seasonYear = (Astro.url.searchParams.get('season') || '2024') as SeasonYear;
+const seasonYear = (Astro.url.searchParams.get('season') || '2025') as SeasonYear;
 
 const season = await getSeason(seasonYear);
 const eventsData = await getEvents(season?.data?.id || 0);
 const events = eventsData?.data as TourEvent[];
 
-let userId: string | null = null;
-if (Astro.cookies.has('sb-user-id')) {
-  userId = Astro.cookies.get('sb-user-id')?.value || null;
-}
+// let userId: string | null = null;
+// if (Astro.cookies.has('sb-user-id')) {
+//   userId = Astro.cookies.get('sb-user-id')?.value || null;
+// }
 
 const seasonState = season.data?.state;
 ---
@@ -35,15 +35,14 @@ const seasonState = season.data?.state;
   </header>
 
   {
-    seasonState === 'FINAL' ||
-      (seasonState === 'CLOSED' && (
-        <a href="/finalleaderboard">
-          <button>LEDARTAVLA FINAL</button>
-        </a>
-      ))
+    seasonState === 'FINAL' && (
+      <a href="/finalleaderboard">
+        <button>LEDARTAVLA FINAL</button>
+      </a>
+    )
   }
 
-  <Sessions />
+  <Sessions server:defer />
 
   <main>
     <h2>Ledartavla efter {events.length} veckor</h2>

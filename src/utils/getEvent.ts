@@ -1,4 +1,3 @@
-import { queryOptions, useQuery } from '@tanstack/react-query';
 import supabase from './supabase';
 
 export async function getEvent(eventId: number) {
@@ -22,15 +21,4 @@ export async function getEvent(eventId: number) {
     .eq('id', eventId)
     .throwOnError()
     .single();
-}
-
-export function eventQuery(eventId: number) {
-  return queryOptions({
-    queryKey: ['event', eventId],
-    queryFn: () => getEvent(eventId),
-  });
-}
-
-export default function useGetEvent(eventId: number) {
-  return useQuery(eventQuery(eventId));
 }

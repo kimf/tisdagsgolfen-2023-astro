@@ -1,4 +1,3 @@
-import { queryOptions, useQuery } from '@tanstack/react-query';
 import supabase from './supabase';
 
 export async function getEvents(seasonId: number) {
@@ -22,15 +21,4 @@ export async function getEvents(seasonId: number) {
     .eq('season_id', seasonId)
     .order('created_at', { ascending: false })
     .throwOnError();
-}
-
-export function eventsQuery(seasonId: number) {
-  return queryOptions({
-    queryKey: ['events', seasonId],
-    queryFn: () => getEvents(seasonId),
-  });
-}
-
-export default function useGetEvents(seasonId: number) {
-  return useQuery(eventsQuery(seasonId));
 }

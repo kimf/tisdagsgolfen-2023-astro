@@ -10,7 +10,7 @@ const { course } = Astro.props;
 
 <Row>
   <strong>{course.name.toUpperCase()}</strong>
-  <div style={{ display: 'flex', flexDirection: 'row', gap: '8px', marginLeft: 'auto' }}>
+  <div>
     <span>PAR {course.par}</span>
     <span>{course.holes_count} HÅL</span>
   </div>

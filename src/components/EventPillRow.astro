@@ -13,11 +13,11 @@ export interface Props {
 const { live, special, teamEvent, strokes, noMargin = false, small = false } = Astro.props;
 ---
 
-<div style={{ flexDirection: 'row', gap: small ? '6px' : '8px', marginTop: noMargin ? 0 : '12px' }}>
+<div>
   {live && <Pill text="LIVE" backgroundColor="red" color="white" />}
   {
     special && (
-      <div style={{ flexDirection: 'row', gap: small ? '6px' : '8px', opacity: 0.8 }}>
+      <div>
         <Pill text="SPECIAL" backgroundColor="blue" />
         {teamEvent && <Pill text="LAG" backgroundColor="purple" />}
       </div>

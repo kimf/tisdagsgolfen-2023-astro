@@ -9,14 +9,6 @@ const { to_par, color } = Astro.props;
 const textColor = color || '#000';
 ---
 
-<span
-  style={{
-    color: to_par === 0 ? textColor : to_par > 0 ? textColor : 'red',
-    height: 'auto',
-    fontSize: '20px',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    width: 'auto',
-  }}>
+<span>
   {to_par === 0 ? 'E' : to_par > 0 ? `+${to_par}` : to_par}
 </span>

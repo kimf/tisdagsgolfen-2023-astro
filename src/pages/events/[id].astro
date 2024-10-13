@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import CourseRow from '../../components/CourseRow.astro';
 import EventPillRow from '../../components/EventPillRow.astro';
 import Row from '../../components/Row.astro';
@@ -14,14 +12,11 @@ import { getEvents } from '../../utils/getEvents';
 import { getSeason } from '../../utils/getSeason';
 import standardCompRank from '../../utils/standardCompetitionRanking';
 
-
-
 export async function getStaticPaths() {
   const season = await getSeason('2024');
   const events = await getEvents(season.data!.id as number);
-  return events.data?.map((event) => ({params: { id: `${event.id}` } }));
+  return events.data?.map((event) => ({ params: { id: `${event.id}` } }));
 }
-
 
 const { id } = Astro.params;
 const eventId = parseInt(`${id}`, 10);
@@ -61,24 +56,8 @@ const rankedScorecards: ScorecardWithRank[] = standardCompRank(scorecards, 'week
   </Row>
   <CourseRow course={event.course as Course} />
 
-  <div
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingTop: '12px',
-      paddingRight: '2px',
-    }}>
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        marginLeft: 'auto',
-        paddingBottom: '12px',
-        gap: '12px',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}>
+  <div>
+    <div>
       <span>SLAG</span>
       <span>POÄNG</span>
       <span>+/-</span>
@@ -87,49 +66,30 @@ const rankedScorecards: ScorecardWithRank[] = standardCompRank(scorecards, 'week
     </div>
   </div>
 
+  {
+    rankedScorecards.map((scorecard) => (
+      <div>
+        <div>
+          {scorecard.players.map((p) => (
+            <div>
+              <Name name={p.player.full_name || ''} firstNameOnly />
+              <Beers beers={p.beers || 0} />
+              <Ciders ciders={p.ciders || 0} />
+            </div>
+          ))}
+        </div>
+        <div>
+          <span>{scorecard.strokes}</span>
+          <span>{scorecard.points}</span>
 
-  {rankedScorecards.map((scorecard) => (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: '4px',
-        backgroundColor: '#eee',
-        borderTop: '1px solid #ccc',
-        paddingLeft: '2px',
-        paddingRight: '2px',
-      }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-        {scorecard.players.map((p) => (
-          <div style={{ flexDirection: 'row' }}>
-            <Name name={p.player.full_name || ""} firstNameOnly />
-            <Beers beers={p.beers || 0} />
-            <Ciders ciders={p.ciders || 0} />
-          </div>
-        ))}
+          <ToPar to_par={scorecard.to_par || 0} />
+
+          {!event.team_event && !event.special && (
+            <span>{scorecard.players.reduce((a, b) => a + (b.fines || 0), 0)}</span>
+          )}
+          <strong>{scorecard.week_points?.toFixed(1)}</strong>
+        </div>
       </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          marginLeft: 'auto',
-          justifyContent: 'space-between',
-          gap: '12px',
-        }}>
-        <span>{scorecard.strokes}</span>
-        <span>{scorecard.points}</span>
-
-        <ToPar to_par={scorecard.to_par || 0} />
-
-        {!event.team_event && !event.special && (
-          <span>
-            {scorecard.players.reduce((a, b) => a + (b.fines || 0), 0)}
-          </span>
-        )}
-        <strong>{scorecard.week_points?.toFixed(1)}</strong>
-      </div>
-    </div>
-  ))}
-
+    ))
+  }
 </main>
