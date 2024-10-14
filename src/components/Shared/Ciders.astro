@@ -1,9 +1,0 @@
----
-export interface Props {
-  ciders: number;
-}
-
-const { ciders } = Astro.props;
----
-
-{ciders > 0 && <div style="font-size: 0.8em;">{ciders > 1 ? `${ciders} x 🥤` : '🥤'}</div>}

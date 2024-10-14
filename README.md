@@ -1,20 +1,9 @@
 # Tisdagsgolfen Leaderboard static Astro website
 
 ```
-## 🚀 More info about setup here...
+## 🚀 WIP
 ```
 
-### TODO
-
-- [ ] Close the week API route "from leaderboard?"
-- [ ] Make it pretty
-- [ ] Lägg till spelformer på "Specialvecka"... ()
-
----
-
-#### Very low prio TODO
-
-- [ ] If live leaderboard is final, show today vs total
-- [ ] Final leaderboard (use 2023 for testing)
-- [ ] Byta profilbild
-- [ ] Statistik och andra features du tänkte lägga till i mobilappen
+Previous years have been rendered and put in the folders under pages.
+There are some assets etc under the public folder as well.
+the "\_astro" folder is needed for the pages we build with Astro and moved from dist to pages.
