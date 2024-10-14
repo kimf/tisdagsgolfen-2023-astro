@@ -18,21 +18,21 @@ export default defineConfig({
       display_override: ['standalone'],
       theme_color: '#008080',
       background_color: '#C7E0D9',
-      orientation: 'portrait-primary',
-    }),
+      orientation: 'portrait-primary'
+    })
   ],
   output: 'static',
   image: {
-    domains: [],
+    domains: []
   },
   adapter: node({
-    mode: 'standalone',
+    mode: 'standalone'
   }),
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: 'load',
+    defaultStrategy: 'load'
   },
   experimental: {
-    clientPrerender: true,
-  },
+    clientPrerender: true
+  }
 });

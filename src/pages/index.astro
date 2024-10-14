@@ -1,9 +1,14 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import { db } from "../db";
+import Layout from "../layouts/Layout.astro";
+
+const seasons = await db.query.seasons.findMany();
 ---
 
 <Layout title="Tisdagsgolfen">
-  <h1>Tisdagsgolfen</h1>
+  <h1>
+    Tisdagsgolfen {seasons && seasons.length > 0 ? seasons[0]?.name : "NO DATA"}
+  </h1>
   <main id="main">
     <h2>Jobbar på't!</h2>
   </main>
