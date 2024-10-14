@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed:200,300,400,500,700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed:200,300,400,500,700&display=swap');
 /* line 1, app/assets/stylesheets/_tables.scss */
 .table {
   border: 0;
@@ -321,7 +321,7 @@ input {
 
 /* line 79, app/assets/stylesheets/_forms.scss */
 .switcher .field:first-child:after {
-  content: "eller";
+  content: 'eller';
   position: absolute;
   top: 20px;
   right: -20px;
@@ -343,7 +343,7 @@ input {
 
 /* line 100, app/assets/stylesheets/_forms.scss */
 .switcher:before {
-  content: "";
+  content: '';
   position: absolute;
   z-index: -1;
   width: calc(100% / 2);
@@ -425,7 +425,7 @@ input {
 
 /* line 167, app/assets/stylesheets/_forms.scss */
 .plusminus button:first-child:before {
-  content: "-";
+  content: '-';
 }
 
 /* line 171, app/assets/stylesheets/_forms.scss */
@@ -436,7 +436,7 @@ input {
 
 /* line 174, app/assets/stylesheets/_forms.scss */
 .plusminus button:last-child:before {
-  content: "+";
+  content: '+';
 }
 
 /* line 177, app/assets/stylesheets/_forms.scss */
@@ -445,7 +445,7 @@ input {
 }
 
 /* line 182, app/assets/stylesheets/_forms.scss */
-.plusminus input[type="number"] {
+.plusminus input[type='number'] {
   left: 38px;
   position: absolute;
   width: 60px;
@@ -514,7 +514,7 @@ body {
   -webkit-touch-callout: none;
   margin: 0;
   padding: 0;
-  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
   color: #222;
   font-size: 16px;
   line-height: 1.5;
@@ -611,7 +611,7 @@ ul.menu .danger a {
 /* line 112, app/assets/stylesheets/application.scss */
 button,
 .btn,
-input[type="submit"] {
+input[type='submit'] {
   padding: 4px 8px;
   background: #ccc;
   border: 1px solid #777;
@@ -669,7 +669,7 @@ a.btn {
 
 /* line 163, app/assets/stylesheets/application.scss */
 .bottom-btn,
-input.bottom-btn[type="submit"] {
+input.bottom-btn[type='submit'] {
   -webkit-appearance: none;
   background: green;
   border-radius: 0;
@@ -692,7 +692,7 @@ input.bottom-btn[type="submit"] {
 
 /* line 184, app/assets/stylesheets/application.scss */
 .bottom-btn.disabled,
-input.bottom-btn.disabled[type="submit"] {
+input.bottom-btn.disabled[type='submit'] {
   background: #ccc;
 }
 
@@ -887,7 +887,7 @@ input.bottom-btn.disabled[type="submit"] {
 
 /* line 344, app/assets/stylesheets/application.scss */
 .leaderboard_toggle:before {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 0;
   width: calc(100% / 3);

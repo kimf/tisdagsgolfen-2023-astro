@@ -40,7 +40,7 @@ seasons.each_with_index do |id, index|
   # # Final leaderboard
   # # 2020,2021,2022 = /2022/final.html
   if id == "2022" or id == "2021" or id == "2020"
-    File.open("./src/pages/#{id}/final.html","w") do |f|
+    File.open("./src/pages/#{id}/final","w") do |f|
       leaderboard_body = URI.open("#{site_url}/scoring_sessions/final_#{id}/leaderboard").read
       f << leaderboard_body
     end
