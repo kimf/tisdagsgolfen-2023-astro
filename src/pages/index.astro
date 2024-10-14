@@ -6,7 +6,9 @@ const seasons = await db.query.seasons.findMany();
 ---
 
 <Layout title="Tisdagsgolfen">
-  <h1>Tisdagsgolfen {seasons[0].name}</h1>
+  <h1>
+    Tisdagsgolfen {seasons && seasons.length > 0 ? seasons[0]?.name : "NO DATA"}
+  </h1>
   <main id="main">
     <h2>Jobbar på't!</h2>
   </main>
