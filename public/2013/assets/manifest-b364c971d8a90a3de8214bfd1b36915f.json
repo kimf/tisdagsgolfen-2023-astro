@@ -1,1 +1,62 @@
-{"files":{"facebook_logo-2a2462a1d74b92099f76d6d5d91b4ab6.png":{"logical_path":"facebook_logo.png","mtime":"2014-10-13T16:24:56-04:00","size":17705,"digest":"2a2462a1d74b92099f76d6d5d91b4ab6"},"header-9260db59ad27c478c2a2555d74c2c201.png":{"logical_path":"header.png","mtime":"2014-10-13T16:24:56-04:00","size":28670,"digest":"9260db59ad27c478c2a2555d74c2c201"},"icon-bullseye-8f1fa155dfc9aa4fe1c5f5791b5ad60a.png":{"logical_path":"icon-bullseye.png","mtime":"2014-10-13T16:24:56-04:00","size":895,"digest":"8f1fa155dfc9aa4fe1c5f5791b5ad60a"},"icon-gir-green-ad0cb865d399465a4754530d3bc7a0e7.png":{"logical_path":"icon-gir-green.png","mtime":"2014-10-13T16:24:56-04:00","size":897,"digest":"ad0cb865d399465a4754530d3bc7a0e7"},"icon-nongir-3c337fadcca393cb7f798763d37001a0.png":{"logical_path":"icon-nongir.png","mtime":"2014-10-13T16:24:56-04:00","size":878,"digest":"3c337fadcca393cb7f798763d37001a0"},"logo-403d184e7122696798951b87ea6b4e9e.png":{"logical_path":"logo.png","mtime":"2014-10-13T16:24:56-04:00","size":12305,"digest":"403d184e7122696798951b87ea6b4e9e"},"application-714b3432f8acbb7e236c5dab7b043e94.js":{"logical_path":"application.js","mtime":"2016-01-22T08:03:29-05:00","size":126111,"digest":"714b3432f8acbb7e236c5dab7b043e94"},"application-add2d7e7c2775fab2f966a1e7ae3b454.css":{"logical_path":"application.css","mtime":"2016-01-22T08:37:20-05:00","size":92612,"digest":"add2d7e7c2775fab2f966a1e7ae3b454"}},"assets":{"facebook_logo.png":"facebook_logo-2a2462a1d74b92099f76d6d5d91b4ab6.png","header.png":"header-9260db59ad27c478c2a2555d74c2c201.png","icon-bullseye.png":"icon-bullseye-8f1fa155dfc9aa4fe1c5f5791b5ad60a.png","icon-gir-green.png":"icon-gir-green-ad0cb865d399465a4754530d3bc7a0e7.png","icon-nongir.png":"icon-nongir-3c337fadcca393cb7f798763d37001a0.png","logo.png":"logo-403d184e7122696798951b87ea6b4e9e.png","application.js":"application-714b3432f8acbb7e236c5dab7b043e94.js","application.css":"application-add2d7e7c2775fab2f966a1e7ae3b454.css"}}
+{
+  "files": {
+    "facebook_logo-2a2462a1d74b92099f76d6d5d91b4ab6.png": {
+      "logical_path": "facebook_logo.png",
+      "mtime": "2014-10-13T16:24:56-04:00",
+      "size": 17705,
+      "digest": "2a2462a1d74b92099f76d6d5d91b4ab6"
+    },
+    "header-9260db59ad27c478c2a2555d74c2c201.png": {
+      "logical_path": "header.png",
+      "mtime": "2014-10-13T16:24:56-04:00",
+      "size": 28670,
+      "digest": "9260db59ad27c478c2a2555d74c2c201"
+    },
+    "icon-bullseye-8f1fa155dfc9aa4fe1c5f5791b5ad60a.png": {
+      "logical_path": "icon-bullseye.png",
+      "mtime": "2014-10-13T16:24:56-04:00",
+      "size": 895,
+      "digest": "8f1fa155dfc9aa4fe1c5f5791b5ad60a"
+    },
+    "icon-gir-green-ad0cb865d399465a4754530d3bc7a0e7.png": {
+      "logical_path": "icon-gir-green.png",
+      "mtime": "2014-10-13T16:24:56-04:00",
+      "size": 897,
+      "digest": "ad0cb865d399465a4754530d3bc7a0e7"
+    },
+    "icon-nongir-3c337fadcca393cb7f798763d37001a0.png": {
+      "logical_path": "icon-nongir.png",
+      "mtime": "2014-10-13T16:24:56-04:00",
+      "size": 878,
+      "digest": "3c337fadcca393cb7f798763d37001a0"
+    },
+    "logo-403d184e7122696798951b87ea6b4e9e.png": {
+      "logical_path": "logo.png",
+      "mtime": "2014-10-13T16:24:56-04:00",
+      "size": 12305,
+      "digest": "403d184e7122696798951b87ea6b4e9e"
+    },
+    "application-714b3432f8acbb7e236c5dab7b043e94.js": {
+      "logical_path": "application.js",
+      "mtime": "2016-01-22T08:03:29-05:00",
+      "size": 126111,
+      "digest": "714b3432f8acbb7e236c5dab7b043e94"
+    },
+    "application-add2d7e7c2775fab2f966a1e7ae3b454.css": {
+      "logical_path": "application.css",
+      "mtime": "2016-01-22T08:37:20-05:00",
+      "size": 92612,
+      "digest": "add2d7e7c2775fab2f966a1e7ae3b454"
+    }
+  },
+  "assets": {
+    "facebook_logo.png": "facebook_logo-2a2462a1d74b92099f76d6d5d91b4ab6.png",
+    "header.png": "header-9260db59ad27c478c2a2555d74c2c201.png",
+    "icon-bullseye.png": "icon-bullseye-8f1fa155dfc9aa4fe1c5f5791b5ad60a.png",
+    "icon-gir-green.png": "icon-gir-green-ad0cb865d399465a4754530d3bc7a0e7.png",
+    "icon-nongir.png": "icon-nongir-3c337fadcca393cb7f798763d37001a0.png",
+    "logo.png": "logo-403d184e7122696798951b87ea6b4e9e.png",
+    "application.js": "application-714b3432f8acbb7e236c5dab7b043e94.js",
+    "application.css": "application-add2d7e7c2775fab2f966a1e7ae3b454.css"
+  }
+}

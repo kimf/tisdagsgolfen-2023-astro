@@ -1,795 +1,852 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-<meta charset='utf-8'>
-<meta content='width=device-width, initial-scale=1.0' name='viewport'>
-<link href='/2012/assets/logo.png' rel='apple-touch-icon'>
-<meta content='yes' name='apple-mobile-web-app-capable'>
-<title>Golftour</title>
-<meta content="authenticity_token" name="csrf-param" />
-<link href="/2012/assets/application-c0ac1a31f09ca109e81598fe1a7393d8.css" media="all" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<header class='container'>
-<h1><a href="/2012">Golftour</a></h1>
-</header>
-<section class='container'>
-<div class='page-header'>
-<h1>Leaderboard</h1>
-</div>
-<table cellpadding='0' cellspacing='0' class='leaderboard'>
-<thead>
-<tr>
-<th>Player</th>
-<th>PB</th>
-<th>Money</th>
-<th>Points</th>
-<th>Eclectic</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="/2012/players/1">Kim</a></td>
-<td>82</td>
-<td>814 kr</td>
-<td>833p</td>
-<td>--4</td>
-</tr>
-<tr>
-<td><a href="/2012/players/2">Bolle</a></td>
-<td>86</td>
-<td>-595 kr</td>
-<td>674p</td>
-<td>--1</td>
-</tr>
-<tr>
-<td><a href="/2012/players/3">Garp</a></td>
-<td>80</td>
-<td>-51 kr</td>
-<td>237p</td>
-<td>+2</td>
-</tr>
-</tbody>
-</table>
-<h3>Category Leaders</h3>
-<div class='row categories'>
-<!-- best score -->
-<div class='span2'>
-<h4>Best Score</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>82</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>91</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>92</span>
-</li>
-</ul>
-</div>
-<!-- strokes_over_par -->
-<div class='span2'>
-<h4>Score avg.</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>+21</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>+24</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>+30</span>
-</li>
-</ul>
-</div>
-<!-- highest_points and point avg -->
-<div class='span2'>
-<h4>Max point</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>42p</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>37p</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>31p</span>
-</li>
-</ul>
-</div>
-<div class='span2'>
-<h4>Point avg</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>32.0p</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>29.3p</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>27.9p</span>
-</li>
-</ul>
-</div>
-<!-- money_avg -->
-<div class='span2'>
-<h4>Money avg.</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>31 kr</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>-6 kr</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>-26 kr</span>
-</li>
-</ul>
-</div>
-<!-- putts avg. -->
-<div class='span2'>
-<h4>Putt avg.</h4>
-<ul>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>1.76</span>
-</li>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>1.86</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>1.92</span>
-</li>
-</ul>
-</div>
-</div>
-<h3>Performance</h3>
-<div class='row categories'>
-<div class='span4'>
-<h4>Girs</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>105</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 22%'></span>
-<span class='percentage'>22%</span>
-</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>71</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 17%'></span>
-<span class='percentage'>17%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>31</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 20%'></span>
-<span class='percentage'>20%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Scramblings</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>69</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 15%'></span>
-<span class='percentage'>15%</span>
-</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>34</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 8%'></span>
-<span class='percentage'>8%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>16</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 10%'></span>
-<span class='percentage'>10%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Picked ups</h4>
-<ul>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>23</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 6%'></span>
-<span class='percentage'>6%</span>
-</span>
-</li>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>12</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 3%'></span>
-<span class='percentage'>3%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>8</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 5%'></span>
-<span class='percentage'>5%</span>
-</span>
-</li>
-</ul>
-</div>
-</div>
-<h3>Putting</h3>
-<div class='row categories'>
-<div class='span4'>
-<h4>No-puts</h4>
-<ul>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>4</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 1%'></span>
-<span class='percentage'>1%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>2</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 1%'></span>
-<span class='percentage'>1%</span>
-</span>
-</li>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>0</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 0%'></span>
-<span class='percentage'>0%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>One-puts</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>125</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 27%'></span>
-<span class='percentage'>27%</span>
-</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>81</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 20%'></span>
-<span class='percentage'>20%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>33</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 22%'></span>
-<span class='percentage'>22%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Two-puts</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>263</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 56%'></span>
-<span class='percentage'>56%</span>
-</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>230</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 56%'></span>
-<span class='percentage'>56%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>93</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 61%'></span>
-<span class='percentage'>61%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Three-puts</h4>
-<ul>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>71</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 17%'></span>
-<span class='percentage'>17%</span>
-</span>
-</li>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>63</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 13%'></span>
-<span class='percentage'>13%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>17</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 11%'></span>
-<span class='percentage'>11%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Four-puts</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>5</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 1%'></span>
-<span class='percentage'>1%</span>
-</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>4</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 1%'></span>
-<span class='percentage'>1%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>0</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 0%'></span>
-<span class='percentage'>0%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Five-puts</h4>
-<ul>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>1</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 0%'></span>
-<span class='percentage'>0%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>0</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 0%'></span>
-<span class='percentage'>0%</span>
-</span>
-</li>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>0</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 0%'></span>
-<span class='percentage'>0%</span>
-</span>
-</li>
-</ul>
-</div>
-</div>
-<h3>Scoring</h3>
-<div class='row categories'>
-<div class='span4'>
-<h4>Eagles</h4>
-<ul>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>0</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 0%'></span>
-<span class='percentage'>0%</span>
-</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>0</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 0%'></span>
-<span class='percentage'>0%</span>
-</span>
-</li>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>0</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 0%'></span>
-<span class='percentage'>0%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Birdies</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>6</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 1%'></span>
-<span class='percentage'>1%</span>
-</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>3</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 1%'></span>
-<span class='percentage'>1%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>2</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 1%'></span>
-<span class='percentage'>1%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Pars</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>140</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 30%'></span>
-<span class='percentage'>30%</span>
-</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>78</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 19%'></span>
-<span class='percentage'>19%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>39</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 25%'></span>
-<span class='percentage'>25%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Bogeys</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>165</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 35%'></span>
-<span class='percentage'>35%</span>
-</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>141</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 34%'></span>
-<span class='percentage'>34%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>55</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 36%'></span>
-<span class='percentage'>36%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Doubles</h4>
-<ul>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>104</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 22%'></span>
-<span class='percentage'>22%</span>
-</span>
-</li>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>99</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 24%'></span>
-<span class='percentage'>24%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>37</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 24%'></span>
-<span class='percentage'>24%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Triples</h4>
-<ul>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>53</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 13%'></span>
-<span class='percentage'>13%</span>
-</span>
-</li>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>35</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 7%'></span>
-<span class='percentage'>7%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>10</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 7%'></span>
-<span class='percentage'>7%</span>
-</span>
-</li>
-</ul>
-</div>
-<div class='span4'>
-<h4>Quadruples</h4>
-<ul>
-<li>
-<span class='name'>Bolle</span>
-<span class='data'>
-<strong>17</strong>
- / 414
-</span>
-<span class='graph'>
-<span class='bar' style='width: 4%'></span>
-<span class='percentage'>4%</span>
-</span>
-</li>
-<li>
-<span class='name'>Kim</span>
-<span class='data'>
-<strong>6</strong>
- / 468
-</span>
-<span class='graph'>
-<span class='bar' style='width: 1%'></span>
-<span class='percentage'>1%</span>
-</span>
-</li>
-<li>
-<span class='name'>Garp</span>
-<span class='data'>
-<strong>2</strong>
- / 153
-</span>
-<span class='graph'>
-<span class='bar' style='width: 1%'></span>
-<span class='percentage'>1%</span>
-</span>
-</li>
-</ul>
-</div>
-</div>
-
-</section>
-<hr>
-<footer class='container'>
-<a href="/2012">Leaderboard</a>
-&bull;
-<a href="/2012/rounds">Rounds</a>
-</footer>
-<script>
-  /*! A fix for the iOS orientationchange zoom bug. Script by @scottjehl, rebound by @wilto.MIT License.*/
-  (function(m){if(!(/iPhone|iPad|iPod/.test(navigator.platform)&&navigator.userAgent.indexOf("AppleWebKit")>-1)){return}var l=m.document;if(!l.querySelector){return}var n=l.querySelector("meta[name=viewport]"),a=n&&n.getAttribute("content"),k=a+",maximum-scale=1",d=a+",maximum-scale=10",g=true,j,i,h,c;if(!n){return}function f(){n.setAttribute("content",d);g=true}function b(){n.setAttribute("content",k);g=false}function e(o){c=o.accelerationIncludingGravity;j=Math.abs(c.x);i=Math.abs(c.y);h=Math.abs(c.z);if(!m.orientation&&(j>7||((h>6&&i<8||h<8&&i>6)&&j>5))){if(g){b()}}else{if(!g){f()}}}m.addEventListener("orientationchange",f,false);m.addEventListener("devicemotion",e,false)})(this);
-</script>
-<script src="/2012/assets/application-bc40dbe14e1cbcc0989c7b8ec04012e5.js" type="text/javascript"></script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="/2012/assets/logo.png" rel="apple-touch-icon" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <title>Golftour</title>
+    <meta content="authenticity_token" name="csrf-param" />
+    <link
+      href="/2012/assets/application-c0ac1a31f09ca109e81598fe1a7393d8.css"
+      media="all"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <header class="container">
+      <h1><a href="/2012">Golftour</a></h1>
+    </header>
+    <section class="container">
+      <div class="page-header">
+        <h1>Leaderboard</h1>
+      </div>
+      <table cellpadding="0" cellspacing="0" class="leaderboard">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>PB</th>
+            <th>Money</th>
+            <th>Points</th>
+            <th>Eclectic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="/2012/players/1">Kim</a></td>
+            <td>82</td>
+            <td>814 kr</td>
+            <td>833p</td>
+            <td>--4</td>
+          </tr>
+          <tr>
+            <td><a href="/2012/players/2">Bolle</a></td>
+            <td>86</td>
+            <td>-595 kr</td>
+            <td>674p</td>
+            <td>--1</td>
+          </tr>
+          <tr>
+            <td><a href="/2012/players/3">Garp</a></td>
+            <td>80</td>
+            <td>-51 kr</td>
+            <td>237p</td>
+            <td>+2</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Category Leaders</h3>
+      <div class="row categories">
+        <!-- best score -->
+        <div class="span2">
+          <h4>Best Score</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">82</span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">91</span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">92</span>
+            </li>
+          </ul>
+        </div>
+        <!-- strokes_over_par -->
+        <div class="span2">
+          <h4>Score avg.</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">+21</span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">+24</span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">+30</span>
+            </li>
+          </ul>
+        </div>
+        <!-- highest_points and point avg -->
+        <div class="span2">
+          <h4>Max point</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">42p</span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">37p</span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">31p</span>
+            </li>
+          </ul>
+        </div>
+        <div class="span2">
+          <h4>Point avg</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">32.0p</span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">29.3p</span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">27.9p</span>
+            </li>
+          </ul>
+        </div>
+        <!-- money_avg -->
+        <div class="span2">
+          <h4>Money avg.</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">31 kr</span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">-6 kr</span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">-26 kr</span>
+            </li>
+          </ul>
+        </div>
+        <!-- putts avg. -->
+        <div class="span2">
+          <h4>Putt avg.</h4>
+          <ul>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">1.76</span>
+            </li>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">1.86</span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">1.92</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <h3>Performance</h3>
+      <div class="row categories">
+        <div class="span4">
+          <h4>Girs</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>105</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 22%"></span>
+                <span class="percentage">22%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>71</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 17%"></span>
+                <span class="percentage">17%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>31</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 20%"></span>
+                <span class="percentage">20%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Scramblings</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>69</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 15%"></span>
+                <span class="percentage">15%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>34</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 8%"></span>
+                <span class="percentage">8%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>16</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 10%"></span>
+                <span class="percentage">10%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Picked ups</h4>
+          <ul>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>23</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 6%"></span>
+                <span class="percentage">6%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>12</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 3%"></span>
+                <span class="percentage">3%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>8</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 5%"></span>
+                <span class="percentage">5%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <h3>Putting</h3>
+      <div class="row categories">
+        <div class="span4">
+          <h4>No-puts</h4>
+          <ul>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>4</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 1%"></span>
+                <span class="percentage">1%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>2</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 1%"></span>
+                <span class="percentage">1%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>0</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 0%"></span>
+                <span class="percentage">0%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>One-puts</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>125</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 27%"></span>
+                <span class="percentage">27%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>81</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 20%"></span>
+                <span class="percentage">20%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>33</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 22%"></span>
+                <span class="percentage">22%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Two-puts</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>263</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 56%"></span>
+                <span class="percentage">56%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>230</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 56%"></span>
+                <span class="percentage">56%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>93</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 61%"></span>
+                <span class="percentage">61%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Three-puts</h4>
+          <ul>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>71</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 17%"></span>
+                <span class="percentage">17%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>63</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 13%"></span>
+                <span class="percentage">13%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>17</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 11%"></span>
+                <span class="percentage">11%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Four-puts</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>5</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 1%"></span>
+                <span class="percentage">1%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>4</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 1%"></span>
+                <span class="percentage">1%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>0</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 0%"></span>
+                <span class="percentage">0%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Five-puts</h4>
+          <ul>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>1</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 0%"></span>
+                <span class="percentage">0%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>0</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 0%"></span>
+                <span class="percentage">0%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>0</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 0%"></span>
+                <span class="percentage">0%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <h3>Scoring</h3>
+      <div class="row categories">
+        <div class="span4">
+          <h4>Eagles</h4>
+          <ul>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>0</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 0%"></span>
+                <span class="percentage">0%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>0</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 0%"></span>
+                <span class="percentage">0%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>0</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 0%"></span>
+                <span class="percentage">0%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Birdies</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>6</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 1%"></span>
+                <span class="percentage">1%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>3</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 1%"></span>
+                <span class="percentage">1%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>2</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 1%"></span>
+                <span class="percentage">1%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Pars</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>140</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 30%"></span>
+                <span class="percentage">30%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>78</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 19%"></span>
+                <span class="percentage">19%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>39</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 25%"></span>
+                <span class="percentage">25%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Bogeys</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>165</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 35%"></span>
+                <span class="percentage">35%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>141</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 34%"></span>
+                <span class="percentage">34%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>55</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 36%"></span>
+                <span class="percentage">36%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Doubles</h4>
+          <ul>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>104</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 22%"></span>
+                <span class="percentage">22%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>99</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 24%"></span>
+                <span class="percentage">24%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>37</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 24%"></span>
+                <span class="percentage">24%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Triples</h4>
+          <ul>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>53</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 13%"></span>
+                <span class="percentage">13%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>35</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 7%"></span>
+                <span class="percentage">7%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>10</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 7%"></span>
+                <span class="percentage">7%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="span4">
+          <h4>Quadruples</h4>
+          <ul>
+            <li>
+              <span class="name">Bolle</span>
+              <span class="data">
+                <strong>17</strong>
+                / 414
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 4%"></span>
+                <span class="percentage">4%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Kim</span>
+              <span class="data">
+                <strong>6</strong>
+                / 468
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 1%"></span>
+                <span class="percentage">1%</span>
+              </span>
+            </li>
+            <li>
+              <span class="name">Garp</span>
+              <span class="data">
+                <strong>2</strong>
+                / 153
+              </span>
+              <span class="graph">
+                <span class="bar" style="width: 1%"></span>
+                <span class="percentage">1%</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <hr />
+    <footer class="container">
+      <a href="/2012">Leaderboard</a>
+      &bull;
+      <a href="/2012/rounds">Rounds</a>
+    </footer>
+    <script>
+      /*! A fix for the iOS orientationchange zoom bug. Script by @scottjehl, rebound by @wilto.MIT License.*/
+      (function (m) {
+        if (
+          !(
+            /iPhone|iPad|iPod/.test(navigator.platform) &&
+            navigator.userAgent.indexOf('AppleWebKit') > -1
+          )
+        ) {
+          return;
+        }
+        var l = m.document;
+        if (!l.querySelector) {
+          return;
+        }
+        var n = l.querySelector('meta[name=viewport]'),
+          a = n && n.getAttribute('content'),
+          k = a + ',maximum-scale=1',
+          d = a + ',maximum-scale=10',
+          g = true,
+          j,
+          i,
+          h,
+          c;
+        if (!n) {
+          return;
+        }
+        function f() {
+          n.setAttribute('content', d);
+          g = true;
+        }
+        function b() {
+          n.setAttribute('content', k);
+          g = false;
+        }
+        function e(o) {
+          c = o.accelerationIncludingGravity;
+          j = Math.abs(c.x);
+          i = Math.abs(c.y);
+          h = Math.abs(c.z);
+          if (!m.orientation && (j > 7 || (((h > 6 && i < 8) || (h < 8 && i > 6)) && j > 5))) {
+            if (g) {
+              b();
+            }
+          } else {
+            if (!g) {
+              f();
+            }
+          }
+        }
+        m.addEventListener('orientationchange', f, false);
+        m.addEventListener('devicemotion', e, false);
+      })(this);
+    </script>
+    <script
+      src="/2012/assets/application-bc40dbe14e1cbcc0989c7b8ec04012e5.js"
+      type="text/javascript"
+    ></script>
+  </body>
 </html>
