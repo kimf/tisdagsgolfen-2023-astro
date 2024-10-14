@@ -1,0 +1,16 @@
+---
+import SeasonEvent from '../../../components/2324/SeasonEvent.astro';
+
+import { getSeason } from '../../../utils/2324/getSeason';
+import { getEvents } from '../../../utils/2324/getEvents';
+
+
+export async function getStaticPaths() {
+  const season = await getSeason("2024");
+  const events = await getEvents(season.data!.id as number);
+  return events.data?.map((event) => ({ params: { id: `${event.id}` } }));
+}
+
+---
+
+<SeasonEvent year='2024' />

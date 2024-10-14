@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/2324.astro';
+import Leaderboard from './Leaderboard.astro';
+
+import { getEvents } from '../../utils/2324/getEvents';
+import { getSeason } from '../../utils/2324/getSeason';
+
+export interface Props {
+  year: SeasonYear;
+}
+
+const { year } = Astro.props;
+
+const season = await getSeason(year);
+const eventsData = await getEvents(season?.data?.id || 0);
+const events = eventsData?.data as TourEvent[];
+---
+
+<Layout title="Tisdagsgolfen">
+  <header>
+    <h1>Tisdagsgolfen {year}</h1>
+    <a href={`${year}/final`}>
+      FINAL &rarr;
+    </a>
+  </header>
+
+
+  <main class="season">
+    <h2>Ledartavla efter {events.length} veckor</h2>
+    <Leaderboard events={events} />
+  </main>
+  <footer>
+    <div class="forward animated"></div>
+    <div class="history">
+      <a href={`${year}/events`}>Historik</a>
+    </div>
+  </footer>
+
+  <style>
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      background: #008080;
+
+      h1 {
+        font-size: 18px;
+        text-transform: uppercase;
+        color: #fff
+      }
+
+      a {
+        color: #eee;
+        padding: 0 8px;
+      }
+    }
+
+    main {
+      padding: 8px;
+      background: #fff;
+      h2 {
+        font-size: 16px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+    }
+    footer {
+      height: 48px;
+      background-image: url(/2023-2024/base.png);
+      background-repeat: repeat-x;
+      background-position: bottom;
+      padding-bottom: 48px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .history{
+      float: right;
+      padding: 10px 20px;
+      margin-right: 20px;
+      background: url(/2023-2024/forward.png) no-repeat right center;
+
+      a {
+        color: black;
+      }
+    }
+
+    .forward {
+      background: url(/2023-2024/idle.png) no-repeat;
+      width: 72px;
+      height: 72px;
+      position: absolute;
+      bottom: 48px;
+    }
+
+    .animated {
+      animation: flap .4s steps(4) infinite alternate;
+    }
+
+    @keyframes flap {
+      from { background-position:  0px; }
+      to { background-position: -288px; }
+    }
+  </style>
+</Layout>

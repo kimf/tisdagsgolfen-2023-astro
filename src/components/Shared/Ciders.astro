@@ -6,4 +6,4 @@ export interface Props {
 const { ciders } = Astro.props;
 ---
 
-{ciders > 0 && <span>{ciders > 1 ? `${ciders} x 🥤` : '🥤'}</span>}
+{ciders > 0 && <div style="font-size: 0.8em;">{ciders > 1 ? `${ciders} x 🥤` : '🥤'}</div>}

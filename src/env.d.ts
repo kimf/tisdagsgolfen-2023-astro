@@ -84,10 +84,6 @@ type LeaderboardItem = {
   events: number;
   points_array: number[];
   special_array: number[];
-  overParAvg: number;
-  overPar: number;
-  overHcp: number;
-  overHcpAvg: number;
   player: Player;
 };
 

@@ -1,54 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Leaderboard from '../components/Leaderboard.astro';
-
-import { getEvents } from '../utils/getEvents';
-import { getSeason } from '../utils/getSeason';
-import Sessions from '../components/Sessions.astro';
-
-const seasonYear = (Astro.url.searchParams.get('season') || '2025') as SeasonYear;
-
-const season = await getSeason(seasonYear);
-const eventsData = await getEvents(season?.data?.id || 0);
-const events = eventsData?.data as TourEvent[];
-
-// let userId: string | null = null;
-// if (Astro.cookies.has('sb-user-id')) {
-//   userId = Astro.cookies.get('sb-user-id')?.value || null;
-// }
-
-const seasonState = season.data?.state;
 ---
 
 <Layout title="Tisdagsgolfen">
-  <header>
-    <h1>Tisdagsgolfen {seasonYear}</h1>
-    <!-- {
-      userId ? (
-        <form action="/api/auth/signout">
-          <button type="submit">Logga ut</button>
-        </form>
-      ) : (
-        <a href="/auth/signin">Logga in</a>
-      )
-    } -->
-  </header>
-
-  {
-    seasonState === 'FINAL' && (
-      <a href="/finalleaderboard">
-        <button>LEDARTAVLA FINAL</button>
-      </a>
-    )
-  }
-
-  <Sessions server:defer />
-
-  <main>
-    <h2>Ledartavla efter {events.length} veckor</h2>
-    <Leaderboard events={events} />
+  <h1>Tisdagsgolfen</h1>
+  <main id="main">
+    <h2>Jobbar på't!</h2>
   </main>
-  <footer>
-    <a href="/events">Historik &rarr;</a>
-  </footer>
 </Layout>

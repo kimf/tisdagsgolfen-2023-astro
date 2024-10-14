@@ -1,0 +1,58 @@
+---
+import EventCard from '../../components/2324/Events/EventCard.astro';
+import Layout from '../../layouts/2324.astro';
+import { getEvents } from '../../utils/2324/getEvents';
+import { getSeason } from '../../utils/2324/getSeason';
+
+export interface Props {
+  year: SeasonYear;
+}
+
+const { year } = Astro.props;
+
+const seasonYear = year;
+
+const season = await getSeason(seasonYear);
+const eventsData = await getEvents(season?.data?.id || 0);
+const events = eventsData?.data as TourEvent[];
+---
+
+<Layout title="HISTORIK - Tisdagsgolfen">
+  <header>
+    <a href={`/${year}`}>&larr; Tillbaka</a>
+    <h1>RUNDOR - {year}</h1>
+  </header>
+  <main class="events">
+    {events.map((event) => <EventCard event={event} year{year} />)}
+  </main>
+</Layout>
+
+<style>
+  header {
+    padding: 8px;
+    background: #008080;
+
+    h1 {
+      font-size: 18px;
+      text-transform: uppercase;
+      color: #fff
+    }
+
+    a {
+      color: #eee;
+      padding: 0 8px;
+    }
+  }
+
+  main.events {
+    padding: 8px;
+    margin-bottom: 100px;
+    background: #fff;
+    h2 {
+      font-size: 16px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+  }
+</style>
+</Layout>

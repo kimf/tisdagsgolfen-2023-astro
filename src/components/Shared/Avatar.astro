@@ -1,10 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 export interface Props {
-  seed: string;
   size?: 'small' | 'smallmedium' | 'medium' | 'large' | 'xlarge';
   alignSelf?: 'flex-start' | 'center' | 'flex-end';
-  uri: string | null;
+  uri: string;
   loading?: boolean;
 }
 
@@ -26,11 +25,9 @@ const borderRadius = {
   xlarge: 10,
 };
 
-const imageUri =
-  uri || `https://api.dicebear.com/7.x/pixel-art/png?seed=${seed}&backgroundColor=3290FC`;
 
 const width = sizes[size || 'medium'];
 const height = sizes[size || 'medium'];
 ---
 
-<Image src={imageUri} alt="Avatar" height={height} width={width} />
+<Image src={uri} alt="Avatar" height={height} width={width} />

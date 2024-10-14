@@ -1,0 +1,101 @@
+---
+import Avatar from '../../Shared/Avatar.astro';
+
+export interface Props {
+  sorting: SortingType;
+  item: LeaderboardItem;
+}
+
+const { item, sorting } = Astro.props;
+
+let pointValue = '';
+let pointText = '';
+let summaryString = '';
+let subSummaryString = '';
+if (sorting === 'kr') {
+  pointValue = `${item.totalFines <= 0 ? '' : '+'}${item.totalFines}`;
+  pointText = 'kr';
+  summaryString = `${item.fines} kr`;
+  subSummaryString = ``;
+  subSummaryString += ` | ${item.beers} öl`;
+  subSummaryString += ` | ${item.ciders} cider`;
+} else {
+  pointValue = parseFloat(`${item.points}`).toFixed(1);
+  pointText = 'p';
+  const emptyPoints =
+    item.points_array.length < 4 ? [...Array(4 - item.points_array.length)].map((_) => 0) : [];
+  const emptySpecialPoints =
+    item.special_array.length < 4 ? [...Array(2 - item.special_array.length)].map((_) => 0) : [];
+  summaryString = `${[...item.points_array, ...emptyPoints].join(', ')} | ${[
+    ...item.special_array,
+    ...emptySpecialPoints,
+  ].join(', ')}`;
+}
+---
+
+<tr>
+  <td class="rank">{item.rank}</td>
+  <td>
+    <Avatar
+      uri={`/2023-2024/avatars/${item.player?.id}.png`}
+      size="medium"
+    />
+  </td>
+  <td>
+    <strong class="name">{item.player?.full_name || 'N/A'}</strong>
+    <div class="summaries">
+      <span>
+        {summaryString}
+        {subSummaryString}
+      </span>
+      <span>
+        {item.events} {item.events === 1 ? 'runda' : 'rundor'}
+        {sorting !== 'kr' && (
+          <span>| Snitt:</span>
+          <span>{item.average.toFixed(1)}</span>
+        )}
+      </span>
+    </div>
+  </td>
+
+  <td class="points">
+    <strong style={{fontSize: '24px'}}>{pointValue}</strong>
+    <span>{pointText}</span>
+  </td>
+</tr>
+
+<style>
+
+  tr {
+    border-bottom: 1px dashed #ccc;
+  }
+  td {
+    padding: 8px 4px;
+  }
+
+  .rank {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+
+  .name {
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .points {
+    text-align: right;
+    strong {
+      letter-spacing: -0.04em;
+    }
+  }
+
+  .summaries {
+    padding-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    color: #555;
+  }
+</style>
