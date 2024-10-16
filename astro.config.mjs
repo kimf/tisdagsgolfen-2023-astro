@@ -6,6 +6,42 @@ import compressor from 'astro-compressor';
 import webmanifest from 'astro-webmanifest';
 import fs from 'fs';
 import path from 'path';
+import fsExtra from 'fs-extra';
+
+const COLORS = {
+  reset: "\x1b[0m",
+  red: "\x1b[31m",
+  green: "\x1b[32m",
+  yellow: "\x1b[33m",
+};
+
+function format(msg, prefix = "") {
+  const start = prefix;
+  const end = prefix ? COLORS.reset : "";
+  return `${start}moving-legacy-content:${end} ${msg}`;
+}
+
+
+const copyLegacyContent = () => ({
+  name: 'copy-legacy-content',
+  hooks: {
+    'astro:build:done': async () => {
+      const legacyDir = path.join(process.cwd(), '_legacy');
+      const publicDir = path.join(process.cwd(), './dist/client');
+
+      try {
+        if (fsExtra.pathExistsSync(legacyDir)) {
+          fsExtra.copySync(legacyDir, publicDir, { overwrite: true });
+          console.log(format('Successfully moved _legacy contents to public directory', COLORS.green));
+        } else {
+          console.log(format('_legacy directory not found, skipping', COLORS.yellow));
+        }
+      } catch (err) {
+        console.error(format('Error moving _legacy contents:', err, COLORS.red));
+      }
+    }
+  }
+});
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,6 +60,7 @@ export default defineConfig({
     }),
     playformCompress(),
     compressor({ gzip: false, brotli: true }),
+    copyLegacyContent(),
   ],
   output: 'static',
   image: {
@@ -75,5 +112,5 @@ export default defineConfig({
         },
       },
     ],
-  }
+  },
 });

@@ -26,6 +26,7 @@
     "@astrojs/ts-plugin": "^1.10.2",
     "@types/better-sqlite3": "^7.6.11",
     "drizzle-kit": "^0.25.0",
+    "fs-extra": "^11.2.0",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.79.5",
