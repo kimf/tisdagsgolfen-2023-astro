@@ -4,3 +4,4 @@ dbs:
       - type: s3
         endpoint: ${REPLICA_URL}
         bucket: sqlite
+        region: eu-north-1
