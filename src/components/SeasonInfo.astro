@@ -1,6 +1,12 @@
 ---
 import { db } from "../db";
 import fs from "fs";
+import season from "../db/schema/season";
+
+await db.insert(season).values({
+  name: "2024",
+});
+
 const seasons = await db.query.seasons.findMany();
 console.log(seasons);
 console.log(seasons[0]);
