@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import fsExtra from 'fs-extra';
 
+
 const COLORS = {
   reset: "\x1b[0m",
   red: "\x1b[31m",
@@ -21,7 +22,7 @@ function format(msg, prefix = "") {
   return `${start}moving-legacy-content:${end} ${msg}`;
 }
 
-
+// TODO: Move to Dockerfile instead!
 const copyLegacyContent = () => ({
   name: 'copy-legacy-content',
   hooks: {

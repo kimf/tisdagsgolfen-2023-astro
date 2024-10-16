@@ -1,0 +1,8 @@
+---
+import { db } from "../db";
+const seasons = await db.query.seasons.findMany();
+---
+
+<div>
+  {seasons && seasons.length > 0 ? seasons[0]?.name : "NO DATA"}
+</div>

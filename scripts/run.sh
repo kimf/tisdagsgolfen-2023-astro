@@ -1,13 +1,11 @@
-#!/bin/bash
-set -e
+#!/bin/sh
 
-# Restore the database if it does not already exist.
-if [ -f $DATABASE_URL ]; then
-	echo "Database already exists, skipping restore"
-else
-	echo "No database found, restoring from replica if exists"
-	litestream restore -if-replica-exists $DATABASE_URL
-fi
+echo "Migrating database..."
+npm run db:migrate & PID=$!
+# Wait for migration to finish
+wait $PID
 
-# Run litestream with your app as the subprocess.
-exec litestream replicate -exec "node ./dist/server/entry.mjs"
+echo "Starting production server..."
+HOST=0.0.0.0 node dist/server/entry.mjs & PID=$!
+
+wait $PID

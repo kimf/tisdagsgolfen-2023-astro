@@ -15,9 +15,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# binaries
-litestream
-
 # data
 data/
 
@@ -31,4 +28,3 @@ data/
 # Ignore .sqlite3 files
 *.db
 *.sqlite3
-```

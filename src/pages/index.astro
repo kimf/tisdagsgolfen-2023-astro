@@ -1,15 +1,14 @@
 ---
-import { db } from "../db";
 import Layout from "../layouts/Layout.astro";
-
-const seasons = await db.query.seasons.findMany();
+import SeasonInfo from "../components/SeasonInfo.astro";
 ---
 
 <Layout title="Tisdagsgolfen">
-  <h1>
-    Tisdagsgolfen {seasons && seasons.length > 0 ? seasons[0]?.name : "NO DATA"}
-  </h1>
+  <h1>Tisdagsgolfen</h1>
   <main id="main">
+    <SeasonInfo server:defer />
     <h2>Jobbar på't!</h2>
+
+    <a href="/play">Play</a>
   </main>
 </Layout>
