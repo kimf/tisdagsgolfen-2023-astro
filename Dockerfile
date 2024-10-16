@@ -18,6 +18,7 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/drizzle ./drizzle
 
 # Create the data directory for the database
+VOLUME /data
 RUN mkdir -p /data
 
 ENV HOST=0.0.0.0

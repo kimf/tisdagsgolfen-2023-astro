@@ -3,14 +3,9 @@ import { db } from "../db";
 import fs from "fs";
 import season from "../db/schema/season";
 
-await db.insert(season).values({
-  name: "2024",
-});
-
-const seasons = await db.query.seasons.findMany();
-console.log(seasons);
-console.log(seasons[0]);
-console.log(process.env.DATABASE_URL);
+// await db.insert(season).values({
+//   name: "2024",
+// });
 
 // check if the file exists
 if (fs.existsSync(process.env.DATABASE_URL!)) {
@@ -18,6 +13,9 @@ if (fs.existsSync(process.env.DATABASE_URL!)) {
 } else {
   console.error("File does not exist");
 }
+
+const seasons = await db.query.seasons.findMany();
+console.log(seasons);
 
 ---
 
