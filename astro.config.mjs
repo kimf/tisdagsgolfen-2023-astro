@@ -21,7 +21,7 @@ function format(msg, prefix = "") {
   return `${start}moving-legacy-content:${end} ${msg}`;
 }
 
-
+// TODO: Move to Dockerfile instead!
 const copyLegacyContent = () => ({
   name: 'copy-legacy-content',
   hooks: {

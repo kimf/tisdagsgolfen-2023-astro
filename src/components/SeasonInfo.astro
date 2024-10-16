@@ -1,7 +1,18 @@
 ---
 import { db } from "../db";
-
+import fs from "fs";
 const seasons = await db.query.seasons.findMany();
+console.log(seasons);
+console.log(seasons[0]);
+console.log(process.env.DATABASE_URL);
+
+// check if the file exists
+if (fs.existsSync(process.env.DATABASE_URL!)) {
+  console.log("File exists");
+} else {
+  console.error("File does not exist");
+}
+
 ---
 
 <div>
