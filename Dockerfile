@@ -4,6 +4,10 @@ WORKDIR /app
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
 
+
+VOLUME /data
+RUN mkdir -p /data
+
 COPY package.json package-lock.json ./
 
 FROM base AS build
