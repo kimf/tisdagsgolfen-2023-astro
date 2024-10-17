@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "prettier -w .",
-    "db:generate": "npx drizzle-kit generate"
+    "db:generate": "npx drizzle-kit generate",
+    "db:migrate": "node drizzle/migrate/migrate.mjs ./drizzle"
   },
   "dependencies": {
     "@astrojs/node": "^9.0.0-beta.2",
