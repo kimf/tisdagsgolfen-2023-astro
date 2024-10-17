@@ -6,6 +6,7 @@ COPY package.json package-lock.json ./
 FROM base AS build
 RUN npm install --legacy-peer-deps
 
+RUN echo "DATABASE_URL: $DATABASE_URL"
 COPY . .
 RUN npm run build
 
@@ -32,4 +33,5 @@ ENV PORT=4321
 ENV NODE_ENV=production
 EXPOSE 4321
 
+RUN echo "DATABASE_URL: $DATABASE_URL"
 CMD ["sh", "./scripts/run.sh"]
