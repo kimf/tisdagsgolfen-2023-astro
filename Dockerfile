@@ -1,6 +1,9 @@
 FROM node:lts-alpine AS base
 WORKDIR /app
 
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
+
 COPY package.json package-lock.json ./
 
 FROM base AS build
@@ -11,6 +14,8 @@ COPY . .
 RUN npm run build
 
 FROM base AS runtime
+
+ENV DATABASE_URL=$DATABASE_URL
 
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
@@ -31,6 +36,7 @@ RUN mkdir -p /data
 ENV HOST=0.0.0.0
 ENV PORT=4321
 ENV NODE_ENV=production
+ENV DATABASE_URL=$DATABASE_URL
 EXPOSE 4321
 
 RUN echo "DATABASE_URL: $DATABASE_URL"
