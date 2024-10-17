@@ -17,8 +17,11 @@ COPY --from=build /app/dist ./dist
 
 # Move the drizzle directory to the runtime image
 COPY --from=build /app/drizzle ./drizzle
-COPY --from=build ./app/scripts/run.sh ./app/scripts/run.sh
-RUN chmod +x ./app/scripts/run.sh
+COPY --from=build ./app/scripts/run.sh ./scripts/run.sh
+
+# TMP to be able do debug drizzle stuff
+COPY --from=build /app/drizzle.config.ts ./drizzle.config.ts
+COPY --from=build ./app/src/db/ ./src/db/
 
 # Create the data directory for the database
 VOLUME /data
@@ -29,4 +32,4 @@ ENV PORT=4321
 ENV NODE_ENV=production
 EXPOSE 4321
 
-CMD ["sh", "./app/scripts/run.sh"]
+CMD ["sh", "./scripts/run.sh"]
