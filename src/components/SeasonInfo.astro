@@ -1,8 +1,9 @@
 ---
 import { db } from "../db";
+await new Promise((resolve) => setTimeout(resolve, 1000));
 const seasons = await db.query.seasons.findMany();
 ---
 
-<div>
+<div class="scoring-session">
   {seasons && seasons.length > 0 ? seasons[0]?.name : "NO DATA"}
 </div>

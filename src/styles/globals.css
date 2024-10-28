@@ -6,4 +6,48 @@
   --color-dark-side: #004444;
   --color-salmon-tint: #efccbf;
   --color-sugar-cookie: #f2e2a4;
+  --color-charcoal-gray: #121212;
+  --color-dark-slate-gray: #191919;
+  --color-outer-space: #252525;
+  --color-rich-black: #0a0a0a;
+  --color-coffee-bean: #1b1b1b;
+  --color-dark-gray: #212427;
+  --color-oil-black: #0c0c0c;
+  --color-obsidian: #0b1215;
+  --color-ebony: #222428;
+  --color-black-chocolate: #100d08;
+  --color-gunmetal: #1d1f21;
+  --color-smoky-black: #101720;
+  --color-oxford-blue: #212a37;
+  --color-eerie-black: #232023;
+  --color-jet-black: #161618;
+  --color-iridium: #181818;
+  --color-arsenic: #11181c;
+  --color-charleston-green: #212124;
+  --color-dark-gunmetal: #222428;
+  --color-jet: #2a2a2a;
+  --color-black-olive: #242526;
+  --color-midnight-blue: #212121;
+}
+
+*,
+html,
+body,
+*:before,
+*:after {
+  box-sizing: inherit;
+  border: 0;
+  margin: 0;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.scoring-session {
+  padding: 16px;
+  height: 100px;
+  margin: 20px 0;
+  color: var(--color-black-chocolate);
+
+  &:not(.fallback) {
+    background-color: var(--color-salmon-tint);
+  }
 }

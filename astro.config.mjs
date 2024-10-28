@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import fsExtra from 'fs-extra';
 
+import svelte from '@astrojs/svelte';
 
 const COLORS = {
   reset: "\x1b[0m",
@@ -66,6 +67,7 @@ export default defineConfig({
     playformCompress(),
     compressor({ gzip: false, brotli: true }),
     copyLegacyContent(),
+    svelte()
   ],
   output: 'static',
   image: {
