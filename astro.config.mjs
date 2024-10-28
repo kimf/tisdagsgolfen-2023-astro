@@ -3,7 +3,7 @@ import node from '@astrojs/node';
 
 import playformCompress from '@playform/compress';
 import compressor from 'astro-compressor';
-import webmanifest from 'astro-webmanifest';
+import AstroPWA from '@vite-pwa/astro'
 import fs from 'fs';
 import path from 'path';
 import fsExtra from 'fs-extra';
@@ -47,18 +47,22 @@ const copyLegacyContent = () => ({
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    webmanifest({
-      name: 'Tisdagsgolfen',
-      id: 'se.fransman.tisdagsgolfen',
-      icon: 'src/images/logo.png',
-      short_name: 'TG',
-      start_url: '/',
-      display: 'standalone',
-      display_override: ['standalone'],
-      theme_color: '#008080',
-      background_color: '#C7E0D9',
-      orientation: 'portrait-primary'
-    }),
+    AstroPWA({
+      experimental: {
+        directoryAndTrailingSlashHandler: true,
+      }
+    }), // webmanifest({
+    //   name: 'Tisdagsgolfen',
+    //   id: 'se.fransman.tisdagsgolfen',
+    //   icon: 'src/images/logo.png',
+    //   short_name: 'TG',
+    //   start_url: '/',
+    //   display: 'standalone',
+    //   display_override: ['standalone'],
+    //   theme_color: '#008080',
+    //   background_color: '#C7E0D9',
+    //   orientation: 'portrait-primary'
+    // }),
     playformCompress(),
     compressor({ gzip: false, brotli: true }),
     copyLegacyContent(),

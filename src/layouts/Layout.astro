@@ -1,4 +1,6 @@
 ---
+import { pwaInfo } from 'virtual:pwa-info';
+import { pwaAssetsHead } from 'virtual:pwa-assets/head';
 import { Head } from 'astro-capo';
 // import { AstroFont } from 'astro-font';
 export interface Props {
@@ -34,47 +36,57 @@ import '../styles/globals.css';
       ]}
     /> -->
     <title>{title || 'Tisdagsgolfen'}</title>
+    {
+      pwaAssetsHead.themeColor && (
+        <meta name="theme-color" content={pwaAssetsHead.themeColor.content} />
+      )
+    }
+    {pwaAssetsHead.links.map((link: any) => <link {...link} />)}
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
   </Head>
   <body>
-    <nav>
-      <a href="/">2025</a>
-      <a href="/2024" target="_blank">2024</a>
-      <a href="/2023" target="_blank">2023</a>
-      <a href="/2022" target="_blank">2022</a>
-      <a href="/2021" target="_blank">2021</a>
-      <a href="/2020" target="_blank">2020</a>
-      <a href="/2019" target="_blank">2019</a>
-      <a href="/2018" target="_blank">2018</a>
-      <a href="/2017" target="_blank">2017</a>
-      <a href="/2016" target="_blank">2016</a>
-      <a href="/2015" target="_blank">2015</a>
-      <a href="/2014" target="_blank">2014</a>
-      <a href="/2013" target="_blank">2013</a>
-      <a href="/2012" target="_blank">2012</a>
-    </nav>
-    <slot />
+    <header>
+      <nav>
+        <a href="/">2025</a>
+        <a href="/2024" target="_blank">2024</a>
+        <a href="/2023" target="_blank">2023</a>
+        <a href="/2022" target="_blank">2022</a>
+        <a href="/2021" target="_blank">2021</a>
+        <a href="/2020" target="_blank">2020</a>
+        <a href="/2019" target="_blank">2019</a>
+        <a href="/2018" target="_blank">2018</a>
+        <a href="/2017" target="_blank">2017</a>
+        <a href="/2016" target="_blank">2016</a>
+        <a href="/2015" target="_blank">2015</a>
+        <a href="/2014" target="_blank">2014</a>
+        <a href="/2013" target="_blank">2013</a>
+        <a href="/2012" target="_blank">2012</a>
+      </nav>
+    </header>
+    <section id="main">
+      <slot />
+    </section>
 
     <style>
-      *,
-      *:before,
-      *:after {
-        box-sizing: inherit;
+      #main {
+        padding: 20px;
       }
+
       nav {
         padding: 8px;
-        background: #000;
+        background: var(--color-ulthuan-grey);
         color: #fff;
         float: left;
         width: 100%;
       }
 
       a {
-        color: #fff;
+        color: var(--color-whiteout);
         text-decoration: none;
-        font-family: Arial;
+        border-radius: 4px;
         padding: 8px;
         float: left;
-        background: #222;
+        background: var(--color-teal);
         margin: 0 4px 4px;
       }
     </style>
