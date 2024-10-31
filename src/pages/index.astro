@@ -8,16 +8,15 @@ import Button from '../components/shared/button.astro';
 <Layout title="Tisdagsgolfen">
   <h1>Tisdagsgolfen</h1>
   <main id="main">
+    <Scorecard client:only="svelte" />
+
+    <Button />
+
     <SeasonInfo server:defer>
       <div slot="fallback">
         <div class="scoring-session fallback"></div>
       </div>
     </SeasonInfo>
-    <a href="/play" class="play-button">Play</a>
-
-    <Button />
-
-    <Scorecard client:only="svelte" />
   </main>
 </Layout>
 
@@ -41,13 +40,5 @@ import Button from '../components/shared/button.astro';
     100% {
       background-position: 400px 0;
     }
-  }
-
-  .play-button {
-    color: var(--color-salmon-tint);
-    padding: 20px;
-    text-decoration: none;
-    background-color: var(--color-black-chocolate);
-    border-radius: 4px;
   }
 </style>

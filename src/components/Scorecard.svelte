@@ -122,6 +122,7 @@
 
 <style>
   .scorecard-container {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -197,7 +198,7 @@
     height: 100%;
     background-image: radial-gradient(#d3c7a7 1px, transparent 1px),
       radial-gradient(#d3c7a7 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-size: 10px 10px;
     background-position:
       0 0,
       10px 10px;
