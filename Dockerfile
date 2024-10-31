@@ -13,6 +13,7 @@ FROM base AS build
 RUN npm install --legacy-peer-deps
 
 COPY . .
+RUN npm run db:migrate
 RUN npm run build
 
 FROM base AS runtime
