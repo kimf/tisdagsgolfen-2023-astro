@@ -1,23 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SeasonInfo from '../components/SeasonInfo.astro';
-import Scorecard from '../components/Scorecard.svelte';
+// import SeasonInfo from '../components/SeasonInfo.astro';
+// import Scorecard from '../components/Scorecard.svelte';
+import ScoringSession from '../components/ScoringSession.tsx';
 import Button from '../components/shared/button.astro';
 ---
 
 <Layout title="Tisdagsgolfen">
   <h1>Tisdagsgolfen</h1>
   <main id="main">
-    <Scorecard client:only="svelte" />
+    <!-- <Scorecard client:only="svelte" /> -->
 
     <Button />
 
-    <SeasonInfo server:defer>
+    <!-- <SeasonInfo server:defer>
       <div slot="fallback">
         <div class="scoring-session fallback"></div>
       </div>
-    </SeasonInfo>
+    </SeasonInfo> -->
   </main>
+
+  <footer>
+    <h1>Scoring Session</h1>
+    <ScoringSession client:only="react" />
+  </footer>
 </Layout>
 
 <style>

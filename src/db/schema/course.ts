@@ -1,5 +1,6 @@
-import { sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { text, integer, sqliteTable } from 'drizzle-orm/sqlite-core';
+import scoringSessions from './session';
 
 const courses = sqliteTable('courses', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
@@ -10,5 +11,9 @@ const courses = sqliteTable('courses', {
   eventsCount: integer('events_count').notNull().default(0),
   createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`)
 });
+
+export const coursesrelations = relations(scoringSessions, ({ many }) => ({
+  scoringSessions: many(scoringSessions)
+}));
 
 export default courses;

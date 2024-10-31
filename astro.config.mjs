@@ -3,23 +3,25 @@ import node from '@astrojs/node';
 
 import playformCompress from '@playform/compress';
 import compressor from 'astro-compressor';
-import AstroPWA from '@vite-pwa/astro'
+import AstroPWA from '@vite-pwa/astro';
 import fs from 'fs';
 import path from 'path';
 import fsExtra from 'fs-extra';
 
 import svelte from '@astrojs/svelte';
 
+import react from '@astrojs/react';
+
 const COLORS = {
-  reset: "\x1b[0m",
-  red: "\x1b[31m",
-  green: "\x1b[32m",
-  yellow: "\x1b[33m",
+  reset: '\x1b[0m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m'
 };
 
-function format(msg, prefix = "") {
+function format(msg, prefix = '') {
   const start = prefix;
-  const end = prefix ? COLORS.reset : "";
+  const end = prefix ? COLORS.reset : '';
   return `${start}moving-legacy-content:${end} ${msg}`;
 }
 
@@ -34,7 +36,9 @@ const copyLegacyContent = () => ({
       try {
         if (fsExtra.pathExistsSync(legacyDir)) {
           fsExtra.copySync(legacyDir, publicDir, { overwrite: true });
-          console.log(format('Successfully moved _legacy contents to public directory', COLORS.green));
+          console.log(
+            format('Successfully moved _legacy contents to public directory', COLORS.green)
+          );
         } else {
           console.log(format('_legacy directory not found, skipping', COLORS.yellow));
         }
@@ -45,29 +49,29 @@ const copyLegacyContent = () => ({
   }
 });
 
-// https://astro.build/config
+//   name: 'Tisdagsgolfen',
+//   id: 'se.fransman.tisdagsgolfen',
+//   icon: 'src/images/logo.png',
+//   short_name: 'TG',
+//   start_url: '/',
+//   display: 'standalone',
+//   display_override: ['standalone'],
+//   theme_color: '#008080',
+//   background_color: '#C7E0D9',
+//   orientation: 'portrait-primary'
+
 export default defineConfig({
   integrations: [
     AstroPWA({
       experimental: {
-        directoryAndTrailingSlashHandler: true,
+        directoryAndTrailingSlashHandler: true
       }
-    }), // webmanifest({
-    //   name: 'Tisdagsgolfen',
-    //   id: 'se.fransman.tisdagsgolfen',
-    //   icon: 'src/images/logo.png',
-    //   short_name: 'TG',
-    //   start_url: '/',
-    //   display: 'standalone',
-    //   display_override: ['standalone'],
-    //   theme_color: '#008080',
-    //   background_color: '#C7E0D9',
-    //   orientation: 'portrait-primary'
-    // }),
+    }),
     playformCompress(),
     compressor({ gzip: false, brotli: true }),
     copyLegacyContent(),
-    svelte()
+    svelte(),
+    react()
   ],
   output: 'static',
   image: {
@@ -78,7 +82,7 @@ export default defineConfig({
   }),
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: 'load'
+    defaultStrategy: 'hover'
   },
   experimental: {
     clientPrerender: true
@@ -116,8 +120,8 @@ export default defineConfig({
 
             next();
           });
-        },
-      },
-    ],
-  },
+        }
+      }
+    ]
+  }
 });
