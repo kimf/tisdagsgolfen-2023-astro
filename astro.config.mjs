@@ -63,6 +63,17 @@ const copyLegacyContent = () => ({
 export default defineConfig({
   integrations: [
     AstroPWA({
+      name: 'Tisdagsgolfen',
+      short_name: 'TG',
+      description: 'Tisdagsgolfen',
+      theme_color: '#008080',
+      icons: [
+        {
+          src: './src/images/logo.png',
+          sizes: '192x192',
+          type: 'image/png'
+        }
+      ],
       experimental: {
         directoryAndTrailingSlashHandler: true
       }
