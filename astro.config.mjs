@@ -48,20 +48,32 @@ const copyLegacyContent = () => ({
 export default defineConfig({
   integrations: [
     AstroPWA({
-      name: 'Tisdagsgolfen',
-      short_name: 'TG',
-      description: 'Tisdagsgolfen',
-      theme_color: '#008080',
-      background_color: '#C7E0D9',
-      display: 'standalone',
-      orientation: 'portrait-primary',
-      icons: [
-        {
-          src: './src/images/logo.png',
-          sizes: '192x192',
-          type: 'image/png'
-        }
-      ],
+      registerType: 'autoUpdate',
+      base: '/',
+      scope: '/',
+      manifest: {
+        name: 'Tisdagsgolfen',
+        short_name: 'TG',
+        description: 'Tisdagsgolfen',
+        theme_color: '#008080',
+        background_color: '#C7E0D9',
+        display: 'standalone',
+        orientation: 'portrait-primary',
+        icons: [
+          {
+            src: './src/images/logo.png',
+            sizes: '192x192',
+            type: 'image/png'
+          }
+        ]
+      },
+      pwaAssets: {
+        config: true
+      },
+      workbox: {
+        navigateFallback: '/',
+        globPatterns: ['**/*.{css,js,html,svg,png,ico,txt}']
+      },
       experimental: {
         directoryAndTrailingSlashHandler: true
       }

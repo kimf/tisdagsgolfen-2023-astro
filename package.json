@@ -26,12 +26,15 @@
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.4",
     "@types/better-sqlite3": "^7.6.11",
+    "@vite-pwa/assets-generator": "^0.2.6",
     "@vite-pwa/astro": "^0.4.3",
     "drizzle-kit": "^0.27.1",
     "fs-extra": "^11.2.0",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.80.6",
+    "sharp": "^0.33.5",
+    "sharp-ico": "^0.1.5",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"
   },
