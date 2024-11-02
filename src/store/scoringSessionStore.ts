@@ -53,7 +53,6 @@ export const store$ = observable<Store>({
   activeSession: mySyncedFetch({
     get: '/api/activesession.json',
     set: '/api/activesession.json',
-    setInit: { method: 'PUT' },
     persist: {
       name: 'activeSession'
     },
