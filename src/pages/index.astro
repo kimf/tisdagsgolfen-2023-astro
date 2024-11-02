@@ -11,7 +11,9 @@ import Scoring from '../components/Scoring.astro';
     </section>
     <aside>
       <h3>Scoring Session:</h3>
-      <Scoring />
+      <Scoring server:defer>
+        <div slot="fallback">Startar golfbilarna...</div>
+      </Scoring>
     </aside>
   </main>
 </Layout>

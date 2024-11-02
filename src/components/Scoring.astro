@@ -1,47 +1,24 @@
-<div id="scoring">Startar golfbilarna....</div>
+---
+import { eq } from 'drizzle-orm';
+import { db } from '../db';
+import scoringSessions from '../db/schema/session';
 
-<script is:inline type="module">
-  setTimeout(async () => {
-    const scoringDiv = document.getElementById('scoring');
+const start = Date.now();
 
-    // Function to get a cookie by name
-    function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    }
+const userId = Astro.cookies.get('activeUserId');
 
-    // Check if user is logged in (client-side)
-    const activeUserId = getCookie('activeUserId');
-    let activeSessionId;
+const sessions = userId
+  ? await db.query.sessions.findFirst({
+      where: eq(scoringSessions.ownerId, userId.value)
+    })
+  : null;
 
-    if (!activeUserId) {
-      scoringDiv.innerHTML = '<a href="/login">LOGGA IN</a>';
-    } else {
-      // If user is logged in, fetch the user's active scoring session (client-side)
-      let activeSession = localStorage.getItem('activeSession');
-      if (!activeSession) {
-        // If no active session, check with the server if there is an active session for the user
-        try {
-          const response = await fetch('/api/activesession.json');
-          const data = await response.json();
-          if (data) {
-            localStorage.setItem('activeSession', JSON.stringify(data));
-            activeSessionId = data.id;
-          } else {
-            scoringDiv.innerHTML = '<a href="/newsession">Starta ny runda</a>';
-          }
-        } catch (error) {
-          console.error('Error fetching active session:', error);
-          scoringDiv.innerHTML = 'Error fetching active session.';
-        }
-      } else {
-        activeSessionId = JSON.parse(activeSession).id;
-      }
+const elapsed = Date.now() - start;
+if (elapsed < 500) {
+  await new Promise((resolve) => setTimeout(resolve, 500 - elapsed));
+}
+---
 
-      if (activeSessionId) {
-        scoringDiv.innerHTML = `<a href="/scoring/${activeSessionId}">Fortsätt pågående runda</a>`;
-      }
-    }
-  }, 550);
-</script>
+{!userId && <a href="/login">LOGGA IN</a>}
+{sessions && <a href=`/scoring/${sessions.id}`>Fortsätt pågående runda</a>}
+{userId && !sessions && <a href="/newsession">Starta ny runda</a>}
