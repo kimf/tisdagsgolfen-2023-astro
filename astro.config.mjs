@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import node from '@astrojs/node';
 
 import playformCompress from '@playform/compress';
@@ -7,10 +7,6 @@ import AstroPWA from '@vite-pwa/astro';
 import fs from 'fs';
 import path from 'path';
 import fsExtra from 'fs-extra';
-
-import svelte from '@astrojs/svelte';
-
-import react from '@astrojs/react';
 
 const COLORS = {
   reset: '\x1b[0m',
@@ -72,9 +68,7 @@ export default defineConfig({
     }),
     playformCompress(),
     compressor({ gzip: false, brotli: true }),
-    copyLegacyContent(),
-    svelte(),
-    react()
+    copyLegacyContent()
   ],
   output: 'static',
   image: {
@@ -89,6 +83,12 @@ export default defineConfig({
   },
   experimental: {
     clientPrerender: true
+  },
+  env: {
+    schema: {
+      DATABASE_URL: envField.string({ context: 'server', access: 'secret' }),
+      USER_PASSWORD: envField.string({ context: 'server', access: 'secret' })
+    }
   },
   vite: {
     // This is a workaround to allow serving HTML files without extensions

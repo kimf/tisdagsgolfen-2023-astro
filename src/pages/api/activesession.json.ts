@@ -1,10 +1,20 @@
+export const prerender = false; // Render at request time
 import { eq } from 'drizzle-orm';
 import { db } from '../../db';
 import scoringSessions from '../../db/schema/session';
-import courses from '../../db/schema/course';
+import type { APIRoute } from 'astro';
 
-export async function GET() {
+export const GET: APIRoute = async ({ cookies }) => {
+  const userId = cookies.get('activeUserId');
+  if (!userId) {
+    return new Response(null, {
+      status: 401,
+      statusText: 'Unauthorized'
+    });
+  }
+
   const sessions = await db.query.sessions.findFirst({
+    where: eq(scoringSessions.ownerId, userId.value),
     with: {
       course: true
     }
@@ -23,4 +33,4 @@ export async function GET() {
       'Content-Type': 'application/json'
     }
   });
-}
+};

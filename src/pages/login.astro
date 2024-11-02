@@ -1,0 +1,55 @@
+---
+export const prerender = false; // Render at request time
+import { USER_PASSWORD } from 'astro:env/server';
+
+import { db } from '../db';
+const errors = { password: '' };
+
+if (Astro.request.method === 'POST') {
+  try {
+    const formData = await Astro.request.formData();
+    const userId = formData.get('userId');
+    const password = formData.get('password');
+
+    // Replace with your actual password check logic
+    if (password === USER_PASSWORD) {
+      Astro.cookies.set('activeUserId', String(userId));
+      return Astro.redirect('/');
+    } else {
+      errors.password = 'Fel lösenord!';
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+
+const players = await db.query.profiles.findMany();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logga in</title>
+  </head>
+  <body>
+    <h1>Logga in</h1>
+    {errors.password && <p style="color: red;">{errors.password}</p>}
+    <form method="post">
+      <label
+        >Användare:
+        <select id="userId" name="userId" required>
+          {players.map((player) => <option value={player.id}>{player.fullName}</option>)}
+        </select>
+      </label>
+      <label
+        >Lösenord:
+        <input type="password" id="password" name="password" required minlength="6" /></label
+      >
+      <button>LOGGA IN</button>
+    </form>
+  </body>
+</html>

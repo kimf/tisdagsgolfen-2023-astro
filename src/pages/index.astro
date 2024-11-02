@@ -1,50 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
-// import SeasonInfo from '../components/SeasonInfo.astro';
-// import Scorecard from '../components/Scorecard.svelte';
-import ScoringSession from '../components/ScoringSession.tsx';
-import Button from '../components/shared/button.astro';
+import Scoring from '../components/Scoring.astro';
 ---
 
 <Layout title="Tisdagsgolfen">
   <h1>Tisdagsgolfen</h1>
   <main id="main">
-    <!-- <Scorecard client:only="svelte" /> -->
-
-    <Button />
-
-    <!-- <SeasonInfo server:defer>
-      <div slot="fallback">
-        <div class="scoring-session fallback"></div>
-      </div>
-    </SeasonInfo> -->
+    <section>
+      <h2>Ledartavla kommer här...</h2>
+    </section>
+    <aside>
+      <h3>Scoring Session:</h3>
+      <Scoring />
+    </aside>
   </main>
-
-  <footer>
-    <h1>Scoring Session</h1>
-    <ScoringSession client:only="react" />
-  </footer>
 </Layout>
 
 <style>
-  /* css shimmer effect */
-  .fallback {
-    background: linear-gradient(
-      to right,
-      var(--color-ulthuan-grey) 0%,
-      var(--color-salmon-tint) 50%,
-      var(--color-salmon-tint) 100%
-    );
-    background-size: 100% 100px;
-    animation: shimmer 2s infinite;
+  #main {
+    display: flex;
+    flex-direction: column;
   }
 
-  @keyframes shimmer {
-    0% {
-      background-position: -400px 0;
-    }
-    100% {
-      background-position: 400px 0;
-    }
+  section {
+    height: 50vh;
+    background-color: #eee;
+    padding: 20px;
+  }
+
+  aside {
+    flex: 1;
+    padding: 40px 0;
   }
 </style>
