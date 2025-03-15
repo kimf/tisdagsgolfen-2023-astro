@@ -14,11 +14,11 @@ const sessions = userId
   : null;
 
 const elapsed = Date.now() - start;
-if (elapsed < 500) {
+if (elapsed < 1000) {
   await new Promise((resolve) => setTimeout(resolve, 500 - elapsed));
 }
 ---
 
 {!userId && <a href="/login">LOGGA IN</a>}
-{sessions && <a href=`/scoring/${sessions.id}`>Fortsätt pågående runda</a>}
+{sessions && <a href=`/scoring/${sessions.id}`>Fortsätt</a>}
 {userId && !sessions && <a href="/newsession">Starta ny runda</a>}

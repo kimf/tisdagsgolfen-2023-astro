@@ -94,7 +94,8 @@ export default defineConfig({
     defaultStrategy: 'hover'
   },
   experimental: {
-    clientPrerender: true
+    clientPrerender: true,
+    session: true
   },
   env: {
     schema: {
