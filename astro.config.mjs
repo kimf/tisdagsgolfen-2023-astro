@@ -1,5 +1,7 @@
 import { defineConfig, envField } from 'astro/config';
 import node from '@astrojs/node';
+import react from '@astrojs/react';
+import tailwindcss from '@tailwindcss/vite';
 
 import playformCompress from '@playform/compress';
 import compressor from 'astro-compressor';
@@ -47,6 +49,7 @@ const copyLegacyContent = () => ({
 
 export default defineConfig({
   integrations: [
+    react(),
     AstroPWA({
       registerType: 'autoUpdate',
       base: '/',
@@ -107,6 +110,7 @@ export default defineConfig({
     // This is a workaround to allow serving HTML files without extensions
     // it only affects the development server, so don't forget to fix this in production as well
     plugins: [
+      tailwindcss(),
       {
         name: 'serve-html-without-extension',
         configureServer(server) {

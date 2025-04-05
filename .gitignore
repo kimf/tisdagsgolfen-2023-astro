@@ -22,3 +22,7 @@ pnpm-debug.log*
 .vercel
 
 local.db*
+
+# windsurf and cursor rules
+.windsurfrules
+.cursor

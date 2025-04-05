@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ScoringCard from '../../components/ScoringCard';
+import { eq } from 'drizzle-orm';
+import { db } from '../../db';
+import scoringSessions from '../../db/schema/session';
+import courses from '../../db/schema/course';
+
+export const prerender = false;
+
+interface PageData {
+  title: string;
+  courseName: string;
+  sessionId: number;
+}
+
+// Get URL parameters and check authentication
+const { id } = Astro.params;
+const userId = Astro.cookies.get('activeUserId');
+
+if (!userId?.value || !id) {
+  return Astro.redirect('/login');
+}
+
+let pageData: PageData | undefined;
+
+try {
+  // Validate session ID
+  const sessionId = parseInt(id);
+  if (isNaN(sessionId)) {
+    return Astro.redirect('/');
+  }
+
+  // Get the session data
+  const sessionData = await db.select().from(scoringSessions).where(eq(scoringSessions.id, sessionId)).limit(1);
+
+  if (sessionData.length === 0 || sessionData[0].ownerId !== userId.value) {
+    return Astro.redirect('/');
+  }
+
+  const session = sessionData[0];
+
+  // Get course data
+  const courseData = await db.select().from(courses).where(eq(courses.id, session.courseId)).limit(1);
+
+  if (courseData.length === 0) {
+    throw new Error('Course not found');
+  }
+
+  const course = courseData[0];
+
+  pageData = {
+    title: `Scoring - ${course.name}`,
+    courseName: course.name,
+    sessionId
+  };
+} catch (error) {
+  console.error('Error loading scoring session:', error);
+  return Astro.redirect('/');
+}
+
+if (!pageData) {
+  return Astro.redirect('/');
+}
+---
+
+<Layout title={pageData.title}>
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-2xl font-bold">{pageData.courseName}</h1>
+      <a href="/" class="button">Back to Home</a>
+    </div>
+
+    <ScoringCard
+      client:load
+      sessionId={pageData.sessionId}
+    />
+  </div>
+</Layout>
+
+<style>
+  .button {
+    @apply inline-block px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors;
+  }
+
+  .container {
+    @apply max-w-4xl;
+  }
+</style>

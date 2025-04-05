@@ -4,17 +4,16 @@ import Scoring from '../components/Scoring.astro';
 ---
 
 <Layout title="Tisdagsgolfen">
-  <h1>Tisdagsgolfen</h1>
   <main id="main">
-    <section>
-      <h2>Ledartavla kommer här...</h2>
-    </section>
     <aside>
       <h3>Scoring Session:</h3>
       <Scoring server:defer>
         <div slot="fallback">Startar golfbilarna...</div>
       </Scoring>
     </aside>
+    <section>
+      <h2>Ledartavla kommer här...</h2>
+    </section>
   </main>
 </Layout>
 

@@ -1,53 +1,161 @@
-:root {
-  --color-whiteout: #fbfbfb;
-  --color-teal: #008080;
-  --color-ulthuan-grey: #c7e0d9;
-  --color-H-MP057: #HMP057;
-  --color-dark-side: #004444;
-  --color-salmon-tint: #efccbf;
-  --color-sugar-cookie: #f2e2a4;
-  --color-charcoal-gray: #121212;
-  --color-dark-slate-gray: #191919;
-  --color-outer-space: #252525;
-  --color-rich-black: #0a0a0a;
-  --color-coffee-bean: #1b1b1b;
-  --color-dark-gray: #212427;
-  --color-oil-black: #0c0c0c;
-  --color-obsidian: #0b1215;
-  --color-ebony: #222428;
-  --color-black-chocolate: #100d08;
-  --color-gunmetal: #1d1f21;
-  --color-smoky-black: #101720;
-  --color-oxford-blue: #212a37;
-  --color-eerie-black: #232023;
-  --color-jet-black: #161618;
-  --color-iridium: #181818;
-  --color-arsenic: #11181c;
-  --color-charleston-green: #212124;
-  --color-dark-gunmetal: #222428;
-  --color-jet: #2a2a2a;
-  --color-black-olive: #242526;
-  --color-midnight-blue: #212121;
-}
+@import "tailwindcss";
 
-*,
-html,
-body,
-*:before,
-*:after {
-  box-sizing: inherit;
-  border: 0;
-  margin: 0;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
-
-.scoring-session {
-  padding: 16px;
-  height: 100px;
-  margin: 20px 0;
-  color: var(--color-black-chocolate);
-
-  &:not(.fallback) {
-    background-color: var(--color-salmon-tint);
+/* Custom styles that extend Tailwind */
+.site-header {
+    background-color: #C7E0D9;
+    padding: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
   }
-}
+
+  .header-container {
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  .site-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .year-pill {
+    display: inline-flex;
+    align-items: center;
+    background-color: #008080;
+    color: white;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition-property: background-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  
+  .year-pill:hover {
+    background-color: #004444;
+  }
+
+  .dropdown-arrow {
+    font-size: 0.75rem;
+    margin-left: 0.25rem;
+  }
+
+  .year-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 50;
+    max-height: 20rem;
+    overflow-y: auto;
+    margin-top: 0.5rem;
+  }
+
+  .header-container:hover .year-dropdown,
+  .year-pill:focus + .year-dropdown {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .header-container:hover .year-dropdown,
+    .year-pill:focus + .year-dropdown {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+
+  .year-dropdown a {
+    text-decoration: none;
+    color: #1f2937;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    text-align: center;
+    transition-property: background-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .year-dropdown a:hover {
+    background-color: #C7E0D9;
+  }
+
+  .year-dropdown a.current-year {
+    background-color: #008080;
+    color: white;
+    font-weight: 700;
+  }
+
+  .scoring-card {
+    max-width: 100%;
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 1rem;
+  }
+
+  .connection-status {
+    margin-bottom: 1rem;
+  }
+
+  .connected {
+    color: #059669;
+  }
+
+  .disconnected {
+    color: #f59e0b;
+  }
+
+  .hole-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .scoring-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .scoring-table th,
+  .scoring-table td {
+    padding: 0.5rem;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+  }
+
+  .score-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .score-controls button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    border: 1px solid #d1d5db;
+    background-color: #f3f4f6;
+    cursor: pointer;
+  }
+  
+  .score-controls button:hover {
+    background-color: #e5e7eb;
+  }
