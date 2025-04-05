@@ -8,25 +8,24 @@ import scoringSessions from '../../db/schema/session';
 const clients = new Map<string, WritableStreamDefaultWriter<Uint8Array>>();
 
 // Function to send updates to all connected clients
-export function sendUpdate(sessionId: string, data: any) {
+export async function sendUpdate(sessionId: string, data: any) {
   const clientsForSession = Array.from(clients.entries()).filter(([clientId]) =>
     clientId.startsWith(`session-${sessionId}`)
   );
 
-  for (const [clientId, writer] of clientsForSession) {
+  const writePromises = clientsForSession.map(async ([clientId, writer]) => {
     try {
       const encoder = new TextEncoder();
       const chunk = encoder.encode(`data: ${JSON.stringify(data)}\n\n`);
-      writer.write(chunk).catch((error) => {
-        console.error(`Error writing to client ${clientId}:`, error);
-        // Remove the client on error
-        clients.delete(clientId);
-      });
+      await writer.write(chunk);
     } catch (error) {
       console.error(`Error sending update to client ${clientId}:`, error);
       clients.delete(clientId);
     }
-  }
+  });
+
+  // Wait for all writes to complete
+  await Promise.allSettled(writePromises);
 }
 
 export const GET: APIRoute = async ({ request }) => {
@@ -58,11 +57,15 @@ export const GET: APIRoute = async ({ request }) => {
   // Store the writer for later use
   clients.set(clientId, writer);
 
-  // Send initial connection message
-  const encoder = new TextEncoder();
-  writer.write(encoder.encode(': connected\n\n')).catch((error) => {
+  // Send initial connection message with proper error handling
+  try {
+    const encoder = new TextEncoder();
+    await writer.write(encoder.encode(': connected\n\n'));
+  } catch (error) {
     console.error('Error sending initial connection message:', error);
-  });
+    clients.delete(clientId);
+    return new Response(null, { status: 500, statusText: 'Failed to establish connection' });
+  }
 
   // Clean up when client disconnects
   request.signal.addEventListener('abort', () => {
