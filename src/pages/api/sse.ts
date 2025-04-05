@@ -5,12 +5,13 @@ import { db } from '../../db';
 import scoringSessions from '../../db/schema/session';
 
 // Store active connections with their writers
-const clients = new Map<string, WritableStreamDefaultWriter<Uint8Array>>;
+const clients = new Map<string, WritableStreamDefaultWriter<Uint8Array>>();
 
 // Function to send updates to all connected clients
 export function sendUpdate(sessionId: string, data: any) {
-  const clientsForSession = Array.from(clients.entries())
-    .filter(([clientId]) => clientId.startsWith(`session-${sessionId}`));
+  const clientsForSession = Array.from(clients.entries()).filter(([clientId]) =>
+    clientId.startsWith(`session-${sessionId}`)
+  );
 
   for (const [clientId, writer] of clientsForSession) {
     try {
@@ -37,7 +38,11 @@ export const GET: APIRoute = async ({ request }) => {
   }
 
   // Verify the session exists
-  const session = await db.select().from(scoringSessions).where(eq(scoringSessions.id, parseInt(sessionId))).limit(1);
+  const session = await db
+    .select()
+    .from(scoringSessions)
+    .where(eq(scoringSessions.id, parseInt(sessionId)))
+    .limit(1);
 
   if (session.length === 0) {
     return new Response(null, { status: 404, statusText: 'Session not found' });
@@ -55,14 +60,14 @@ export const GET: APIRoute = async ({ request }) => {
 
   // Send initial connection message
   const encoder = new TextEncoder();
-  writer.write(encoder.encode(': connected\n\n')).catch(error => {
+  writer.write(encoder.encode(': connected\n\n')).catch((error) => {
     console.error('Error sending initial connection message:', error);
   });
 
   // Clean up when client disconnects
   request.signal.addEventListener('abort', () => {
     clients.delete(clientId);
-    writer.close().catch(error => {
+    writer.close().catch((error) => {
       console.error('Error closing writer:', error);
     });
   });
@@ -72,7 +77,7 @@ export const GET: APIRoute = async ({ request }) => {
     headers: {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive'
+      Connection: 'keep-alive'
     }
   });
 };

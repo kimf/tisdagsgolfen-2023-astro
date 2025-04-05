@@ -23,21 +23,23 @@ interface LeaderboardProps {
 
 export const Leaderboard = ({ players, onPlayerSelect }: LeaderboardProps) => {
   const [expandedPlayerId, setExpandedPlayerId] = useState<number | null>(null);
-  
+
   const togglePlayerExpand = (playerId: number) => {
     setExpandedPlayerId(expandedPlayerId === playerId ? null : playerId);
   };
-  
+
   const sortedPlayers = [...players].sort((a, b) => a.relativeScore - b.relativeScore);
-  
+
   return (
     <div className="bg-charcoal-gray rounded-xl p-4 shadow-retro-lg">
-      <h2 className="text-2xl font-bold text-salmon-tint mb-6 text-center uppercase tracking-wider">Leaderboard</h2>
-      
+      <h2 className="text-2xl font-bold text-salmon-tint mb-6 text-center uppercase tracking-wider">
+        Leaderboard
+      </h2>
+
       <div className="space-y-4">
         {sortedPlayers.map((player, index) => (
           <div key={player.id} className="relative">
-            <motion.div 
+            <motion.div
               className={`bg-dark-slate-gray rounded-lg border-2 ${
                 expandedPlayerId === player.id ? 'border-teal' : 'border-coffee-bean'
               } overflow-hidden cursor-pointer`}
@@ -56,22 +58,34 @@ export const Leaderboard = ({ players, onPlayerSelect }: LeaderboardProps) => {
                     <p className="text-xs text-ulthuan-grey">{player.rounds} rounds</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center space-x-4">
-                  <div className={`text-xl font-bold ${player.relativeScore <= 0 ? 'text-success' : 'text-salmon-tint'}`}>
+                  <div
+                    className={`text-xl font-bold ${player.relativeScore <= 0 ? 'text-success' : 'text-salmon-tint'}`}
+                  >
                     {player.relativeScore <= 0 ? player.relativeScore : `+${player.relativeScore}`}
                   </div>
                   <motion.div
                     animate={{ rotate: expandedPlayerId === player.id ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <svg className="w-5 h-5 text-ulthuan-grey" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    <svg
+                      className="w-5 h-5 text-ulthuan-grey"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
                     </svg>
                   </motion.div>
                 </div>
               </div>
-              
+
               {/* Expanded details */}
               <AnimatePresence>
                 {expandedPlayerId === player.id && (
@@ -86,42 +100,48 @@ export const Leaderboard = ({ players, onPlayerSelect }: LeaderboardProps) => {
                       <div className="bg-rich-black rounded p-3">
                         <p className="text-xs text-ulthuan-grey mb-1">Circle Hits</p>
                         <div className="flex items-center justify-between">
-                          <span className="text-sugar-cookie font-bold">{player.stats.circleHits}%</span>
+                          <span className="text-sugar-cookie font-bold">
+                            {player.stats.circleHits}%
+                          </span>
                           <div className="w-24 h-2 bg-outer-space rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-gradient-to-r from-amber-500 to-amber-400" 
+                            <div
+                              className="h-full bg-gradient-to-r from-amber-500 to-amber-400"
                               style={{ width: `${player.stats.circleHits}%` }}
                             />
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="bg-rich-black rounded p-3">
                         <p className="text-xs text-ulthuan-grey mb-1">Inside Putts</p>
                         <div className="flex items-center justify-between">
-                          <span className="text-sugar-cookie font-bold">{player.stats.insidePutts}%</span>
+                          <span className="text-sugar-cookie font-bold">
+                            {player.stats.insidePutts}%
+                          </span>
                           <div className="w-24 h-2 bg-outer-space rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-gradient-to-r from-amber-500 to-amber-400" 
+                            <div
+                              className="h-full bg-gradient-to-r from-amber-500 to-amber-400"
                               style={{ width: `${player.stats.insidePutts}%` }}
                             />
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="bg-rich-black rounded p-3">
                         <p className="text-xs text-ulthuan-grey mb-1">Converted</p>
                         <div className="flex items-center justify-between">
-                          <span className="text-sugar-cookie font-bold">{player.stats.converted}%</span>
+                          <span className="text-sugar-cookie font-bold">
+                            {player.stats.converted}%
+                          </span>
                           <div className="w-24 h-2 bg-outer-space rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-gradient-to-r from-fuchsia-600 to-fuchsia-400" 
+                            <div
+                              className="h-full bg-gradient-to-r from-fuchsia-600 to-fuchsia-400"
                               style={{ width: `${player.stats.converted}%` }}
                             />
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="bg-rich-black rounded p-3">
                         <p className="text-xs text-ulthuan-grey mb-1">Penalties</p>
                         <div className="flex items-center justify-between space-x-4">
@@ -136,7 +156,7 @@ export const Leaderboard = ({ players, onPlayerSelect }: LeaderboardProps) => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <motion.button
                       className="w-full py-2 bg-teal text-whiteout rounded-md font-medium shadow-retro"
                       whileHover={{ scale: 1.02 }}

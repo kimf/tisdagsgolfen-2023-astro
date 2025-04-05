@@ -39,20 +39,20 @@ export const NewSessionForm = ({ onCreateSession, onCancel }: NewSessionFormProp
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Filter out empty player names
-    const validPlayers = players.filter(name => name.trim() !== '');
-    
+    const validPlayers = players.filter((name) => name.trim() !== '');
+
     if (validPlayers.length === 0) {
       alert('Please add at least one player');
       return;
     }
-    
+
     if (!courseName) {
       alert('Please enter a course name');
       return;
     }
-    
+
     onCreateSession({
       courseName,
       totalHoles,
@@ -63,23 +63,27 @@ export const NewSessionForm = ({ onCreateSession, onCancel }: NewSessionFormProp
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <motion.div 
+      <motion.div
         className="bg-charcoal-gray text-whiteout rounded-xl p-6 w-full max-w-md border-3 border-rich-black shadow-retro-lg"
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
       >
-        <h2 className="text-2xl font-bold text-salmon-tint mb-6 text-center uppercase tracking-wider">Game Rules</h2>
-        
+        <h2 className="text-2xl font-bold text-salmon-tint mb-6 text-center uppercase tracking-wider">
+          Game Rules
+        </h2>
+
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
-            <label className="block text-ulthuan-grey mb-2 text-sm uppercase tracking-wider">Course Name</label>
+            <label className="block text-ulthuan-grey mb-2 text-sm uppercase tracking-wider">
+              Course Name
+            </label>
             <input
               type="text"
               value={courseName}
@@ -89,21 +93,28 @@ export const NewSessionForm = ({ onCreateSession, onCancel }: NewSessionFormProp
               required
             />
           </div>
-          
+
           <div className="mb-6">
-            <label className="block text-ulthuan-grey mb-2 text-sm uppercase tracking-wider">Holes</label>
+            <label className="block text-ulthuan-grey mb-2 text-sm uppercase tracking-wider">
+              Holes
+            </label>
             <div className="flex gap-4">
               <motion.button
                 type="button"
                 className={`flex-1 py-3 px-4 rounded border-2 flex items-center justify-center gap-2 ${
-                  totalHoles === 9 
-                    ? 'bg-teal border-dark-side text-whiteout' 
+                  totalHoles === 9
+                    ? 'bg-teal border-dark-side text-whiteout'
                     : 'bg-dark-slate-gray border-coffee-bean text-ulthuan-grey'
                 }`}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setTotalHoles(9)}
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
                   <circle cx="8" cy="12" r="2" fill="currentColor" />
                   <circle cx="12" cy="12" r="2" fill="currentColor" />
@@ -111,18 +122,23 @@ export const NewSessionForm = ({ onCreateSession, onCancel }: NewSessionFormProp
                 </svg>
                 9 holes
               </motion.button>
-              
+
               <motion.button
                 type="button"
                 className={`flex-1 py-3 px-4 rounded border-2 flex items-center justify-center gap-2 ${
-                  totalHoles === 18 
-                    ? 'bg-teal border-dark-side text-whiteout' 
+                  totalHoles === 18
+                    ? 'bg-teal border-dark-side text-whiteout'
                     : 'bg-dark-slate-gray border-coffee-bean text-ulthuan-grey'
                 }`}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setTotalHoles(18)}
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
                   <circle cx="8" cy="9" r="1.5" fill="currentColor" />
                   <circle cx="12" cy="9" r="1.5" fill="currentColor" />
@@ -135,46 +151,72 @@ export const NewSessionForm = ({ onCreateSession, onCancel }: NewSessionFormProp
               </motion.button>
             </div>
           </div>
-          
+
           <div className="mb-6">
-            <label className="block text-ulthuan-grey mb-2 text-sm uppercase tracking-wider">Starting from</label>
+            <label className="block text-ulthuan-grey mb-2 text-sm uppercase tracking-wider">
+              Starting from
+            </label>
             <div className="flex gap-4">
               <motion.button
                 type="button"
                 className={`flex-1 py-3 px-4 rounded border-2 flex items-center justify-center gap-2 ${
-                  startingHole === 'front' 
-                    ? 'bg-teal border-dark-side text-whiteout' 
+                  startingHole === 'front'
+                    ? 'bg-teal border-dark-side text-whiteout'
                     : 'bg-dark-slate-gray border-coffee-bean text-ulthuan-grey'
                 }`}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setStartingHole('front')}
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 12H19M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 12H19M5 12L11 6M5 12L11 18"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
                 Front
               </motion.button>
-              
+
               <motion.button
                 type="button"
                 className={`flex-1 py-3 px-4 rounded border-2 flex items-center justify-center gap-2 ${
-                  startingHole === 'back' 
-                    ? 'bg-teal border-dark-side text-whiteout' 
+                  startingHole === 'back'
+                    ? 'bg-teal border-dark-side text-whiteout'
                     : 'bg-dark-slate-gray border-coffee-bean text-ulthuan-grey'
                 }`}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setStartingHole('back')}
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M19 12H5M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 12H5M19 12L13 6M19 12L13 18"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
                 Back
               </motion.button>
             </div>
           </div>
-          
+
           <div className="mb-6">
-            <label className="block text-ulthuan-grey mb-2 text-sm uppercase tracking-wider">Par</label>
+            <label className="block text-ulthuan-grey mb-2 text-sm uppercase tracking-wider">
+              Par
+            </label>
             <div className="flex items-center">
               <motion.button
                 type="button"
@@ -202,7 +244,7 @@ export const NewSessionForm = ({ onCreateSession, onCancel }: NewSessionFormProp
               </motion.button>
             </div>
           </div>
-          
+
           <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
               <label className="text-ulthuan-grey text-sm uppercase tracking-wider">Players</label>
@@ -212,13 +254,24 @@ export const NewSessionForm = ({ onCreateSession, onCancel }: NewSessionFormProp
                 whileTap={{ scale: 0.95 }}
                 onClick={addPlayer}
               >
-                <svg className="w-5 h-5 mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg
+                  className="w-5 h-5 mr-1"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 5V19M5 12H19"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
                 Add Player
               </motion.button>
             </div>
-            
+
             {players.map((player, index) => (
               <div key={index} className="flex gap-2 mb-2">
                 <input
@@ -235,15 +288,26 @@ export const NewSessionForm = ({ onCreateSession, onCancel }: NewSessionFormProp
                     whileTap={{ scale: 0.95 }}
                     onClick={() => removePlayer(index)}
                   >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M6 12H18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M6 12H18"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </motion.button>
                 )}
               </div>
             ))}
           </div>
-          
+
           <div className="flex gap-4 mt-8">
             <motion.button
               type="button"
@@ -254,7 +318,7 @@ export const NewSessionForm = ({ onCreateSession, onCancel }: NewSessionFormProp
             >
               Cancel
             </motion.button>
-            
+
             <motion.button
               type="submit"
               className="flex-1 py-3 px-4 bg-teal border-2 border-dark-side rounded text-whiteout font-bold shadow-retro"

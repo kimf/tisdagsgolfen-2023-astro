@@ -99,13 +99,13 @@ const MOCK_RECENT_GAMES = [
 export default function LeaderboardPage() {
   const [selectedPlayerId, setSelectedPlayerId] = useState<number | null>(null);
   const [seasonFilter, setSeasonFilter] = useState<'current' | 'all'>('current');
-  
-  const selectedPlayer = MOCK_PLAYERS.find(player => player.id === selectedPlayerId);
-  
+
+  const selectedPlayer = MOCK_PLAYERS.find((player) => player.id === selectedPlayerId);
+
   return (
     <div className="min-h-screen bg-rich-black p-4">
       <header className="mb-8 text-center">
-        <motion.h1 
+        <motion.h1
           className="text-3xl font-bold text-salmon-tint mb-2"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -128,8 +128,8 @@ export default function LeaderboardPage() {
           <div className="flex space-x-2">
             <motion.button
               className={`px-4 py-2 rounded-full text-sm font-medium ${
-                seasonFilter === 'current' 
-                  ? 'bg-teal text-whiteout' 
+                seasonFilter === 'current'
+                  ? 'bg-teal text-whiteout'
                   : 'bg-dark-slate-gray text-ulthuan-grey'
               }`}
               whileTap={{ scale: 0.95 }}
@@ -139,8 +139,8 @@ export default function LeaderboardPage() {
             </motion.button>
             <motion.button
               className={`px-4 py-2 rounded-full text-sm font-medium ${
-                seasonFilter === 'all' 
-                  ? 'bg-teal text-whiteout' 
+                seasonFilter === 'all'
+                  ? 'bg-teal text-whiteout'
                   : 'bg-dark-slate-gray text-ulthuan-grey'
               }`}
               whileTap={{ scale: 0.95 }}
@@ -149,23 +149,28 @@ export default function LeaderboardPage() {
               All Time
             </motion.button>
           </div>
-          
+
           <motion.button
             className="w-10 h-10 bg-dark-slate-gray rounded-full flex items-center justify-center text-ulthuan-grey"
             whileTap={{ scale: 0.95 }}
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+              />
             </svg>
           </motion.button>
         </div>
-        
-        <Leaderboard 
-          players={MOCK_PLAYERS} 
-          onPlayerSelect={(playerId) => setSelectedPlayerId(playerId)} 
+
+        <Leaderboard
+          players={MOCK_PLAYERS}
+          onPlayerSelect={(playerId) => setSelectedPlayerId(playerId)}
         />
       </main>
-      
+
       <AnimatePresence>
         {selectedPlayerId && selectedPlayer && (
           <PlayerProfile

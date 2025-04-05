@@ -38,9 +38,9 @@ export default function ScoringPage({}: ScoringPageProps) {
       const response = await fetch('/api/scoring/create', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(sessionData),
+        body: JSON.stringify(sessionData)
       });
 
       if (!response.ok) {
@@ -164,7 +164,9 @@ export default function ScoringPage({}: ScoringPageProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-2xl font-bold text-sugar-cookie mb-6 text-center uppercase tracking-wider">SPELADE RUNDOR</h2>
+            <h2 className="text-2xl font-bold text-sugar-cookie mb-6 text-center uppercase tracking-wider">
+              SPELADE RUNDOR
+            </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
               {/* Example past rounds - in a real app, these would be loaded from the database */}

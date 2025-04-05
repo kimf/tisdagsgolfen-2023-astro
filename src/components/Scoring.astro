@@ -8,28 +8,29 @@ import ShowNewSession from './ShowNewSession';
 const userId = Astro.cookies.get('activeUserId');
 
 const activeSessions = userId
-  ? await db.select()
+  ? await db
+      .select()
       .from(scoringSessions)
-      .where(
-        eq(scoringSessions.ownerId, userId.value)
-      )
+      .where(eq(scoringSessions.ownerId, userId.value))
       .limit(1)
   : [];
 
 const activeSession = activeSessions[0];
 ---
 
-{!userId && (
-  <div class="flex justify-center items-center h-32">
-    <a href="/login" class="button">LOGGA IN</a>
-  </div>
-)}
+{
+  !userId && (
+    <div class="flex justify-center items-center h-32">
+      <a href="/login" class="button">
+        LOGGA IN
+      </a>
+    </div>
+  )
+}
 
 {activeSession && <ScoringCard client:load sessionId={activeSession.id} />}
 
-{userId && !activeSession && (
-  <ShowNewSession client:load />
-)}
+{userId && !activeSession && <ShowNewSession client:load />}
 
 <style>
   .scoring-card {

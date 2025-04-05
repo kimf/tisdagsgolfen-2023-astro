@@ -32,7 +32,11 @@ try {
   }
 
   // Get the session data
-  const sessionData = await db.select().from(scoringSessions).where(eq(scoringSessions.id, sessionId)).limit(1);
+  const sessionData = await db
+    .select()
+    .from(scoringSessions)
+    .where(eq(scoringSessions.id, sessionId))
+    .limit(1);
 
   if (sessionData.length === 0 || sessionData[0].ownerId !== userId.value) {
     return Astro.redirect('/');
@@ -41,7 +45,11 @@ try {
   const session = sessionData[0];
 
   // Get course data
-  const courseData = await db.select().from(courses).where(eq(courses.id, session.courseId)).limit(1);
+  const courseData = await db
+    .select()
+    .from(courses)
+    .where(eq(courses.id, session.courseId))
+    .limit(1);
 
   if (courseData.length === 0) {
     throw new Error('Course not found');
@@ -71,10 +79,7 @@ if (!pageData) {
       <a href="/" class="button">Back to Home</a>
     </div>
 
-    <ScoringCard
-      client:load
-      sessionId={pageData.sessionId}
-    />
+    <ScoringCard client:load sessionId={pageData.sessionId} />
   </div>
 </Layout>
 

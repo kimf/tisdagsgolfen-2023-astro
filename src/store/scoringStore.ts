@@ -26,7 +26,7 @@ export const scoringStore = observable<{
   isConnected: boolean;
 }>({
   session: null,
-  isConnected: false,
+  isConnected: false
 });
 
 // Load persisted state from localStorage if available
@@ -58,7 +58,7 @@ export const totalScores = computed(() => {
   const session = scoringStore.session.get();
   if (!session || !session.players) return [];
 
-  return session.players.map(player => ({
+  return session.players.map((player) => ({
     id: player.id,
     name: player.name,
     total: player.scores.reduce((sum, score) => sum + score, 0)
@@ -173,7 +173,7 @@ export async function updateScore(playerId: number, holeIndex: number, score: nu
   if (!session || !session.players) return;
 
   // Update local state immediately
-  const playerIndex = session.players.findIndex(p => p.id === playerId);
+  const playerIndex = session.players.findIndex((p) => p.id === playerId);
   if (playerIndex === -1) return;
 
   // Make sure the player and scores exist
@@ -208,11 +208,8 @@ export async function updateScore(playerId: number, holeIndex: number, score: nu
           score
         })
       });
-
     } catch (error) {
       console.error('Failed to update score on server:', error);
     }
   }
 }
-
-

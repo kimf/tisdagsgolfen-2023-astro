@@ -15,16 +15,18 @@ export const GET: APIRoute = async ({ cookies }) => {
     });
   }
 
-  console.log('Looking for active session for user:', userId.value);
-  
+  // console.log('Looking for active session for user:', userId.value);
+
   try {
     // Use the correct query with scoringSessions
-    const session = await db.select().from(scoringSessions)
+    const session = await db
+      .select()
+      .from(scoringSessions)
       .where(eq(scoringSessions.ownerId, userId.value))
       .limit(1);
-    
+
     console.log('Query result:', session);
-    
+
     if (session.length === 0) {
       console.log('No active session found for user');
       return new Response(null, {
@@ -32,19 +34,19 @@ export const GET: APIRoute = async ({ cookies }) => {
         statusText: 'Not found'
       });
     }
-    
+
     // Get the course information
     const courseInfo = await db.query.courses.findFirst({
       where: eq(courses.id, session[0].courseId)
     });
-    
+
     console.log('Course info:', courseInfo);
-    
+
     // Get player scores for this session
     // This would need to be adapted to your actual schema
     // This is just a placeholder based on your existing code
     const playerScores: Array<{ id: number; name: string; scores: number[]; total: number }> = [];
-    
+
     // Format the response to match what ScoringCard expects
     const formattedSession = {
       ...session[0],
@@ -54,16 +56,15 @@ export const GET: APIRoute = async ({ cookies }) => {
       par: courseInfo?.par || 72,
       status: session[0].state || 'active'
     };
-    
+
     console.log('Active session found:', formattedSession);
-  
 
     return new Response(JSON.stringify(formattedSession), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   } catch (error) {
     console.error('Error fetching active session:', error);
     return new Response(JSON.stringify({ error: 'Failed to fetch active session' }), {

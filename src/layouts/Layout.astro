@@ -47,7 +47,9 @@ import '../styles/globals.css';
   <body>
     <header class="site-header">
       <div class="header-container">
-        <h1 class="site-title">Tisdagsgolfen <span class="year-pill">2025 <span class="dropdown-arrow">▼</span></span></h1>
+        <h1 class="site-title">
+          Tisdagsgolfen <span class="year-pill">2025 <span class="dropdown-arrow">▼</span></span>
+        </h1>
         <div class="year-dropdown">
           <a href="/" class="current-year">2025</a>
           <a href="/2024" target="_blank">2024</a>
@@ -73,7 +75,7 @@ import '../styles/globals.css';
     <style>
       :root {
         --primary-color: #008080; /* Teal */
-        --secondary-color: #C7E0D9; /* Light teal */
+        --secondary-color: #c7e0d9; /* Light teal */
         --text-color: #333;
         --background-color: #fff;
         --pill-background: #008080;
@@ -81,7 +83,18 @@ import '../styles/globals.css';
       }
 
       body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          'Open Sans',
+          'Helvetica Neue',
+          sans-serif;
         margin: 0;
         padding: 0;
         color: var(--text-color);
@@ -91,7 +104,7 @@ import '../styles/globals.css';
       .site-header {
         background-color: var(--secondary-color);
         padding: 1rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         position: relative;
       }
 
@@ -140,7 +153,7 @@ import '../styles/globals.css';
         right: 0;
         background-color: white;
         border-radius: 0.5rem;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         z-index: 100;
         max-height: 300px;
         overflow-y: auto;

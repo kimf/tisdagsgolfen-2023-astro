@@ -23,7 +23,11 @@ export const GET: APIRoute = async ({ params }) => {
     }
 
     // Get the session from the database
-    const sessionData = await db.select().from(scoringSessions).where(eq(scoringSessions.id, sessionId)).limit(1);
+    const sessionData = await db
+      .select()
+      .from(scoringSessions)
+      .where(eq(scoringSessions.id, sessionId))
+      .limit(1);
 
     if (sessionData.length === 0) {
       return new Response(JSON.stringify({ error: 'Session not found' }), {
@@ -37,7 +41,11 @@ export const GET: APIRoute = async ({ params }) => {
     const session = sessionData[0];
 
     // Get the course information
-    const courseData = await db.select().from(courses).where(eq(courses.id, session.courseId)).limit(1);
+    const courseData = await db
+      .select()
+      .from(courses)
+      .where(eq(courses.id, session.courseId))
+      .limit(1);
     const course = courseData.length > 0 ? courseData[0] : null;
 
     // Course information check
@@ -55,10 +63,12 @@ export const GET: APIRoute = async ({ params }) => {
     const playersData = await db.select().from(profiles).limit(4);
 
     // Create placeholder scores for each player
-    const sessionPlayers = playersData.map(player => {
+    const sessionPlayers = playersData.map((player) => {
       // Generate some random scores for demonstration
       const totalHoles = course?.holesCount || 18;
-      const scores = Array(totalHoles).fill(0).map(() => Math.floor(Math.random() * 3) + 3);
+      const scores = Array(totalHoles)
+        .fill(0)
+        .map(() => Math.floor(Math.random() * 3) + 3);
 
       return {
         id: player.id,

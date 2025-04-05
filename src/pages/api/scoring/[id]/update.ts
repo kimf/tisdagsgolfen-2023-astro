@@ -8,7 +8,7 @@ import { sendUpdate } from '../../sse';
 export const POST: APIRoute = async ({ request, params }) => {
   const sessionId = params.id;
   if (!sessionId) {
-    return new Response(JSON.stringify({ error: 'Session ID is required' }), { 
+    return new Response(JSON.stringify({ error: 'Session ID is required' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -17,28 +17,33 @@ export const POST: APIRoute = async ({ request, params }) => {
   try {
     const data = await request.json();
     const { playerId, holeIndex, score } = data;
-    
+
     if (!playerId || holeIndex === undefined || score === undefined) {
       return new Response(JSON.stringify({ error: 'Missing required fields' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
       });
     }
-    
+
     // Get the round
-    const round = await db.select().from(rounds).where(eq(rounds.id, parseInt(sessionId))).limit(1);
-    
+    const round = await db
+      .select()
+      .from(rounds)
+      .where(eq(rounds.id, parseInt(sessionId)))
+      .limit(1);
+
     if (round.length === 0) {
       return new Response(JSON.stringify({ error: 'Session not found' }), {
         status: 404,
         headers: { 'Content-Type': 'application/json' }
       });
     }
-    
+
     // Update the score in the database
     const holeNumber = holeIndex + 1; // Convert 0-based index to 1-based hole number
-    
-    await db.update(scores)
+
+    await db
+      .update(scores)
       .set({ score })
       .where(
         and(
@@ -47,33 +52,40 @@ export const POST: APIRoute = async ({ request, params }) => {
           eq(scores.holeNumber, holeNumber)
         )
       );
-    
+
     // Fetch the updated session data
     // Get the course
-    const course = await db.select().from(courses).where(eq(courses.id, round[0].courseId)).limit(1);
-    
+    const course = await db
+      .select()
+      .from(courses)
+      .where(eq(courses.id, round[0].courseId))
+      .limit(1);
+
     // Get all scores for this round
-    const allScores = await db.select().from(scores).where(eq(scores.roundId, parseInt(sessionId)));
-    
+    const allScores = await db
+      .select()
+      .from(scores)
+      .where(eq(scores.roundId, parseInt(sessionId)));
+
     // Get unique player IDs from scores
-    const playerIds = [...new Set(allScores.map(score => score.playerId))];
-    
+    const playerIds = [...new Set(allScores.map((score) => score.playerId))];
+
     // Get player details
     const sessionPlayers = [];
-    
+
     for (const pid of playerIds) {
       const player = await db.select().from(players).where(eq(players.id, pid)).limit(1);
-      
+
       if (player.length > 0) {
         // Get all scores for this player in this round
         const playerScores = allScores
-          .filter(s => s.playerId === pid)
+          .filter((s) => s.playerId === pid)
           .sort((a, b) => a.holeNumber - b.holeNumber)
-          .map(s => s.score);
-        
+          .map((s) => s.score);
+
         // Calculate total
         const total = playerScores.reduce((sum, s) => sum + s, 0);
-        
+
         sessionPlayers.push({
           id: pid,
           name: player[0].name,
@@ -82,7 +94,7 @@ export const POST: APIRoute = async ({ request, params }) => {
         });
       }
     }
-    
+
     // Construct the updated session object
     const updatedSession = {
       id: parseInt(sessionId),
@@ -95,10 +107,10 @@ export const POST: APIRoute = async ({ request, params }) => {
       par: course[0].par,
       status: round[0].status
     };
-    
+
     // Send update to all connected clients
     sendUpdate(sessionId, updatedSession);
-    
+
     return new Response(JSON.stringify(updatedSession), {
       status: 200,
       headers: {

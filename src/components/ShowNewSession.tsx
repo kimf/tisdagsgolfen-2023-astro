@@ -26,7 +26,7 @@ export default function ShowNewSession() {
           >
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <h3 className="text-lg font-semibold mb-4">Starta ny runda</h3>
-              <NewSessionForm 
+              <NewSessionForm
                 onCreateSession={(session) => {
                   window.location.href = `/scoring/${session.id}`;
                 }}
