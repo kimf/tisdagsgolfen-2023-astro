@@ -1,9 +1,9 @@
 export const prerender = false;
 import type { APIRoute } from 'astro';
 import { eq, and } from 'drizzle-orm';
-import { db } from '../../../../db';
-import { rounds, scores, players, courses } from '../../../../db/schema';
-import { sendUpdate } from '../../sse';
+import { db } from 'src/db';
+import { rounds, scores, players, courses } from 'src/db/schema';
+import { sendUpdate } from 'src/pages/api/sse';
 
 export const POST: APIRoute = async ({ request, params }) => {
   const sessionId = params.id;

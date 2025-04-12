@@ -1,8 +1,62 @@
 ---
-import NewSessionForm from '../../components/scoring/NewSessionForm';
-import Layout from '../../layouts/Layout.astro';
+import { db } from 'src/db';
+import profiles from 'src/db/schema/profile';
+import Layout from 'src/layouts/Layout.astro';
+
+const players = await db.select().from(profiles).orderBy(profiles.guest, profiles.active);
 ---
 
 <Layout title="Ny runda - Tisdagsgolfen">
-  <NewSessionForm client:load />
+  <div>
+    <div>
+      <h2>Game Rules</h2>
+
+      <form>
+        <div>
+          <label>Course Name</label>
+          <input type="text" placeholder="Enter course name" required />
+        </div>
+
+        <div>
+          <label>Holes</label>
+          <div>
+            <input type="radio" id="9-holes" name="totalHoles" value="9" required />
+            <label for="9-holes">9 holes</label>
+          </div>
+          <div>
+            <input type="radio" id="18-holes" name="totalHoles" value="18" required />
+            <label for="18-holes">18 holes</label>
+          </div>
+        </div>
+
+        <div>
+          <div>
+            <label>Players</label>
+            <button> Add Player </button>
+          </div>
+
+          <ul>
+            {
+              players.map((player, index) => (
+                <li>
+                  <input type="checkbox" id={`player-${index}`} name={`player-${index}`} />
+                  <label for={`player-${index}`}>{player.fullName}</label>
+                  <input
+                    type="number"
+                    min="0"
+                    placeholder="Strokes"
+                    name={`player-${index}-strokes`}
+                  />
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div>
+          <button type="submit">Start Game</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </Layout>

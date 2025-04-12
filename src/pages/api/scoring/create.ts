@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { db } from '../../../db';
-import { courses, players, rounds, scores } from '../../../db/schema';
+import { db } from 'src/db';
+import { courses, players, rounds, scores } from 'src/db/schema';
 import { eq } from 'drizzle-orm';
 import { sendUpdate } from '../sse';
 

@@ -2,8 +2,8 @@
 export const prerender = false; // Render at request time
 import { USER_PASSWORD } from 'astro:env/server';
 
-import { db } from '../db';
-import '../styles/globals.css';
+import '@styles/globals.css';
+import { db } from 'src/db';
 
 const errors = { password: '' };
 

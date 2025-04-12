@@ -1,6 +1,5 @@
 import { defineConfig, envField } from 'astro/config';
 import node from '@astrojs/node';
-import react from '@astrojs/react';
 
 import playformCompress from '@playform/compress';
 import compressor from 'astro-compressor';
@@ -48,7 +47,6 @@ const copyLegacyContent = () => ({
 
 export default defineConfig({
   integrations: [
-    react(),
     AstroPWA({
       registerType: 'autoUpdate',
       base: '/',
