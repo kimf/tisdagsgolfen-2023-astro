@@ -1,0 +1,24 @@
+---
+import { eq } from 'drizzle-orm';
+import { db } from '../../db';
+import scoringSessions from '../../db/schema/session';
+import { ScoringCard } from './ScoringCard';
+
+const userId = Astro.cookies.get('activeUserId');
+
+const activeSessions = userId
+  ? await db
+      .select()
+      .from(scoringSessions)
+      .where(eq(scoringSessions.ownerId, userId.value))
+      .limit(1)
+  : [];
+
+const activeSession = activeSessions[0];
+---
+
+{!userId && <a href="/login">LOGGA IN</a>}
+
+{activeSession && <ScoringCard client:load sessionId={activeSession.id} />}
+
+{userId && !activeSession && <a href="/scoring/new">Starta ny runda</a>}

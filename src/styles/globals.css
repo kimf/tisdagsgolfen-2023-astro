@@ -1,167 +1,82 @@
-@import 'tailwindcss';
-
-/* Custom styles that extend Tailwind */
-.site-header {
-  background-color: #c7e0d9;
-  padding: 1rem;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  position: relative;
-}
-
-.header-container {
-  max-width: 72rem;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-}
-
-.site-title {
+body {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background-color: #f5f5f5;
+}
+
+/* === Layout === */
+#main {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
-.year-pill {
-  display: inline-flex;
-  align-items: center;
+section {
+  height: 50vh;
+  background-color: #eee;
+  padding: 20px;
+}
+
+aside {
+  flex: 1;
+  padding: 40px 0;
+}
+
+/* === Buttons === */
+button {
+  width: 100%;
+  padding: 0.75rem;
   background-color: #008080;
   color: white;
-  border-radius: 9999px;
-  padding: 0.25rem 0.75rem;
-  margin-left: 0.5rem;
-  font-size: 0.875rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
   cursor: pointer;
-  transition-property: background-color;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  transition: background-color 0.2s;
 }
 
-.year-pill:hover {
-  background-color: #004444;
+button:hover {
+  background-color: #006666;
+}
+/* === Forms === */
+form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 320px;
 }
 
-.dropdown-arrow {
-  font-size: 0.75rem;
-  margin-left: 0.25rem;
-}
-
-.year-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  z-index: 50;
-  max-height: 20rem;
-  overflow-y: auto;
-  margin-top: 0.5rem;
-}
-
-.header-container:hover .year-dropdown,
-.year-pill:focus + .year-dropdown {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.5rem;
-  padding: 1rem;
-}
-
-@media (min-width: 768px) {
-  .header-container:hover .year-dropdown,
-  .year-pill:focus + .year-dropdown {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-}
-
-.year-dropdown a {
-  text-decoration: none;
-  color: #1f2937;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  text-align: center;
-  transition-property: background-color;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.year-dropdown a:hover {
-  background-color: #c7e0d9;
-}
-
-.year-dropdown a.current-year {
-  background-color: #008080;
-  color: white;
-  font-weight: 700;
-}
-
-.scoring-card {
-  max-width: 100%;
-  overflow-x: auto;
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  padding: 1rem;
-}
-
-.connection-status {
+label {
+  display: block;
   margin-bottom: 1rem;
+  color: #555;
 }
 
+select,
+input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* === Typography === */
+h1 {
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+/* === Utility Classes === */
 .connected {
-  color: #059669;
+  color: green;
 }
 
 .disconnected {
-  color: #f59e0b;
-}
-
-.hole-navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.scoring-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.scoring-table th,
-.scoring-table td {
-  padding: 0.5rem;
-  text-align: center;
-  border: 1px solid #e5e7eb;
-}
-
-.score-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.score-controls button {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 9999px;
-  border: 1px solid #d1d5db;
-  background-color: #f3f4f6;
-  cursor: pointer;
-}
-
-.score-controls button:hover {
-  background-color: #e5e7eb;
+  color: orange;
 }

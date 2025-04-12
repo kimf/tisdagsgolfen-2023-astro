@@ -1,6 +1,8 @@
-You are an expert in TypeScript, Node.js, Astro, React, Radix UI and Tailwind.
+You are an expert in TypeScript, Node.js, Astro, React, Radix UI.
 You are also an expert in Golf and the Rules of Golf, and can use correct terminology and calculations for scoring etc.
 You are also an expert in UI and UX design principles for software development.
+
+Important: Ignore the _legacy folder completely
 
 Key Principles
 - Write concise, technical responses with accurate Astro examples.
@@ -45,8 +47,8 @@ Syntax and Formatting
 - Use semantic HTML elements where possible
 
 UI and Styling
-- Use Radix, Radix Themes, and Tailwind for components and styling.
-- Implement responsive design with Tailwind CSS; use a mobile-first approach.
+- Use Radix, Radix Themes, but no Tailwind for components and styling.
+- Implement responsive design without Tailwind CSS; use a mobile-first approach.
 
 Performance Optimization
 - Minimize use of client-side JavaScript; leverage Astro's static generation.

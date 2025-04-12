@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import ScoringCard from '../../components/ScoringCard';
+import ScoringCard from '../../components/homepage/ScoringCard';
 import { eq } from 'drizzle-orm';
 import { db } from '../../db';
 import scoringSessions from '../../db/schema/session';
@@ -73,22 +73,8 @@ if (!pageData) {
 ---
 
 <Layout title={pageData.title}>
-  <div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-8">
-      <h1 class="text-2xl font-bold">{pageData.courseName}</h1>
-      <a href="/" class="button">Back to Home</a>
-    </div>
+  <h1>{pageData.courseName}</h1>
+  <a href="/">Back to Home</a>
 
-    <ScoringCard client:load sessionId={pageData.sessionId} />
-  </div>
+  <ScoringCard client:load sessionId={pageData.sessionId} />
 </Layout>
-
-<style>
-  .button {
-    @apply inline-block px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors;
-  }
-
-  .container {
-    @apply max-w-4xl;
-  }
-</style>
