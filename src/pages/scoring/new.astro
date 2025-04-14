@@ -1,62 +1,181 @@
 ---
-import { db } from 'src/db';
-import profiles from 'src/db/schema/profile';
 import Layout from 'src/layouts/Layout.astro';
-
-const players = await db.select().from(profiles).orderBy(profiles.guest, profiles.active);
+import { db } from 'src/db';
+import courses from 'src/db/schema/course';
+import profiles from 'src/db/schema/profile';
+const dbPlayers = await db.select().from(profiles).orderBy(profiles.guest, profiles.active);
+const dbCourses = await db.select().from(courses).orderBy(courses.eventsCount);
 ---
 
 <Layout title="Ny runda - Tisdagsgolfen">
-  <div>
-    <div>
-      <h2>Game Rules</h2>
 
-      <form>
-        <div>
-          <label>Course Name</label>
-          <input type="text" placeholder="Enter course name" required />
-        </div>
+<form
+  x-data="{
+    course: null,
+    isSpecialWeek: false,
+    isTeamEvent: false,
+    isStrokesEvent: false,
+    selectedPlayers: [],
+    togglePlayer(playerId, name) {
+      const idx = this.selectedPlayers.findIndex(p => p.id === playerId);
+      if (idx === -1) {
+        this.selectedPlayers.push({ id: playerId, strokes: 10, name });
+      } else {
+        this.selectedPlayers.splice(idx, 1);
+      }
+    }
+  }"
+  :action="isTeamEvent ? '/scoring/teamsetup' : '/scoring/new'"
+  :method="isTeamEvent ? 'get' : 'post'"
+  class="game-setup-form"
+>
 
-        <div>
-          <label>Holes</label>
-          <div>
-            <input type="radio" id="9-holes" name="totalHoles" value="9" required />
-            <label for="9-holes">9 holes</label>
-          </div>
-          <div>
-            <input type="radio" id="18-holes" name="totalHoles" value="18" required />
-            <label for="18-holes">18 holes</label>
-          </div>
-        </div>
+  <div class="form-section column">
+      <h3>Inställningar</h3>
+      <label>
+        <input type="checkbox" x-model="isSpecialWeek">
+        Specialvecka
+      </label>
 
-        <div>
-          <div>
-            <label>Players</label>
-            <button> Add Player </button>
-          </div>
+      <label x-show="isSpecialWeek" x-transition>
+        <input type="checkbox" x-model="isTeamEvent">
+        Lagtävling
+      </label>
 
-          <ul>
-            {
-              players.map((player, index) => (
-                <li>
-                  <input type="checkbox" id={`player-${index}`} name={`player-${index}`} />
-                  <label for={`player-${index}`}>{player.fullName}</label>
-                  <input
-                    type="number"
-                    min="0"
-                    placeholder="Strokes"
-                    name={`player-${index}-strokes`}
-                  />
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-
-        <div>
-          <button type="submit">Start Game</button>
-        </div>
-      </form>
-    </div>
+      <label x-show="isSpecialWeek" x-transition>
+        <input type="checkbox" x-model="isStrokesEvent">
+        Slaggolf
+      </label>
   </div>
+
+
+  <div class="form-section">
+            <h3>Bana</h3>
+    <select x-model="course">
+      {dbCourses.map(crs => (
+        <option value={crs.id}>{`${crs.club}: ${crs.name}`}</option>
+      ))}
+    </select>
+  </div>
+
+  <div class="form-section">
+    <h3>Välj spelare</h3>
+    {dbPlayers.map(dbPlayer => (
+      <label class="list-item">
+        <input
+          type="checkbox"
+          @click={`togglePlayer(${dbPlayer.id})`}
+          :checked={`selectedPlayers.some(p => p.id === ${dbPlayer.id})`}
+        >
+        {dbPlayer.fullName}
+
+        <template x-if={`!isTeamEvent && selectedPlayers.some(p => p.id === ${dbPlayer.id})`}>
+          <input
+            type="number"
+            x-model.number={`selectedPlayers.find(p => p.id === ${dbPlayer.id}).strokes`}
+            min="0"
+          >
+        </template>
+      </label>
+    ))}
+  </div>
+
+
+
+
+  <button type="submit" :disabled="!course || selectedPlayers.length === 0" x-text="isTeamEvent ? 'Sätt upp lag' : 'Starta runda'" />
+
+  <pre>
+    <code x-text="JSON.stringify({ course, isSpecialWeek, isTeamEvent, isStrokesEvent, selectedPlayers }, null, 4)"></code>
+  </pre>
+</form>
+
 </Layout>
+
+<style>
+    .columns {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .game-setup-form {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 1rem;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .form-section {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: #666;
+    }
+
+
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 0.5rem;
+      background: #fff;
+      font-size: 1rem;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      border: 1px solid #eee;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .list-item input[type="checkbox"], .list-item input[type="radio"] {
+      display: none;
+    }
+
+    .list-item input[type="number"] {
+      width: 4rem;
+      padding: 0.25rem;
+      border: 1px solid #ddd;
+      border-radius: 0.25rem;
+      margin-left: auto;
+    }
+
+    .list-item:has(input:checked) {
+      background: #e8f5e9;
+      border-color: #4caf50;
+      color: #2e7d32;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 1rem;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      margin-top: 2rem;
+    }
+
+    button[type="submit"]:disabled {
+      background: #ccc;
+    }
+
+    pre {
+      background-color: black;
+      color: lightgreen;
+    }
+  </style>

@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm';
+import { relations, sql, type InferSelectModel } from 'drizzle-orm';
 import { text, integer, sqliteTable } from 'drizzle-orm/sqlite-core';
 import courses from './course';
 
@@ -23,5 +23,7 @@ export const scoringSessionRelations = relations(scoringSessions, ({ one }) => (
     references: [courses.id]
   })
 }));
+
+export type ScoringSession = InferSelectModel<typeof scoringSessions>;
 
 export default scoringSessions;

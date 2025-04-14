@@ -7,6 +7,8 @@ import AstroPWA from '@vite-pwa/astro';
 import fs from 'fs';
 import path from 'path';
 import fsExtra from 'fs-extra';
+import htmx from 'astro-htmx';
+import alpinejs from '@astrojs/alpinejs';
 
 const COLORS = {
   reset: '\x1b[0m',
@@ -47,6 +49,8 @@ const copyLegacyContent = () => ({
 
 export default defineConfig({
   integrations: [
+    alpinejs(),
+    htmx(),
     AstroPWA({
       registerType: 'autoUpdate',
       base: '/',

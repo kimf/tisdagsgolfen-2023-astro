@@ -17,6 +17,7 @@
 //     constraint scores_scorecard_id_fkey foreign key (scorecard_id) references scorecards (id) on delete cascade
 //   ) tablespace pg_default;
 
+// export type Score = InferSelectModel<typeof scores>;
 // create trigger summarize_scorecard_on_score
 // after insert
 // or delete

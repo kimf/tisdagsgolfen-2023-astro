@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm';
+import { sql, type InferSelectModel } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 const seasons = sqliteTable('seasons', {
@@ -9,5 +9,7 @@ const seasons = sqliteTable('seasons', {
   closedAt: text('closed_at'),
   createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`)
 });
+
+export type Season = InferSelectModel<typeof seasons>;
 
 export default seasons;

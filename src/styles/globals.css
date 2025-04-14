@@ -1,82 +1,9 @@
-body {
-  margin: 0;
-  font-family:
-    system-ui,
-    -apple-system,
-    sans-serif;
-  background-color: #f5f5f5;
-}
-
-/* === Layout === */
-#main {
-  display: flex;
-  flex-direction: column;
-}
-
-section {
-  height: 50vh;
-  background-color: #eee;
-  padding: 20px;
-}
-
-aside {
-  flex: 1;
-  padding: 40px 0;
-}
-
-/* === Buttons === */
-button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #008080;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-button:hover {
-  background-color: #006666;
-}
-/* === Forms === */
-form {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 320px;
-}
-
-label {
-  display: block;
-  margin-bottom: 1rem;
-  color: #555;
-}
-
-select,
-input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-/* === Typography === */
-h1 {
-  color: #333;
-  margin-bottom: 2rem;
-}
-
-/* === Utility Classes === */
-.connected {
-  color: green;
-}
-
-.disconnected {
-  color: orange;
+:root {
+  --brand-green: #4caf50;
+  --brand-green-light: #8bc34a;
+  --brand-green-dark: #2e7d32;
+  --brand-gray: #f5f5f5;
+  --brand-gray-dark: #e0e0e0;
+  --font-size-base: 14px;
+  --header-height: 46px;
 }

@@ -1,3 +1,4 @@
+import type { InferSelectModel } from 'drizzle-orm';
 import { text, integer, sqliteTable } from 'drizzle-orm/sqlite-core';
 
 const profiles = sqliteTable('profiles', {
@@ -7,5 +8,7 @@ const profiles = sqliteTable('profiles', {
   guest: integer('guest').notNull().default(0),
   active: integer('active').notNull().default(1)
 });
+
+export type Profile = InferSelectModel<typeof profiles>;
 
 export default profiles;

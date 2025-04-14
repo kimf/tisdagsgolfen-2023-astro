@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm';
+import { sql, type InferSelectModel } from 'drizzle-orm';
 import { text, integer, sqliteTable, unique, index } from 'drizzle-orm/sqlite-core';
 
 import courses from './course';
@@ -20,5 +20,7 @@ const holes = sqliteTable(
     index('hole_course_index').on(t.courseId, t.index)
   ]
 );
+
+export type Hole = InferSelectModel<typeof holes>;
 
 export default holes;
