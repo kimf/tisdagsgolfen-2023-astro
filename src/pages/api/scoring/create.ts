@@ -1,132 +1,137 @@
 import type { APIRoute } from 'astro';
-import { db } from 'src/db';
-import { courses, players, rounds, scores } from 'src/db/schema';
-import { eq } from 'drizzle-orm';
-import { sendUpdate } from '../sse';
+// import { db } from 'src/db';
+// import { eq } from 'drizzle-orm';
+// import { sendUpdate } from '../sse';
 
-// ...existing code...
 export const POST: APIRoute = async ({ request }) => {
-  try {
-    const sessionData = await request.json();
-    const { courseName, totalHoles, startingHole, players: playerNames, par } = sessionData;
+  return new Response(JSON.stringify({ error: 'Failed to update score' }), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 
-    // Wrap everything in a transaction
-    const session = await db.transaction(async (tx) => {
-      // Create or find course
-      let courseId: number;
-      const existingCourse = await tx
-        .select()
-        .from(courses)
-        .where(eq(courses.name, courseName))
-        .limit(1);
+  // try {
+  //   const sessionData = await request.json();
+  //   const { courseName, totalHoles, startingHole, players: playerNames, par } = sessionData;
 
-      if (existingCourse.length > 0) {
-        courseId = existingCourse[0].id;
-      } else {
-        const [newCourse] = await tx
-          .insert(courses)
-          .values({
-            name: courseName,
-            par,
-            holes: totalHoles
-          })
-          .returning({ id: courses.id });
+  //   // Wrap everything in a transaction
+  //   const session = await db.transaction(async (tx) => {
+  //     // Create or find course
+  //     let courseId: number;
+  //     const existingCourse = await tx
+  //       .select()
+  //       .from(courses)
+  //       .where(eq(courses.name, courseName))
+  //       .limit(1);
 
-        courseId = newCourse.id;
-      }
+  //     if (existingCourse.length > 0) {
+  //       courseId = existingCourse[0].id;
+  //     } else {
+  //       const [newCourse] = await tx
+  //         .insert(courses)
+  //         .values({
+  //           name: courseName,
+  //           par,
+  //           holes: totalHoles
+  //         })
+  //         .returning({ id: courses.id });
 
-      // Create round
-      const [round] = await tx
-        .insert(rounds)
-        .values({
-          courseId,
-          date: new Date().toISOString(),
-          startingHole: startingHole === 'back' ? 10 : 1,
-          status: 'active'
-        })
-        .returning({ id: rounds.id });
+  //       courseId = newCourse.id;
+  //     }
 
-      const roundId = round.id;
+  //     // Create round
+  //     const [round] = await tx
+  //       .insert(rounds)
+  //       .values({
+  //         courseId,
+  //         date: new Date().toISOString(),
+  //         startingHole: startingHole === 'back' ? 10 : 1,
+  //         status: 'active'
+  //       })
+  //       .returning({ id: rounds.id });
 
-      // Create players and scores
-      const sessionPlayers = [];
-      const scoreValues = [];
+  //     const roundId = round.id;
 
-      for (const playerName of playerNames) {
-        // Find or create player
-        let playerId: number;
-        const existingPlayer = await tx
-          .select()
-          .from(players)
-          .where(eq(players.name, playerName))
-          .limit(1);
+  //     // Create players and scores
+  //     const sessionPlayers = [];
+  //     const scoreValues = [];
 
-        if (existingPlayer.length > 0) {
-          playerId = existingPlayer[0].id;
-        } else {
-          const [newPlayer] = await tx
-            .insert(players)
-            .values({
-              name: playerName
-            })
-            .returning({ id: players.id });
+  //     for (const playerName of playerNames) {
+  //       // Find or create player
+  //       let playerId: number;
+  //       const existingPlayer = await tx
+  //         .select()
+  //         .from(players)
+  //         .where(eq(players.name, playerName))
+  //         .limit(1);
 
-          playerId = newPlayer.id;
-        }
+  //       if (existingPlayer.length > 0) {
+  //         playerId = existingPlayer[0].id;
+  //       } else {
+  //         const [newPlayer] = await tx
+  //           .insert(players)
+  //           .values({
+  //             name: playerName
+  //           })
+  //           .returning({ id: players.id });
 
-        // Initialize scores (default to par for each hole)
-        const playerScores = Array(totalHoles).fill(par / totalHoles);
+  //         playerId = newPlayer.id;
+  //       }
 
-        // Prepare score entries for batch insert
-        for (let holeIndex = 0; holeIndex < totalHoles; holeIndex++) {
-          scoreValues.push({
-            roundId,
-            playerId,
-            holeNumber: holeIndex + 1,
-            score: playerScores[holeIndex]
-          });
-        }
+  //       // Initialize scores (default to par for each hole)
+  //       const playerScores = Array(totalHoles).fill(par / totalHoles);
 
-        sessionPlayers.push({
-          id: playerId,
-          name: playerName,
-          scores: playerScores,
-          total: playerScores.reduce((sum, score) => sum + score, 0)
-        });
-      }
+  //       // Prepare score entries for batch insert
+  //       for (let holeIndex = 0; holeIndex < totalHoles; holeIndex++) {
+  //         scoreValues.push({
+  //           roundId,
+  //           playerId,
+  //           holeNumber: holeIndex + 1,
+  //           score: playerScores[holeIndex]
+  //         });
+  //       }
 
-      // Batch insert all scores at once
-      await tx.insert(scores).values(scoreValues);
+  //       sessionPlayers.push({
+  //         id: playerId,
+  //         name: playerName,
+  //         scores: playerScores,
+  //         total: playerScores.reduce((sum, score) => sum + score, 0)
+  //       });
+  //     }
 
-      return {
-        id: roundId,
-        courseId,
-        courseName,
-        date: new Date().toISOString(),
-        players: sessionPlayers,
-        currentHole: 0,
-        totalHoles,
-        par,
-        status: 'active'
-      };
-    });
+  //     // Batch insert all scores at once
+  //     await tx.insert(scores).values(scoreValues);
 
-    // Broadcast the new session to any connected clients
-    sendUpdate(session.id.toString(), session);
+  //     return {
+  //       id: roundId,
+  //       courseId,
+  //       courseName,
+  //       date: new Date().toISOString(),
+  //       players: sessionPlayers,
+  //       currentHole: 0,
+  //       totalHoles,
+  //       par,
+  //       status: 'active'
+  //     };
+  //   });
 
-    return new Response(JSON.stringify(session), {
-      status: 201,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-  } catch (error) {
-    console.error('Error creating session:', error);
-    return new Response(JSON.stringify({ error: 'Failed to create session' }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-  }
+  //   // Broadcast the new session to any connected clients
+  //   sendUpdate(session.id.toString(), session);
+
+  //   return new Response(JSON.stringify(session), {
+  //     status: 201,
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   });
+  // } catch (error) {
+  //   console.error('Error creating session:', error);
+  //   return new Response(JSON.stringify({ error: 'Failed to create session' }), {
+  //     status: 500,
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   });
+  // }
 };
