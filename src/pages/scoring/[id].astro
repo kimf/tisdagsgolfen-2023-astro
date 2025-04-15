@@ -1,80 +1,124 @@
 ---
-import { eq } from 'drizzle-orm';
-import Layout from 'src/layouts/Layout.astro';
 import { db } from 'src/db';
-import scoringSessions from 'src/db/schema/session';
-import courses from 'src/db/schema/course';
-import ScoringCard from 'src/components/homepage/ScoringCard.astro';
+import { eq } from 'drizzle-orm';
 
-export const prerender = false;
-
-interface PageData {
-  title: string;
-  courseName: string;
-  sessionId: number;
-}
-
-// Get URL parameters and check authentication
 const { id } = Astro.params;
-const userId = Astro.cookies.get('activeUserId');
 
-if (!userId?.value || !id) {
-  return Astro.redirect('/login');
-}
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const sessionId = formData.get('sessionId');
+  const strokesEntries = [...formData.entries()]
+    .filter(([key]) => key.startsWith('strokes['))
+    .map(([key, value]) => {
+      const playerId = key.match(/strokes\[(.*?)\]/)?.[1];
+      return { playerId, strokes: Number(value), sessionId };
+    });
 
-let pageData: PageData | undefined;
-
-try {
-  // Validate session ID
-  const sessionId = parseInt(id);
-  if (isNaN(sessionId)) {
-    return Astro.redirect('/');
+  // Upsert or insert scores
+  for (const entry of strokesEntries) {
+    await db.insert(strokes).values(entry);
   }
 
-  // Get the session data
-  const sessionData = await db
-    .select()
-    .from(scoringSessions)
-    .where(eq(scoringSessions.id, sessionId))
-    .limit(1);
-
-  if (sessionData.length === 0 || sessionData[0].ownerId !== userId.value) {
-    return Astro.redirect('/');
-  }
-
-  const session = sessionData[0];
-
-  // Get course data
-  const courseData = await db
-    .select()
-    .from(courses)
-    .where(eq(courses.id, session.courseId))
-    .limit(1);
-
-  if (courseData.length === 0) {
-    throw new Error('Course not found');
-  }
-
-  const course = courseData[0];
-
-  pageData = {
-    title: `Scoring - ${course.name}`,
-    courseName: course.name,
-    sessionId
-  };
-} catch (error) {
-  console.error('Error loading scoring session:', error);
-  return Astro.redirect('/');
+  return redirect(`/score/${sessionId}`);
 }
 
-if (!pageData) {
-  return Astro.redirect('/');
-}
+const teamData = await db.select().from(teamMembers).where(eq(teamMembers.sessionId, id));
+
+const playerIds = teamData.map((tm) => tm.playerId);
+const allPlayers = await db
+  .select()
+  .from(players)
+  .where((p) => playerIds.includes(p.id));
+
+// Group players by team
+const teams = teamData.reduce((acc, tm) => {
+  const player = allPlayers.find((p) => p.id === tm.playerId);
+  if (!acc[tm.teamIndex]) acc[tm.teamIndex] = [];
+  if (player) acc[tm.teamIndex].push({ id: player.id, name: player.name });
+  return acc;
+}, {});
+
+const jsonTeams = JSON.stringify(teams);
 ---
 
-<Layout title={pageData.title}>
-  <h1>{pageData.courseName}</h1>
-  <a href="/">Back to Home</a>
+<html lang="en">
+  <head>
+    <title>Score Entry</title>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        background: #2e3440;
+        color: #d8dee9;
+        font-family: monospace;
+        padding: 1rem;
+      }
+      h3,
+      h4 {
+        color: #81a1c1;
+      }
+      input[type='number'] {
+        background: #3b4252;
+        color: #d8dee9;
+        border: 1px solid #4c566a;
+        border-radius: 4px;
+        padding: 0.3rem;
+        width: 4rem;
+        text-align: center;
+      }
+      button {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        background: none;
+        border: 1px solid #4c566a;
+        color: #d8dee9;
+        border-radius: 4px;
+      }
+      button:hover {
+        background: #434c5e;
+      }
+    </style>
+  </head>
+  <body>
+    <form method="POST" x-data="scoringForm()" x-init="init()">
+      <template x-for="(players, teamIndex) in teams" :key="teamIndex">
+        <div style="margin-bottom: 1.5rem;">
+          <h3>Team <span x-text="parseInt(teamIndex) + 1"></span></h3>
+          <template x-for="player in players" :key="player.id">
+            <div style="margin-bottom: 0.5rem;">
+              <label x-text="player.name"></label>
+              <input
+                type="number"
+                :name="`strokes[${player.id}]`"
+                x-model.number="scores[player.id]"
+                min="0"
+              />
 
-  <ScoringCard sessionId={pageData.sessionId} />
-</Layout>
+              <HoleInputWithPad player={player} hole={hole} sessionId={id} />
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <input type="hidden" name="sessionId" value={id} />
+      <button type="submit">Save Scores</button>
+    </form>
+
+    <script>
+      function scoringForm() {
+        return {
+          teams: {},
+          scores: {},
+          init() {
+            this.teams = JSON.parse(`<?= jsonTeams ?>`);
+            for (let team of Object.values(this.teams)) {
+              for (let player of team) {
+                this.scores[player.id] = 0;
+              }
+            }
+          }
+        };
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+---
+const { sessionId } = Astro.props;
+// Query strokes and players here
+const leaderboardData = await getLeaderboard(sessionId);
+---
+
+<div
+  id="leaderboard"
+  hx-get={`/score/leaderboard/${sessionId}`}
+  hx-trigger="every 5s"
+  hx-swap="outerHTML"
+>
+  <h3>Leaderboard</h3>
+  <ul>
+    {
+      leaderboardData.map((entry) => (
+        <li>
+          {entry.name}: {entry.total} strokes (thru hole {entry.thru})
+        </li>
+      ))
+    }
+  </ul>
+</div>

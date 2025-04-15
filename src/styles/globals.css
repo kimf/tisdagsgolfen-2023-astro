@@ -1,9 +1,63 @@
-:root {
-  --brand-green: #4caf50;
-  --brand-green-light: #8bc34a;
-  --brand-green-dark: #2e7d32;
-  --brand-gray: #f5f5f5;
-  --brand-gray-dark: #e0e0e0;
-  --font-size-base: 14px;
-  --header-height: 46px;
+body {
+  background: #2e3440;
+  color: #d8dee9;
+  font-family: monospace;
+  padding: 1rem;
+}
+h3,
+h4 {
+  color: #81a1c1;
+  margin-bottom: 0.5rem;
+}
+
+a,
+a:visited {
+  color: turquoise;
+}
+
+a:hover,
+button:hover,
+a.button:hover {
+  color: rgb(19, 175, 160);
+}
+
+button,
+a.button {
+  background: none;
+  border: 1px solid #4c566a;
+  color: #d8dee9;
+  padding: 0.3rem 0.6rem;
+  margin: 0.2rem;
+  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: none;
+  background: #434c5e;
+}
+
+button[type='submit'] {
+  border: 1px solid #5a657b;
+  color: #222;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  background: turquoise;
+}
+
+pre {
+  max-width: 100%;
+  overflow: hidden;
+  background: black;
+  color: darkgreen;
+  font-size: 0.8rem;
+  padding: 10px;
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
+input:disabled,
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

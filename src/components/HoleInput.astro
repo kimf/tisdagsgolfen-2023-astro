@@ -1,0 +1,24 @@
+---
+const { player, hole, sessionId } = Astro.props;
+---
+
+<div class="hole-card" id={`hole-${player.id}-${hole}`}>
+  <form hx-post="/score/update" hx-target={`#hole-${player.id}-${hole}`} hx-swap="outerHTML">
+    <input type="hidden" name="playerId" value={player.id} />
+    <input type="hidden" name="hole" value={hole} />
+    <input type="hidden" name="sessionId" value={sessionId} />
+
+    <label>Score</label>
+    <input type="number" name="strokes" min="1" value="" />
+
+    <label>Putts</label>
+    <input type="number" name="putts" min="0" value="" />
+
+    <label>
+      <input type="checkbox" name="penalty" value="1" />
+      Penalty
+    </label>
+
+    <button type="submit">Save</button>
+  </form>
+</div>
