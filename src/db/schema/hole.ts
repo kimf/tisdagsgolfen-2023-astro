@@ -1,5 +1,5 @@
 import { sql, type InferSelectModel } from 'drizzle-orm';
-import { text, integer, sqliteTable, unique, index } from 'drizzle-orm/sqlite-core';
+import { text, integer, sqliteTable, index } from 'drizzle-orm/sqlite-core';
 
 import courses from './course';
 

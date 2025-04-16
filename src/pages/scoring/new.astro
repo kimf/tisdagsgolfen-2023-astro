@@ -8,7 +8,7 @@ import { eq } from 'drizzle-orm';
 
 if (Astro.request.method === 'POST') {
   const formData = await Astro.request.formData();
-  const userId = Astro.cookies.get('activeUserId');
+  const userId = await Astro.session?.get('userId');
 
   const teamEvent = formData.get('teamEvent');
   const teamsRaw = formData.get('teams');

@@ -1,5 +1,5 @@
 ---
-import { USER_PASSWORD } from 'astro:env/server';
+export const prerender = false; // Render at request time
 
 import 'src/styles/globals.css';
 import { db } from 'src/db';
@@ -7,7 +7,7 @@ import { db } from 'src/db';
 const errors = { password: '' };
 
 if (Astro.request.method === 'GET') {
-  const userId = Astro.cookies.get('activeUserId');
+  const userId = await Astro.session?.get('userId');
   if (userId) {
     return Astro.redirect('/');
   }
@@ -20,8 +20,8 @@ if (Astro.request.method === 'POST') {
     const password = formData.get('password');
 
     // Replace with your actual password check logic
-    if (password === USER_PASSWORD) {
-      Astro.cookies.set('activeUserId', String(userId));
+    if (password === import.meta.env.USER_PASSWORD) {
+      await Astro.session?.set('userId', String(userId));
       return Astro.redirect('/');
     } else {
       errors.password = 'Fel lösenord!';

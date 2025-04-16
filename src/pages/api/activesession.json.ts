@@ -5,24 +5,22 @@ import scoringSessions from 'src/db/schema/session';
 import courses from 'src/db/schema/course';
 import type { APIRoute } from 'astro';
 
-export const GET: APIRoute = async ({ cookies }) => {
-  const userId = cookies.get('activeUserId');
+export const GET: APIRoute = async ({ session }) => {
+  const userId = await session?.get('userId');
   if (!userId) {
-    console.log('No activeUserId cookie found');
+    console.log('No active userId session found');
     return new Response(null, {
       status: 401,
       statusText: 'Unauthorized'
     });
   }
 
-  // console.log('Looking for active session for user:', userId.value);
-
   try {
     // Use the correct query with scoringSessions
     const session = await db
       .select()
       .from(scoringSessions)
-      .where(eq(scoringSessions.ownerId, userId.value))
+      .where(eq(scoringSessions.ownerId, userId))
       .limit(1);
 
     console.log('Query result:', session);

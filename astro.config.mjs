@@ -91,15 +91,14 @@ export default defineConfig({
     domains: []
   },
   adapter: node({
-    mode: 'standalone'
+    mode: 'static'
   }),
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'hover'
   },
   experimental: {
-    clientPrerender: true,
-    session: true
+    clientPrerender: true
   },
   env: {
     schema: {

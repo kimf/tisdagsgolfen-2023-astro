@@ -7,7 +7,7 @@ export const onRequest = defineMiddleware((context, next) => {
     return next();
   }
 
-  const userId = context.cookies.get('activeUserId');
+  const userId = context.session?.get('userId');
 
   if (!userId) {
     return new Response(null, { status: 401 });
