@@ -1,0 +1,134 @@
+---
+const { player, hole, sessionId, par } = Astro.props;
+---
+
+<div class="hole-card" id={`hole-${player.id}-${hole}`} x-data="padInput()" x-init="init()">
+  <h4>{player.name} — Hole {hole}</h4>
+
+  <form
+    hx-post="/score/update"
+    hx-target={`#hole-${player.id}-${hole}`}
+    hx-swap="outerHTML"
+    @htmx:afterRequest="advanceToNext()"
+  >
+    <input type="hidden" name="playerId" :value="playerId" />
+    <input type="hidden" name="hole" :value="hole" />
+    <input type="hidden" name="sessionId" value={sessionId} />
+    <input type="hidden" name="strokes" :value="score" />
+    <input type="hidden" name="putts" :value="putts" />
+    <input type="hidden" name="penalty" :value="penalty ? 1 : 0" />
+
+    <div class="display">
+      <span x-text="score || '-'" style="font-weight:bold"></span> strokes,
+      <span x-text="putts"></span> putts
+      <span x-show="penalty">(penalty)</span>
+      <span x-show="score !== null" style="margin-left: 1rem;">
+        (
+        <span
+          :class="{
+            'under': score < par,
+            'over': score > par,
+            'even': score === par
+          }"
+          x-text="getScoreToPar()"></span>
+        )
+      </span>
+    </div>
+
+    <div class="pad">
+      <template x-for="n in [1,2,3,4,5,6,7,8,9]" :key="n">
+        <button type="button" @click="setScore(n)" x-text="n"></button>
+      </template>
+      <button type="button" @click="setScore(10)">10+</button>
+      <button type="button" @click="reset()">Clear</button>
+    </div>
+
+    <label>
+      Putts:
+      <input type="number" x-model="putts" min="0" style="width: 3rem;" />
+    </label>
+
+    <label style="margin-left: 1rem;">
+      <input type="checkbox" x-model="penalty" /> Penalty
+    </label>
+
+    <div style="margin-top: 1rem;">
+      <button type="submit">Save</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  function padInput() {
+    return {
+      score: null,
+      putts: 0,
+      penalty: false,
+      par: Number({ par }),
+      hole: Number({ hole }),
+      playerId: '{player.id}',
+
+      init() {
+        this.reset();
+      },
+
+      reset() {
+        this.score = null;
+        this.putts = 0;
+        this.penalty = false;
+      },
+
+      setScore(n) {
+        this.score = n;
+        if (window.navigator.vibrate) window.navigator.vibrate(50);
+        const audio = new Audio('/tap.mp3');
+        audio.play().catch(() => {});
+      },
+
+      getScoreToPar() {
+        if (this.score === null) return '';
+        const diff = this.score - this.par;
+        if (diff === 0) return 'E';
+        return diff > 0 ? `+${diff}` : `${diff}`;
+      },
+
+      advanceToNext() {
+        const nextHoleId = `hole-${this.playerId}-${this.hole + 1}`;
+        const el = document.getElementById(nextHoleId);
+        if (el) {
+          setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+        }
+      }
+    };
+  }
+</script>
+
+<style>
+  .pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+  .pad button {
+    padding: 1rem;
+    font-size: 1.2rem;
+    background: #3b4252;
+    color: #d8dee9;
+    border: 1px solid #4c566a;
+    border-radius: 6px;
+  }
+  .display {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  .under {
+    color: #a3be8c;
+  }
+  .over {
+    color: #bf616a;
+  }
+  .even {
+    color: #d8dee9;
+  }
+</style>

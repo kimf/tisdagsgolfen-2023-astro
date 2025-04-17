@@ -1,10 +1,35 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Scoring from 'src/components/homepage/Scoring.astro';
+import Layout from 'src/layouts/Layout.astro';
 ---
 
 <Layout title="Tisdagsgolfen">
-  <h1>Tisdagsgolfen</h1>
+  <div slot="header">
+    <nav>
+      <a href="/">2025</a>
+      <a href="/2024" target="_blank">2024</a>
+      <a href="/2023" target="_blank">2023</a>
+      <a href="/2022" target="_blank">2022</a>
+      <a href="/2021" target="_blank">2021</a>
+      <a href="/2020" target="_blank">2020</a>
+      <a href="/2019" target="_blank">2019</a>
+      <a href="/2018" target="_blank">2018</a>
+      <a href="/2017" target="_blank">2017</a>
+      <a href="/2016" target="_blank">2016</a>
+      <a href="/2015" target="_blank">2015</a>
+      <a href="/2014" target="_blank">2014</a>
+      <a href="/2013" target="_blank">2013</a>
+      <a href="/2012" target="_blank">2012</a>
+    </nav>
+  </div>
   <main id="main">
-    <h2>Jobbar på't!</h2>
+    <h2>Scoring Session:</h2>
+    <Scoring server:defer>
+      <div slot="fallback">Startar golfbilarna...</div>
+    </Scoring>
+
+    <!-- <section>
+      <h2>Ledartavla kommer här...</h2>
+    </section> -->
   </main>
 </Layout>

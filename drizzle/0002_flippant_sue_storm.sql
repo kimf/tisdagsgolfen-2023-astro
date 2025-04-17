@@ -1,0 +1,1 @@
+ALTER TABLE `profiles` RENAME COLUMN "team_event" TO "guest";

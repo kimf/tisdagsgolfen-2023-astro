@@ -1,0 +1,297 @@
+---
+import Layout from 'src/layouts/Layout.astro';
+import db from 'src/db';
+import courses from 'src/db/schema/course';
+import { shortName } from 'src/utils/formatters';
+
+import { scoringSessions, profiles } from 'src/db/schema';
+import { eq } from 'drizzle-orm';
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const userId = await Astro.session?.get('userId');
+
+  const teamEvent = formData.get('teamEvent');
+  const teamsRaw = formData.get('teams');
+
+  // let teams;
+  // try {
+  //   teams = JSON.parse(teamsRaw as string);
+  // } catch (e) {
+  //   return new Response('Invalid team data', { status: 400 });
+  // }
+
+  const sessionId = await db
+    .insert(scoringSessions)
+    .values({
+      courseId: formData.get('courseId'),
+      ownerId: userId,
+      special: formData.get('special'),
+      strokes: formData.get('strokes'),
+      teamEvent
+    })
+    .returning({ insertedId: scoringSessions.id });
+
+  // for (let [teamIndex, team] of teams.entries()) {
+  //   for (let playerId of team.players) {
+  //     await db.insert(teamMembers).values({
+  //       sessionId: session.id,
+  //       teamIndex,
+  //       playerId
+  //     });
+  //   }
+  // }
+
+  return Astro.redirect(`/score/${sessionId}`);
+}
+
+const allPlayers = await db
+  .select()
+  .from(profiles)
+  .orderBy(profiles.guest)
+  .where(eq(profiles.active, 1));
+const dbCourses = await db.select().from(courses).orderBy(courses.eventsCount);
+---
+
+<Layout title="Ny Runda">
+  <form method="POST" x-data="teamForm()">
+    <h3>Inställningar</h3>
+    <div class="chips">
+      <label>
+        <input type="checkbox" name="specialweek" x-model="specialWeek" />Specialvecka
+      </label>
+      <label x-show="specialWeek" x-cloak>
+        <input type="checkbox" name="teamevent" x-model="teamEvent" />Lagtävling
+      </label>
+      <label x-show="specialWeek" x-cloak>
+        <input type="checkbox" name="strokes" x-model="strokes" />Slaggolf
+      </label>
+    </div>
+
+    <h3>Välj Bana</h3>
+    <div class="chips">
+      {
+        dbCourses.map((course) => (
+          <label>
+            <input type="radio" name="course" value={course.id} x-model="course" />
+            {course.club} - {course.name}
+          </label>
+        ))
+      }
+    </div>
+
+    <div x-show="teamEvent" x-cloak x-transition style="margin-top: 40px">
+      <h3>Sätt ihop lagen + sätt slag</h3>
+      <template x-for="(team, index) in teams" :key="index">
+        <div class="team-box">
+          <div class="team-header">
+            <h4>
+              Lag <span x-text="index + 1"></span>
+              <button type="button" @click="removeTeam(index)" x-show="index>0">-</button>
+            </h4>
+
+            <template x-if="teamEvent">
+              <span>
+                <input type="number" value="10" :name="`teams[${index}][strokes]`" />
+                Slag
+              </span>
+            </template>
+          </div>
+
+          <div class="chips">
+            {
+              allPlayers.map((player, index) => (
+                <label
+                  x-data={`{playerId: ${player.id}}`}
+                  x-show="!playerIsInAnotherTeam(playerId, index)"
+                >
+                  <input
+                    type="checkbox"
+                    value={player.id}
+                    x-model="teams[index].players"
+                    value="yes"
+                  />
+
+                  {shortName(player.fullName)}
+                </label>
+              ))
+            }
+          </div>
+          <template x-if="teamEvent">
+            <input type="hidden" x-model="team.players" :name="`teams[${index}][players]`" />
+          </template>
+        </div>
+      </template>
+      <button type="button" @click="addTeam()">+ Nytt lag</button>
+    </div>
+
+    <div x-show="!teamEvent" x-transition>
+      <h3>Välj Spelare & sätt slag</h3>
+      <div class="chips">
+        {
+          allPlayers.map((player, index) => (
+            <div class="player">
+              <label>
+                <input
+                  type="checkbox"
+                  name={`players[${index}]`}
+                  value={player.id}
+                  x-model="selectedPlayers"
+                />
+                {shortName(player.fullName)}
+              </label>
+              <template x-if={`!teamEvent && hasSelectedPlayer(${player.id})`}>
+                <input type="number" value="10" name={`players[${index}]['strokes']`} />
+              </template>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <button type="submit" style="margin-top: 2rem;" :disabled="disableSave">Start Scoring</button>
+
+    <pre x-text="JSON.stringify($data.teams, null, 2)"></pre>
+  </form>
+
+  <div data-players={JSON.stringify(allPlayers)} hidden></div>
+
+  <script>
+    import type { Profile } from 'src/db/schema/profile';
+    type Team = {
+      players: string[];
+    };
+
+    function teamForm() {
+      return {
+        course: null,
+        strokes: false,
+        teamEvent: false,
+        specialWeek: false,
+        players: JSON.parse(
+          (document.querySelector('[data-players]') as HTMLElement).dataset.players!
+        ) as Profile[],
+        selectedPlayers: [] as string[],
+        teams: [{ players: [] }, { players: [] }] as Team[],
+
+        addTeam() {
+          this.teams.push({ players: [] });
+        },
+
+        removeTeam(index: number) {
+          this.teams.splice(index, 1);
+        },
+
+        disableSave() {
+          if (this.course === null) {
+            return true;
+          }
+          if (this.teamEvent) {
+            console.log(this.teams.length);
+            if (this.teams.length === 0) {
+              return true;
+            }
+            return !this.teams.some((t) => t.players.length > 0);
+          }
+          return this.selectedPlayers.length === 0;
+        },
+
+        playerIsInAnotherTeam(playerId: number, currentTeamIndex: number) {
+          return this.teams.some(
+            (team, index) =>
+              index !== currentTeamIndex && team.players.includes(playerId.toString())
+          );
+        },
+
+        hasSelectedPlayer(id: number) {
+          return this.selectedPlayers.includes(id.toString());
+        },
+
+        getPlayerName(id: number) {
+          return this.players.find((p) => p.id === id)?.fullName || '';
+        }
+      };
+    }
+
+    // Expose the teamForm function to the global scope
+    window.teamForm = teamForm;
+  </script>
+</Layout>
+
+<style>
+  label:has(input) {
+    cursor: pointer;
+  }
+
+  label input[type='checkbox'],
+  label input[type='radio'] {
+    display: none;
+  }
+
+  label:has(input:checked) {
+    background: rgb(19, 175, 94);
+    color: #fff;
+    transition: all 150ms ease-in-out;
+  }
+
+  form h3:not(:first-child) {
+    border-top: 1px solid #4c566a;
+    padding-top: 1rem;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .chips label {
+    display: flex;
+    border: 1px solid #88c0d0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    height: 24px;
+    align-items: center;
+  }
+
+  .chips input[type='number'] {
+    width: 40px;
+    height: 20px;
+    padding: 0 4px;
+  }
+
+  .player {
+    display: flex;
+    padding: 4px;
+    width: 40%;
+    background: #444;
+    justify-content: space-between;
+    border: 1px solid #88c0d0;
+    padding: 0.5rem 0.5rem;
+    border-radius: 3px;
+  }
+  .player label {
+    border: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  .player:has(input:checked) {
+    background: rgb(19, 175, 94);
+  }
+
+  .team-box {
+    border: 1px solid #88c0d0;
+    padding: 8px;
+    margin-bottom: 20px;
+  }
+
+  .team-header {
+    display: flex;
+    justify-content: space-between;
+
+    h4 {
+      margin: 0;
+    }
+  }
+</style>

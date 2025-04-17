@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1728940225329,
+      "tag": "0000_luxuriant_scourge",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1730400681323,
+      "tag": "0001_living_korath",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1730401509970,
+      "tag": "0002_flippant_sue_storm",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1730402963234,
+      "tag": "0003_known_talon",
+      "breakpoints": true
+    }
+  ]
+}

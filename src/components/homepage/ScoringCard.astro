@@ -1,0 +1,183 @@
+---
+import db from 'src/db';
+import { eq } from 'drizzle-orm';
+
+interface Props {
+  sessionId: number;
+}
+
+const { sessionId } = Astro.props;
+
+// Fetch session data server-side
+const session = null;
+
+if (!session) {
+  throw new Error('Session not found');
+}
+
+// Transform data for template
+const players = session.scores.reduce((acc: any[], score) => {
+  const playerIndex = acc.findIndex((p) => p.id === score.playerId);
+  if (playerIndex === -1) {
+    acc.push({
+      id: score.playerId,
+      name: score.player.name,
+      scores: Array(session.course.holes).fill(0),
+      total: 0
+    });
+  }
+  acc[acc.length - 1].scores[score.holeNumber - 1] = score.score;
+  acc[acc.length - 1].total += score.score;
+  return acc;
+}, []);
+---
+
+<div>
+  <div>
+    <span id="connection-status"></span>
+  </div>
+
+  <div>
+    <h2>{session.course.name}</h2>
+    <div>
+      <span>PAR {session.course.par}</span>
+      <span>{session.course.holes} HÅL</span>
+    </div>
+  </div>
+
+  <div>
+    <button id="prev-hole" disabled>←</button>
+    <div>
+      <button id="current-hole">HÅL 1</button>
+      <span>av {session.course.holes}</span>
+    </div>
+    <button id="next-hole">→</button>
+  </div>
+
+  <div>POÄNG</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th style="text-align: center">Score</th>
+        <th style="text-align: center">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        players.map((player: any) => (
+          <tr data-player-id={player.id}>
+            <td>{player.name}</td>
+            <td>
+              <div>
+                <button class="decrease-score">-</button>
+                <span class="current-score">{player.scores[0]}</span>
+                <button class="increase-score">+</button>
+              </div>
+            </td>
+            <td style="text-align: center">
+              <span class="total-score">{player.total}</span>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<script define:vars={{ sessionId, totalHoles: session.course.holes }}>
+  let currentHole = 0;
+  const eventSource = new EventSource(`/api/scoring/${sessionId}/events`);
+
+  // Update connection status
+  const connectionStatus = document.getElementById('connection-status');
+  eventSource.onopen = () => {
+    connectionStatus.textContent = 'Online';
+  };
+  eventSource.onerror = () => {
+    connectionStatus.textContent = 'Offline (Local First Mode)';
+  };
+
+  // Handle hole navigation
+  const prevButton = document.getElementById('prev-hole');
+  const nextButton = document.getElementById('next-hole');
+  const currentHoleButton = document.getElementById('current-hole');
+
+  prevButton.addEventListener('click', () => {
+    if (currentHole > 0) {
+      currentHole--;
+      updateHoleDisplay();
+    }
+  });
+
+  nextButton.addEventListener('click', () => {
+    if (currentHole < totalHoles - 1) {
+      currentHole++;
+      updateHoleDisplay();
+    }
+  });
+
+  function updateHoleDisplay() {
+    currentHoleButton.textContent = `HÅL ${currentHole + 1}`;
+    prevButton.disabled = currentHole === 0;
+    nextButton.disabled = currentHole === totalHoles - 1;
+    updateScoreDisplay();
+  }
+
+  // Handle score changes
+  document.querySelectorAll('.decrease-score').forEach((button) => {
+    button.addEventListener('click', (e) => {
+      const row = (e.target as HTMLElement).closest('tr');
+      const playerId = row.dataset.playerId;
+      const scoreSpan = row.querySelector('.current-score');
+      const currentScore = parseInt(scoreSpan.textContent);
+      if (currentScore > 1) {
+        updateScore(playerId, currentHole, currentScore - 1);
+      }
+    });
+  });
+
+  document.querySelectorAll('.increase-score').forEach((button) => {
+    button.addEventListener('click', (e) => {
+      const row = e.target.closest('tr');
+      const playerId = row.dataset.playerId;
+      const scoreSpan = row.querySelector('.current-score');
+      const currentScore = parseInt(scoreSpan.textContent);
+      updateScore(playerId, currentHole, currentScore + 1);
+    });
+  });
+
+  async function updateScore(playerId: string, hole: number, score: number) {
+    try {
+      const response = await fetch('/api/scoring/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, playerId, hole, score })
+      });
+      if (response.ok) {
+        const data = await response.json();
+        updateScoreDisplay(data);
+      }
+    } catch (error) {
+      console.error('Error updating score:', error);
+    }
+  }
+
+  function updateScoreDisplay(sessionData = null) {
+    document.querySelectorAll('tr[data-player-id]').forEach((row) => {
+      const playerId = row.dataset.playerId;
+      const player = sessionData?.players?.find((p) => p.id === parseInt(playerId));
+      if (player) {
+        row.querySelector('.current-score').textContent = player.scores[currentHole].toString();
+        row.querySelector('.total-score').textContent = player.total.toString();
+      }
+    });
+  }
+
+  // Listen for score updates
+  eventSource.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    updateScoreDisplay(data);
+  };
+</script>
