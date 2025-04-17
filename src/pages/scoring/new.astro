@@ -1,9 +1,10 @@
 ---
 import Layout from 'src/layouts/Layout.astro';
-import { db } from 'src/db';
+import db from 'src/db';
 import courses from 'src/db/schema/course';
-import scoringSessions from 'src/db/schema/session';
-import profiles, { shortName } from 'src/db/schema/profile';
+import { shortName } from 'src/utils/formatters';
+
+import { scoringSessions, profiles } from 'src/db/schema';
 import { eq } from 'drizzle-orm';
 
 if (Astro.request.method === 'POST') {
@@ -23,7 +24,7 @@ if (Astro.request.method === 'POST') {
   const sessionId = await db
     .insert(scoringSessions)
     .values({
-      course: formData.get('courseId'),
+      courseId: formData.get('courseId'),
       ownerId: userId,
       special: formData.get('special'),
       strokes: formData.get('strokes'),

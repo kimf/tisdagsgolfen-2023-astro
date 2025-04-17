@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 export const prerender = false;
-// import { db } from 'src/db';
+// import db from 'src/db';
 // import { eq } from 'drizzle-orm';
 // import { sendUpdate } from '../sse';
 

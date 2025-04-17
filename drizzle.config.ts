@@ -1,13 +1,15 @@
-import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
 
+const isProd = import.meta.env.PROD;
+
 export default defineConfig({
-  dialect: 'sqlite',
+  dialect: isProd ? 'turso' : 'sqlite',
   schema: './src/db/schema/*',
   out: './drizzle',
   verbose: true,
   strict: true,
   dbCredentials: {
-    url: process.env.DATABASE_URL!
+    url: import.meta.env.DATABASE_URL!,
+    authToken: isProd ? import.meta.env.TURSO_AUTH_TOKEN : ''
   }
 });

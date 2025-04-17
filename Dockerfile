@@ -4,6 +4,9 @@ WORKDIR /app
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
 
+ARG TURSO_AUTH_TOKEN
+ENV TURSO_AUTH_TOKEN=$TURSO_AUTH_TOKEN
+
 VOLUME /data
 RUN mkdir -p /data
 
@@ -19,6 +22,7 @@ RUN npm run build
 FROM base AS runtime
 
 ENV DATABASE_URL=$DATABASE_URL
+ENV TURSO_AUTH_TOKEN=$TURSO_AUTH_TOKEN
 
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
@@ -35,6 +39,7 @@ ENV HOST=0.0.0.0
 ENV PORT=4321
 ENV NODE_ENV=production
 ENV DATABASE_URL=$DATABASE_URL
+ENV TURSO_AUTH_TOKEN=$TURSO_AUTH_TOKEN
 EXPOSE 4321
 
 CMD ["sh", "./scripts/run.sh"]

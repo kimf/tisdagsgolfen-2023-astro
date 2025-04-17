@@ -11,9 +11,4 @@ const profiles = sqliteTable('profiles', {
 
 export type Profile = InferSelectModel<typeof profiles>;
 
-export function shortName(fullName: Profile['fullName']) {
-  const parts = fullName.split(' ');
-  return `${parts[0]} ${parts[1][0]}`;
-}
-
 export default profiles;

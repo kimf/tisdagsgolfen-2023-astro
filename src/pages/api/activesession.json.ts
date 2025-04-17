@@ -1,8 +1,8 @@
 export const prerender = false; // Render at request time
 import { eq } from 'drizzle-orm';
-import { db } from 'src/db';
-import scoringSessions from 'src/db/schema/session';
-import courses from 'src/db/schema/course';
+import db from 'src/db';
+import { courses, scoringSessions } from 'src/db/schema';
+
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = async ({ session }) => {

@@ -1,7 +1,7 @@
 export const prerender = false;
 import type { APIRoute } from 'astro';
 // import { eq, and } from 'drizzle-orm';
-// import { db } from 'src/db';
+// import db from 'src/db';
 // import { sendUpdate } from 'src/pages/api/sse';
 
 export const POST: APIRoute = async ({ request, params }) => {

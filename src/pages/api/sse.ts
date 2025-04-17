@@ -1,9 +1,8 @@
 export const prerender = false;
 import type { APIRoute } from 'astro';
 import { eq } from 'drizzle-orm';
-import { db } from 'src/db';
-import scoringSessions from 'src/db/schema/session';
-
+import db from 'src/db';
+import { scoringSessions } from 'src/db/schema';
 // Store active connections with their writers
 const clients = new Map<string, WritableStreamDefaultWriter<Uint8Array>>();
 

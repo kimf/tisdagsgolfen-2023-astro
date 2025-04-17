@@ -1,6 +1,6 @@
 import { relations, sql, type InferSelectModel } from 'drizzle-orm';
 import { text, integer, sqliteTable } from 'drizzle-orm/sqlite-core';
-import scoringSessions from './session';
+import scoringSessions from './scoring_sessions';
 
 const courses = sqliteTable('courses', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),

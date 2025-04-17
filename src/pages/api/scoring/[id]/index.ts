@@ -1,11 +1,9 @@
 import type { APIRoute } from 'astro';
-import { db } from 'src/db';
+import db from 'src/db';
 import { eq } from 'drizzle-orm';
+import { scoringSessions, courses, profiles } from 'src/db/schema';
 
 // Import the correct schema tables
-import scoringSessions from 'src/db/schema/session';
-import courses from 'src/db/schema/course';
-import profiles from 'src/db/schema/profile';
 
 export const prerender = false;
 

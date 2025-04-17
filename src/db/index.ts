@@ -1,21 +1,46 @@
-import { drizzle } from 'drizzle-orm/better-sqlite3';
-import Database from 'better-sqlite3';
+import { createClient } from '@libsql/client';
 
-import courses, { coursesrelations } from './schema/course';
-import seasons from './schema/season';
-import profiles from './schema/profile';
-import holes from './schema/hole';
-import sessions, { scoringSessionRelations } from './schema/session';
+import { drizzle } from 'drizzle-orm/libsql';
 
-const dbUrl = import.meta.env.DATABASE_URL;
+import {
+  courses,
+  coursesrelations,
+  holes,
+  profiles,
+  scoringSessionRelations,
+  seasons,
+  scoringSessions
+} from './schema';
 
-if (!dbUrl) {
+const url = import.meta.env.DATABASE_URL;
+
+if (!url) {
   console.error('DATABASE_URL is not set');
   throw new Error('DATABASE_URL is not set');
 }
 
-const sqlite = new Database(import.meta.env.DATABASE_URL);
+let authToken = '';
+if (import.meta.env.PROD) {
+  authToken = import.meta.env.TURSO_AUTH_TOKEN;
 
-export const db = drizzle(sqlite, {
-  schema: { courses, seasons, sessions, profiles, holes, scoringSessionRelations, coursesrelations }
+  if (!authToken || authToken === '') {
+    console.error('TURSO_AUTH_TOKEN is not set');
+    throw new Error('TURSO_AUTH_TOKEN is not set');
+  }
+}
+
+const turso = createClient({ url, authToken });
+
+const db = drizzle(turso, {
+  schema: {
+    courses,
+    seasons,
+    scoringSessions,
+    profiles,
+    holes,
+    scoringSessionRelations,
+    coursesrelations
+  }
 });
+
+export default db;
