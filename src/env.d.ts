@@ -3,6 +3,7 @@
 
 interface ImportMetaEnv {
   readonly DATABASE_URL: string;
+  readonly REDIS_URL: string;
   readonly TURSO_AUTH_TOKEN: string;
   readonly USER_PASSWORD: string;
 }

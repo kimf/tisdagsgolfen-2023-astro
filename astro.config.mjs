@@ -45,6 +45,15 @@ const copyLegacyContent = () => ({
   }
 });
 
+const redisUrl = import.meta.env.redisUrl;
+
+if (!redisUrl) {
+  console.error('redisUrl is not set');
+  throw new Error('redisUrl is not set');
+}
+
+console.warn('###### PROD:', import.meta.env.PROD);
+
 export default defineConfig({
   integrations: [
     alpinejs(),
@@ -92,7 +101,7 @@ export default defineConfig({
     output: 'hybrid'
   }),
   session: {
-    driver: import.meta.env.PROD ? 'redis' : 'fs-lite',
+    driver: import.meta.env.PROD ? redisUrl : 'fs-lite',
     options: {
       url: import.meta.env.REDIS_URL
     }
@@ -108,7 +117,8 @@ export default defineConfig({
     schema: {
       DATABASE_URL: envField.string({ context: 'server', access: 'secret' }),
       TURSO_AUTH_TOKEN: envField.string({ context: 'server', access: 'secret' }),
-      USER_PASSWORD: envField.string({ context: 'server', access: 'secret' })
+      USER_PASSWORD: envField.string({ context: 'server', access: 'secret' }),
+      REDIS_URL: envField.string({ context: 'server', access: 'secret' })
     }
   },
   vite: {
