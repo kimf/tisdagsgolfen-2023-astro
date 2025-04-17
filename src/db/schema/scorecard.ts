@@ -26,9 +26,15 @@ const scorecards = sqliteTable('scorecards', {
 });
 
 export const scorecardsRelations = relations(scorecards, ({ one, many }) => ({
-  course: one(courses),
   players: many(scorecardPlayers),
-  scoringSession: one(scoringSessions)
+  course: one(courses, {
+    fields: [scorecards.courseId],
+    references: [courses.id]
+  }),
+  scoringSession: one(scoringSessions, {
+    fields: [scorecards.scoringSessionId],
+    references: [scoringSessions.id]
+  })
 }));
 
 export type Scorecard = InferSelectModel<typeof scorecards>;

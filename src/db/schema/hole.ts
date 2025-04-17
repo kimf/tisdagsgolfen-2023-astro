@@ -22,7 +22,10 @@ const holes = sqliteTable(
 );
 
 export const holesRelations = relations(holes, ({ one }) => ({
-  course: one(courses)
+  course: one(courses, {
+    fields: [holes.courseId],
+    references: [courses.id]
+  })
 }));
 
 export type Hole = InferSelectModel<typeof holes>;
