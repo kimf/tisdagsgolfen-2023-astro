@@ -45,14 +45,12 @@ const copyLegacyContent = () => ({
   }
 });
 
-const redisUrl = import.meta.env.redisUrl;
-
+console.warn('###### PROD:', import.meta.env.PROD);
+const redisUrl = import.meta.env.REDIS_URL;
 if (!redisUrl) {
   console.error('redisUrl is not set');
   throw new Error('redisUrl is not set');
 }
-
-console.warn('###### PROD:', import.meta.env.PROD);
 
 export default defineConfig({
   integrations: [
@@ -101,10 +99,8 @@ export default defineConfig({
     output: 'hybrid'
   }),
   session: {
-    driver: import.meta.env.PROD ? redisUrl : 'fs-lite',
-    options: {
-      url: import.meta.env.REDIS_URL
-    }
+    driver: import.meta.env.PROD ? 'redis' : 'fs-lite',
+    options: { url: redisUrl }
   },
   prefetch: {
     prefetchAll: true,
