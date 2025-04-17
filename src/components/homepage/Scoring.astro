@@ -13,9 +13,21 @@ const activeSessions = userId
 const activeSession = activeSessions[0];
 ---
 
-{!userId && <a href="/login">LOGGA IN</a>}
+{
+  !userId && (
+    <a href="/login" class="button">
+      LOGGA IN
+    </a>
+  )
+}
 
-{activeSession && <ScoringCard sessionId={activeSession.id} />}
+{
+  activeSession && (
+    <a href={`/scoring/${activeSession.id}`} class="button">
+      Fortsätt runda
+    </a>
+  )
+}
 
 {
   userId && !activeSession && (

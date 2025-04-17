@@ -1,15 +1,13 @@
 ---
 import db from 'src/db';
 import { eq } from 'drizzle-orm';
+import type { ScoringSession } from 'src/db/schema/scoring_sessions';
 
 interface Props {
-  sessionId: number;
+  session: ScoringSession;
 }
 
-const { sessionId } = Astro.props;
-
-// Fetch session data server-side
-const session = null;
+const { session } = Astro.props;
 
 if (!session) {
   throw new Error('Session not found');

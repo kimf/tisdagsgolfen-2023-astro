@@ -6,84 +6,96 @@ import { eq } from 'drizzle-orm';
 import db from 'src/db';
 import { scoringSessions, profiles, scorecardPlayers, courses, scorecards } from 'src/db/schema';
 import { shortName } from 'src/utils/formatters';
-import { extractPlayers } from 'src/utils/formDataExtractors';
+import { extractPlayers, extractTeams } from 'src/utils/formDataExtractors';
 
 if (Astro.request.method === 'POST') {
-  const formData = await Astro.request.formData();
-  const userId = await Astro.session?.get('userId');
+  try {
+    const formData = await Astro.request.formData();
+    const userId = await Astro.session?.get('userId');
 
-  if (!userId) {
-    throw new Error('Logga in för att skapa scoringSession');
-  }
-
-  const isSpecial = formData.get('special') === 'on';
-  const isTeamEvent = isSpecial && formData.get('teamEvent') === 'on';
-  const isStrokes = formData.get('strokes') === 'on';
-  const courseId = Number(formData.get('course'));
-
-  let createdScoringSessionId: number;
-
-  await db.transaction(async (tx) => {
-    const players = extractPlayers(formData);
-    if (!players) {
-      tx.rollback();
-      return;
+    if (!userId) {
+      throw new Error('Logga in för att skapa scoringSession');
     }
 
-    const scoringSesh = await tx
-      .insert(scoringSessions)
-      .values({
-        ownerId: Number(userId),
-        courseId,
-        special: isSpecial ? 1 : 0,
-        strokes: isStrokes ? 1 : 0,
-        teamEvent: isTeamEvent ? 1 : 0
-      })
-      .returning({ id: scoringSessions.id });
+    const isSpecial = formData.get('specialweek') === 'on';
+    const isTeamEvent = isSpecial && formData.get('teamevent') === 'on';
+    const isStrokes = formData.get('strokes') === 'on';
+    const courseId = Number(formData.get('course'));
 
-    createdScoringSessionId = scoringSesh[0].id;
+    let createdScoringSessionId: number;
+    await db.transaction(async (tx) => {
+      const scoringSesh = await tx
+        .insert(scoringSessions)
+        .values({
+          ownerId: Number(userId),
+          courseId,
+          special: isSpecial ? 1 : 0,
+          strokes: isStrokes ? 1 : 0,
+          teamEvent: isTeamEvent ? 1 : 0
+        })
+        .returning({ id: scoringSessions.id });
 
-    // Prepare all scorecards
-    const scorecardValues = players.map((player) => ({
-      courseId: courseId,
-      scoringSessionId: scoringSesh[0].id,
-      givenStrokes: Number(player.strokes) || 0
-    }));
+      createdScoringSessionId = scoringSesh[0].id;
 
-    // Batch insert scorecards
-    const scorecardsInserted = await tx
-      .insert(scorecards)
-      .values(scorecardValues)
-      .returning({ id: scorecards.id });
+      // Prepare all scorecards
+      let scorecardValues: {
+        courseId: number;
+        scoringSessionId: number;
+        givenStrokes: number;
+        playerIds: string[];
+        teamIndex?: number;
+      }[];
 
-    // Prepare all scorecardPlayers
-    const scorecardPlayerValues = players.map((player, idx) => ({
-      scorecardId: scorecardsInserted[idx].id,
-      playerId: Number(player.id)
-    }));
+      if (isTeamEvent) {
+        const teams = extractTeams(formData);
+        if (!teams) {
+          tx.rollback();
+          throw new Error('No teams');
+        }
+        scorecardValues = teams.map((team, index) => ({
+          courseId: courseId,
+          scoringSessionId: createdScoringSessionId,
+          givenStrokes: Number(team.strokes) || 0,
+          teamIndex: index,
+          playerIds: team.players
+        }));
+      } else {
+        const players = extractPlayers(formData);
+        if (!players) {
+          tx.rollback();
+          throw new Error('No players posted');
+        }
+        scorecardValues = players.map((player) => ({
+          courseId: courseId,
+          scoringSessionId: createdScoringSessionId,
+          givenStrokes: Number(player.strokes) || 0,
+          playerIds: [player.id]
+        }));
+      }
 
-    await tx.insert(scorecardPlayers).values(scorecardPlayerValues);
-  });
+      // Batch insert scorecards
+      const scorecardsInserted = await tx
+        .insert(scorecards)
+        .values(scorecardValues)
+        .returning({ id: scorecards.id });
 
-  // const teamsRaw = formData.get('teams');
-  // let teams;
-  // try {
-  //   teams = JSON.parse(teamsRaw as string);
-  // } catch (e) {
-  //   return new Response('Invalid team data', { status: 400 });
-  // }
+      const scorecardPlayerValues: { scorecardId: number; playerId: number }[] = [];
+      scorecardValues.forEach((scorecard, idx) => {
+        for (const playerId of scorecard.playerIds) {
+          scorecardPlayerValues.push({
+            scorecardId: scorecardsInserted[idx].id,
+            playerId: Number(playerId)
+          });
+        }
+      });
 
-  // for (let [teamIndex, team] of teams.entries()) {
-  //   for (let playerId of team.players) {
-  //     await db.insert(teamMembers).values({
-  //       sessionId: session.id,
-  //       teamIndex,
-  //       playerId
-  //     });
-  //   }
-  // }
+      await tx.insert(scorecardPlayers).values(scorecardPlayerValues);
+    });
 
-  return Astro.redirect(`/scoring/${createdScoringSessionId}`);
+    return Astro.redirect(`/scoring/${createdScoringSessionId}`);
+  } catch (e) {
+    console.warn(e);
+  }
 }
 
 const allPlayers = await db
