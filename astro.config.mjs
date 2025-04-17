@@ -46,7 +46,7 @@ const copyLegacyContent = () => ({
 });
 
 console.warn('###### PROD:', import.meta.env.PROD);
-const redisUrl = import.meta.env.REDIS_URL;
+const redisUrl = process.env.REDIS_URL;
 if (!redisUrl) {
   console.error('redisUrl is not set');
   throw new Error('redisUrl is not set');
