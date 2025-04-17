@@ -87,8 +87,11 @@ export default defineConfig({
   image: {
     domains: []
   },
-  output: 'static',
-  adapter: vercel(),
+  output: 'hybrid',
+  adapter: vercel({
+    edgeMiddleware: true,
+    functionPerRoute: true
+  }),
   session: {
     driver: import.meta.env.PROD ? 'redis' : 'fs-lite',
     options: {
