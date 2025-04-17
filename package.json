@@ -10,7 +10,8 @@
     "lint": "prettier -w .",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "postinstall": "drizzle-kit migrate"
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.6",
