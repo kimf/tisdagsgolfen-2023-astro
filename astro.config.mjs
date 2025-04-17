@@ -89,9 +89,7 @@ export default defineConfig({
   },
   output: 'static',
   adapter: vercel({
-    output: 'hybrid',
-    edgeMiddleware: true,
-    functionPerRoute: true
+    output: 'hybrid'
   }),
   session: {
     driver: import.meta.env.PROD ? 'redis' : 'fs-lite',
