@@ -1,4 +1,4 @@
-import { defineConfig, envField } from 'astro/config';
+import { defineConfig, envField, fontProviders } from 'astro/config';
 import playformCompress from '@playform/compress';
 import compressor from 'astro-compressor';
 import AstroPWA from '@vite-pwa/astro';
@@ -45,9 +45,9 @@ const copyLegacyContent = () => ({
   }
 });
 
-console.warn('###### PROD:', import.meta.env.PROD);
+const isProd = import.meta.env.PROD;
 const redisUrl = process.env.REDIS_URL;
-if (!redisUrl) {
+if (!redisUrl && isProd) {
   console.error('redisUrl is not set');
   throw new Error('redisUrl is not set');
 }
@@ -99,7 +99,7 @@ export default defineConfig({
     output: 'hybrid'
   }),
   session: {
-    driver: import.meta.env.PROD ? 'redis' : 'fs-lite',
+    driver: isProd ? 'redis' : 'fs-lite',
     options: { url: redisUrl }
   },
   prefetch: {
@@ -107,7 +107,15 @@ export default defineConfig({
     defaultStrategy: 'hover'
   },
   experimental: {
-    clientPrerender: true
+    clientPrerender: true,
+    fonts: [
+      {
+        provider: fontProviders.google(),
+        name: 'JetBrains Mono',
+        cssVariable: '--font-mono',
+        weights: [200, 400, 700]
+      }
+    ]
   },
   env: {
     schema: {

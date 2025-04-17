@@ -1,9 +1,65 @@
+:root {
+  --font-size: 14px;
+  --line-height: 1.2;
+}
+
 body {
   background: #2e3440;
   color: #d8dee9;
-  font-family: monospace;
-  padding: 1rem;
+  font-family:
+    var(--font-mono), SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  font-variant-ligatures: common-ligatures;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
 }
+
+body > .wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header#header {
+  background-color: #121419;
+  padding: 12px;
+  h1 {
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+  }
+  a {
+    text-decoration: none;
+  }
+}
+
+main#main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+footer#footer {
+  flex-shrink: 0;
+  background: #232733;
+  padding: 12px;
+  text-align: center;
+}
+
+.container {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+#main .container {
+  width: 100%;
+}
+
 h3,
 h4 {
   color: #81a1c1;
@@ -18,7 +74,7 @@ a:visited {
 a:hover,
 button:hover,
 a.button:hover {
-  color: rgb(19, 175, 160);
+  color: darkcyan;
 }
 
 button,
@@ -37,7 +93,7 @@ a.button {
 button[type='submit'] {
   border: 1px solid #5a657b;
   color: #222;
-  font-weight: bold;
+  font-weight: 600;
   text-transform: uppercase;
   padding: 0.5rem 1rem;
   background: turquoise;
@@ -47,7 +103,7 @@ pre {
   max-width: 100%;
   overflow: hidden;
   background: black;
-  color: darkgreen;
+  color: greenyellow;
   font-size: 0.8rem;
   padding: 10px;
 }

@@ -1,6 +1,8 @@
 import { relations, sql, type InferSelectModel } from 'drizzle-orm';
 import { text, integer, sqliteTable } from 'drizzle-orm/sqlite-core';
 import scoringSessions from './scoring_sessions';
+import holes from './hole';
+import scorecards from './scorecard';
 
 const courses = sqliteTable('courses', {
   id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
@@ -12,8 +14,10 @@ const courses = sqliteTable('courses', {
   createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`)
 });
 
-export const coursesrelations = relations(scoringSessions, ({ many }) => ({
-  scoringSessions: many(scoringSessions)
+export const coursesRelations = relations(courses, ({ many }) => ({
+  scoringSessions: many(scoringSessions),
+  scorecards: many(scorecards),
+  holes: many(holes)
 }));
 
 export type Course = InferSelectModel<typeof courses>;

@@ -1,9 +1,9 @@
 export const prerender = false; // Render at request time
-import { eq } from 'drizzle-orm';
 import db from 'src/db';
 import { courses, scoringSessions } from 'src/db/schema';
 
 import type { APIRoute } from 'astro';
+import { eq } from 'drizzle-orm';
 
 export const GET: APIRoute = async ({ session }) => {
   const userId = await session?.get('userId');
@@ -20,7 +20,7 @@ export const GET: APIRoute = async ({ session }) => {
     const session = await db
       .select()
       .from(scoringSessions)
-      .where(eq(scoringSessions.ownerId, userId))
+      .where(eq(scoringSessions.ownerId, Number(userId)))
       .limit(1);
 
     console.log('Query result:', session);

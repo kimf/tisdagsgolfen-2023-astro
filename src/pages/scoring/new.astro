@@ -1,36 +1,77 @@
 ---
-import Layout from 'src/layouts/Layout.astro';
-import db from 'src/db';
-import courses from 'src/db/schema/course';
-import { shortName } from 'src/utils/formatters';
+export const prerender = false;
 
-import { scoringSessions, profiles } from 'src/db/schema';
+import Layout from 'src/layouts/Layout.astro';
 import { eq } from 'drizzle-orm';
+import db from 'src/db';
+import { scoringSessions, profiles, scorecardPlayers, courses, scorecards } from 'src/db/schema';
+import { shortName } from 'src/utils/formatters';
+import { extractPlayers } from 'src/utils/formDataExtractors';
 
 if (Astro.request.method === 'POST') {
   const formData = await Astro.request.formData();
   const userId = await Astro.session?.get('userId');
 
-  const teamEvent = formData.get('teamEvent');
-  const teamsRaw = formData.get('teams');
+  if (!userId) {
+    throw new Error('Logga in för att skapa scoringSession');
+  }
 
+  const isSpecial = formData.get('special') === 'on';
+  const isTeamEvent = isSpecial && formData.get('teamEvent') === 'on';
+  const isStrokes = formData.get('strokes') === 'on';
+  const courseId = Number(formData.get('course'));
+
+  let createdScoringSessionId: number;
+
+  await db.transaction(async (tx) => {
+    const players = extractPlayers(formData);
+    if (!players) {
+      tx.rollback();
+      return;
+    }
+
+    const scoringSesh = await tx
+      .insert(scoringSessions)
+      .values({
+        ownerId: Number(userId),
+        courseId,
+        special: isSpecial ? 1 : 0,
+        strokes: isStrokes ? 1 : 0,
+        teamEvent: isTeamEvent ? 1 : 0
+      })
+      .returning({ id: scoringSessions.id });
+
+    createdScoringSessionId = scoringSesh[0].id;
+
+    // Prepare all scorecards
+    const scorecardValues = players.map((player) => ({
+      courseId: courseId,
+      scoringSessionId: scoringSesh[0].id,
+      givenStrokes: Number(player.strokes) || 0
+    }));
+
+    // Batch insert scorecards
+    const scorecardsInserted = await tx
+      .insert(scorecards)
+      .values(scorecardValues)
+      .returning({ id: scorecards.id });
+
+    // Prepare all scorecardPlayers
+    const scorecardPlayerValues = players.map((player, idx) => ({
+      scorecardId: scorecardsInserted[idx].id,
+      playerId: Number(player.id)
+    }));
+
+    await tx.insert(scorecardPlayers).values(scorecardPlayerValues);
+  });
+
+  // const teamsRaw = formData.get('teams');
   // let teams;
   // try {
   //   teams = JSON.parse(teamsRaw as string);
   // } catch (e) {
   //   return new Response('Invalid team data', { status: 400 });
   // }
-
-  const sessionId = await db
-    .insert(scoringSessions)
-    .values({
-      courseId: formData.get('courseId'),
-      ownerId: userId,
-      special: formData.get('special'),
-      strokes: formData.get('strokes'),
-      teamEvent
-    })
-    .returning({ insertedId: scoringSessions.id });
 
   // for (let [teamIndex, team] of teams.entries()) {
   //   for (let playerId of team.players) {
@@ -42,7 +83,7 @@ if (Astro.request.method === 'POST') {
   //   }
   // }
 
-  return Astro.redirect(`/score/${sessionId}`);
+  return Astro.redirect(`/scoring/${createdScoringSessionId}`);
 }
 
 const allPlayers = await db
@@ -80,7 +121,7 @@ const dbCourses = await db.select().from(courses).orderBy(courses.eventsCount);
       }
     </div>
 
-    <div x-show="teamEvent" x-cloak x-transition style="margin-top: 40px">
+    <div x-show="specialWeek && teamEvent" x-cloak>
       <h3>Sätt ihop lagen + sätt slag</h3>
       <template x-for="(team, index) in teams" :key="index">
         <div class="team-box">
@@ -92,7 +133,13 @@ const dbCourses = await db.select().from(courses).orderBy(courses.eventsCount);
 
             <template x-if="teamEvent">
               <span>
-                <input type="number" value="10" :name="`teams[${index}][strokes]`" />
+                <input
+                  inputmode="numeric"
+                  type="text"
+                  pattern="[0-9]*"
+                  value="10"
+                  :name="`teams[${index}][strokes]`"
+                />
                 Slag
               </span>
             </template>
@@ -125,7 +172,7 @@ const dbCourses = await db.select().from(courses).orderBy(courses.eventsCount);
       <button type="button" @click="addTeam()">+ Nytt lag</button>
     </div>
 
-    <div x-show="!teamEvent" x-transition>
+    <div x-show="!(specialWeek && teamEvent)">
       <h3>Välj Spelare & sätt slag</h3>
       <div class="chips">
         {
@@ -134,14 +181,20 @@ const dbCourses = await db.select().from(courses).orderBy(courses.eventsCount);
               <label>
                 <input
                   type="checkbox"
-                  name={`players[${index}]`}
+                  name={`players[${index}][id]`}
                   value={player.id}
                   x-model="selectedPlayers"
                 />
                 {shortName(player.fullName)}
               </label>
               <template x-if={`!teamEvent && hasSelectedPlayer(${player.id})`}>
-                <input type="number" value="10" name={`players[${index}]['strokes']`} />
+                <input
+                  inputmode="numeric"
+                  type="text"
+                  pattern="[0-9]*"
+                  value="10"
+                  name={`players[${index}]['strokes']`}
+                />
               </template>
             </div>
           ))
@@ -149,9 +202,7 @@ const dbCourses = await db.select().from(courses).orderBy(courses.eventsCount);
       </div>
     </div>
 
-    <button type="submit" style="margin-top: 2rem;" :disabled="disableSave">Start Scoring</button>
-
-    <pre x-text="JSON.stringify($data.teams, null, 2)"></pre>
+    <button type="submit" style="margin-top: 2rem;" :disabled="disableSave">SPELA GOLF</button>
   </form>
 
   <div data-players={JSON.stringify(allPlayers)} hidden></div>
@@ -219,6 +270,11 @@ const dbCourses = await db.select().from(courses).orderBy(courses.eventsCount);
 </Layout>
 
 <style>
+  form > div {
+    border-bottom: 1px solid #4c566a;
+    padding-bottom: 1rem;
+    margin: 0 0 1rem 0;
+  }
   label:has(input) {
     cursor: pointer;
   }
@@ -233,17 +289,10 @@ const dbCourses = await db.select().from(courses).orderBy(courses.eventsCount);
     color: #fff;
     transition: all 150ms ease-in-out;
   }
-
-  form h3:not(:first-child) {
-    border-top: 1px solid #4c566a;
-    padding-top: 1rem;
-    margin: 1rem 0 0.5rem;
-  }
-
   .chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 12px;
   }
   .chips label {
     display: flex;

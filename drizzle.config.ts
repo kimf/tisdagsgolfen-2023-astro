@@ -1,6 +1,6 @@
 import { defineConfig } from 'drizzle-kit';
 
-const isProd = import.meta.env.PROD;
+const isProd = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
   dialect: isProd ? 'turso' : 'sqlite',
@@ -9,7 +9,7 @@ export default defineConfig({
   verbose: true,
   strict: true,
   dbCredentials: {
-    url: import.meta.env.DATABASE_URL!,
-    authToken: isProd ? import.meta.env.TURSO_AUTH_TOKEN : ''
+    url: process.env.DATABASE_URL!,
+    authToken: isProd ? process.env.TURSO_AUTH_TOKEN : ''
   }
 });

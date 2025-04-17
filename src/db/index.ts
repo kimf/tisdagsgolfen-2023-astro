@@ -1,15 +1,20 @@
 import { createClient } from '@libsql/client';
-
 import { drizzle } from 'drizzle-orm/libsql';
 
 import {
   courses,
-  coursesrelations,
+  coursesRelations,
   holes,
+  holesRelations,
   profiles,
+  profilesRelations,
+  scorecardPlayers,
+  scorecardPlayersRelations,
+  scorecards,
+  scorecardsRelations,
+  scoringSessions,
   scoringSessionRelations,
-  seasons,
-  scoringSessions
+  seasons
 } from './schema';
 
 const url = import.meta.env.DATABASE_URL;
@@ -34,12 +39,18 @@ const turso = createClient({ url, authToken });
 const db = drizzle(turso, {
   schema: {
     courses,
-    seasons,
-    scoringSessions,
-    profiles,
+    coursesRelations,
     holes,
+    holesRelations,
+    profiles,
+    profilesRelations,
+    scorecardPlayers,
+    scorecardPlayersRelations,
+    scorecards,
+    scorecardsRelations,
+    scoringSessions,
     scoringSessionRelations,
-    coursesrelations
+    seasons
   }
 });
 

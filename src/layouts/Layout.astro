@@ -1,6 +1,7 @@
 ---
 import { pwaInfo } from 'virtual:pwa-info';
 import { pwaAssetsHead } from 'virtual:pwa-assets/head';
+import { Font } from 'astro:assets';
 import { Head } from 'astro-capo';
 // import { AstroFont } from 'astro-font';
 export interface Props {
@@ -17,25 +18,7 @@ import 'src/styles/globals.css';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-
-    <!-- <AstroFont
-      config={[
-        {
-          name: "Micro5",
-          src: [
-            {
-              style: 'bold',
-              weight: '700',
-              path: 'https://fonts.gstatic.com/s/afacad/v1/6NUK8FKMIQOGaw6wjYT7ZHG_zsBBfvLqagk-80KjZfJ_uw.woff2'
-            },
-          ],
-          preload: true,
-          display: "swap",
-          selector: "body",
-          fallback: "sans-serif",
-        },
-      ]}
-    /> -->
+    <Font cssVariable="--font-mono" preload />
     <title>{title || 'Tisdagsgolfen'}</title>
     {
       pwaAssetsHead.themeColor && (
@@ -46,14 +29,27 @@ import 'src/styles/globals.css';
     {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
   </Head>
   <body>
-    <header>
-      <h1>
-        <a href="/">Tisdagsgolfen 2025</a>
-      </h1>
-      <slot name="header" />
-    </header>
-    <section id="main">
-      <slot />
-    </section>
+    <div class="wrapper">
+      <header id="header">
+        <div class="container">
+          <h1>
+            <a href="/">Tisdagsgolfen 2025</a>
+          </h1>
+          <slot name="header" />
+        </div>
+      </header>
+
+      <main id="main">
+        <div class="container">
+          <slot />
+        </div>
+      </main>
+
+      <footer id="footer">
+        <div class="container">
+          <slot name="footer" />
+        </div>
+      </footer>
+    </div>
   </body>
 </html>

@@ -4,7 +4,14 @@ import Layout from 'src/layouts/Layout.astro';
 ---
 
 <Layout title="Tisdagsgolfen">
-  <div slot="header">
+  <Scoring server:defer>
+    <div slot="fallback">Startar golfbilarna...</div>
+  </Scoring>
+
+  <!-- <section>
+      <h2>Ledartavla kommer här...</h2>
+    </section> -->
+  <div slot="footer">
     <nav>
       <a href="/">2025</a>
       <a href="/2024" target="_blank">2024</a>
@@ -22,14 +29,4 @@ import Layout from 'src/layouts/Layout.astro';
       <a href="/2012" target="_blank">2012</a>
     </nav>
   </div>
-  <main id="main">
-    <h2>Scoring Session:</h2>
-    <Scoring server:defer>
-      <div slot="fallback">Startar golfbilarna...</div>
-    </Scoring>
-
-    <!-- <section>
-      <h2>Ledartavla kommer här...</h2>
-    </section> -->
-  </main>
 </Layout>

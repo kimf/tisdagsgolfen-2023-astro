@@ -29,6 +29,27 @@
       "when": 1730402963234,
       "tag": "0003_known_talon",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1744914460723,
+      "tag": "0004_whole_beyonder",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1744914937004,
+      "tag": "0005_talented_expediter",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1744920385277,
+      "tag": "0006_chubby_ulik",
+      "breakpoints": true
     }
   ]
 }
