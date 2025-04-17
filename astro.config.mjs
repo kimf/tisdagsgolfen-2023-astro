@@ -87,8 +87,9 @@ export default defineConfig({
   image: {
     domains: []
   },
-  output: 'hybrid',
+  output: 'static',
   adapter: vercel({
+    output: 'hybrid',
     edgeMiddleware: true,
     functionPerRoute: true
   }),
