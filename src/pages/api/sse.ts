@@ -32,7 +32,10 @@ export const GET: APIRoute = async ({ request }) => {
   const sessionId = url.searchParams.get('sessionId');
 
   if (!sessionId) {
-    return new Response(null, { status: 400, statusText: 'Missing sessionId parameter' });
+    return new Response(null, {
+      status: 400,
+      statusText: 'Missing sessionId parameter'
+    });
   }
 
   // Verify the session exists
@@ -63,7 +66,10 @@ export const GET: APIRoute = async ({ request }) => {
   } catch (error) {
     console.error('Error sending initial connection message:', error);
     clients.delete(clientId);
-    return new Response(null, { status: 500, statusText: 'Failed to establish connection' });
+    return new Response(null, {
+      status: 500,
+      statusText: 'Failed to establish connection'
+    });
   }
 
   // Clean up when client disconnects

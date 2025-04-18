@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { shortName } from '../../src/utils/formatters';
 
 describe('shortName', () => {

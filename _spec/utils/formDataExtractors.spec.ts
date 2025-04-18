@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { extractPlayers, extractTeams } from '../../src/utils/formDataExtractors';
 
 describe('extractPlayers', () => {

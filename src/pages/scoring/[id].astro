@@ -3,16 +3,9 @@ export const prerender = false;
 import db from 'src/db';
 import { asc, eq } from 'drizzle-orm';
 import HoleInputWithPad from 'src/components/HoleInputWithPad.astro';
-import {
-  courses,
-  profiles,
-  scorecardPlayers,
-  scorecards,
-  scorecards,
-  scoringSessions
-} from 'src/db/schema';
-import Layout from 'src/layouts/Layout.astro';
 import HoleInput from 'src/components/HoleInput.astro';
+import { scorecards, scoringSessions } from 'src/db/schema';
+import Layout from 'src/layouts/Layout.astro';
 
 const { id } = Astro.params;
 const userId = await Astro.session?.get('userId');
@@ -69,7 +62,7 @@ const scoringSession = await db.query.scoringSessions.findFirst({
 
 <Layout title="För score">
   <pre>{JSON.stringify(scoringSession, null, 2)}</pre>
-  <form method="POST" x-data="scoringForm()" x-init="init()">
+  <form method="POST" x-data="scoringForm()">
     <template x-for="(players, teamIndex) in teams" :key="teamIndex">
       <div style="margin-bottom: 1.5rem;">
         <h3>Team <span x-text="parseInt(teamIndex) + 1"></span></h3>
@@ -130,15 +123,7 @@ const scoringSession = await db.query.scoringSessions.findFirst({
   function scoringForm() {
     return {
       teams: {},
-      scores: {},
-      init() {
-        this.teams = JSON.parse(`<?= jsonTeams ?>`);
-        for (let team of Object.values(this.teams)) {
-          for (let player of team) {
-            this.scores[player.id] = 0;
-          }
-        }
-      }
+      scores: {}
     };
   }
 </script>

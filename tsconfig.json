@@ -3,7 +3,7 @@
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist", "_legacy"],
   "compilerOptions": {
-    "types": ["vite-plugin-pwa/client"],
+    "types": ["vite-plugin-pwa/client", "vitest/globals"],
     "baseUrl": "."
   },
   "plugins": [
