@@ -1,9 +1,14 @@
 name: Unit Tests
+
 on:
   push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+
+env:
+  DATABASE_URL: 'file:test.db'
+
 jobs:
   test:
     timeout-minutes: 60
