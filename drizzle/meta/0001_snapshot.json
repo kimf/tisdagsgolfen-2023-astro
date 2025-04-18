@@ -116,18 +116,12 @@
       "indexes": {
         "holes_number_course_id_unique": {
           "name": "holes_number_course_id_unique",
-          "columns": [
-            "number",
-            "course_id"
-          ],
+          "columns": ["number", "course_id"],
           "isUnique": true
         },
         "holes_index_course_id_unique": {
           "name": "holes_index_course_id_unique",
-          "columns": [
-            "index",
-            "course_id"
-          ],
+          "columns": ["index", "course_id"],
           "isUnique": true
         }
       },
@@ -136,12 +130,8 @@
           "name": "holes_course_id_courses_id_fk",
           "tableFrom": "holes",
           "tableTo": "courses",
-          "columnsFrom": [
-            "course_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["course_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }

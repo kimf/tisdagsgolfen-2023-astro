@@ -116,18 +116,12 @@
       "indexes": {
         "hole_course_number": {
           "name": "hole_course_number",
-          "columns": [
-            "course_id",
-            "number"
-          ],
+          "columns": ["course_id", "number"],
           "isUnique": false
         },
         "hole_course_index": {
           "name": "hole_course_index",
-          "columns": [
-            "course_id",
-            "index"
-          ],
+          "columns": ["course_id", "index"],
           "isUnique": false
         }
       },
@@ -136,12 +130,8 @@
           "name": "holes_course_id_courses_id_fk",
           "tableFrom": "holes",
           "tableTo": "courses",
-          "columnsFrom": [
-            "course_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["course_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -260,12 +250,8 @@
           "name": "scorecard_players_player_id_profiles_id_fk",
           "tableFrom": "scorecard_players",
           "tableTo": "profiles",
-          "columnsFrom": [
-            "player_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["player_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -273,12 +259,8 @@
           "name": "scorecard_players_scorecard_id_scorecards_id_fk",
           "tableFrom": "scorecard_players",
           "tableTo": "scorecards",
-          "columnsFrom": [
-            "scorecard_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["scorecard_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -406,12 +388,8 @@
           "name": "scorecards_scoring_session_id_scoring_sessions_id_fk",
           "tableFrom": "scorecards",
           "tableTo": "scoring_sessions",
-          "columnsFrom": [
-            "scoring_session_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["scoring_session_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -419,12 +397,8 @@
           "name": "scorecards_course_id_courses_id_fk",
           "tableFrom": "scorecards",
           "tableTo": "courses",
-          "columnsFrom": [
-            "course_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["course_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -520,12 +494,8 @@
           "name": "scoring_sessions_course_id_courses_id_fk",
           "tableFrom": "scoring_sessions",
           "tableTo": "courses",
-          "columnsFrom": [
-            "course_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["course_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
