@@ -8,6 +8,7 @@ export default getViteConfig({
     include: ['_spec/**/*.spec.{ts,js}'],
     coverage: {
       include: ['src/**/*']
-    }
+    },
+    setupFiles: ['./_spec/setup.ts']
   }
 });
