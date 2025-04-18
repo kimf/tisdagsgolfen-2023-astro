@@ -11,7 +11,10 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "postinstall": "drizzle-kit migrate"
+    "postinstall": "drizzle-kit migrate",
+    "test": "vitest",
+    "test:e2e": "playwright test",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.6",
@@ -34,10 +37,13 @@
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.4",
+    "@playwright/test": "^1.52.0",
     "@types/alpinejs": "^3.13.11",
     "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.14.1",
     "@vite-pwa/assets-generator": "^1.0.0",
     "@vite-pwa/astro": "^1.0.0",
+    "@vitest/coverage-v8": "^3.1.1",
     "autoprefixer": "^10.4.21",
     "drizzle-kit": "^0.30.6",
     "fs-extra": "^11.3.0",
@@ -47,7 +53,8 @@
     "sharp": "^0.34.0",
     "sharp-ico": "^0.1.5",
     "tsx": "^4.19.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.39.0"
